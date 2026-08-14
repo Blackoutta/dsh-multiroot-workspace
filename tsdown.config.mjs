@@ -19,10 +19,11 @@ export default defineConfig({
   outDir: 'dist',
   format: 'cjs',
   platform: 'browser',
-  external: [
-    /^react(-dom)?(\/.+)?$/,
-    /^@deepseek-ai\//,
-  ],
+  deps: {
+    neverBundle: [/^react(-dom)?(\/.+)?$/, /^@deepseek-ai\//],
+    alwaysBundle: ['clsx'],
+    onlyBundle: false,
+  },
   banner: {
     js: `window.__ModuleLoader__.load({ id: ${JSON.stringify(ID)}, factory: function (require) { const module = { exports: {} }; const exports = module.exports;`,
   },

@@ -2,7 +2,8 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  min-width: min(520px, calc(100vw - 64px));
+  width: 100%;
+  min-width: 0;
 }
 
 .field {
@@ -37,7 +38,7 @@
 
 .rootRow {
   display: grid;
-  grid-template-columns: minmax(90px, 0.35fr) minmax(160px, 1fr) auto;
+  grid-template-columns: 90px minmax(0, 1fr);
   align-items: center;
   gap: 8px;
   padding: 8px;
@@ -45,8 +46,19 @@
   border-radius: 10px;
 }
 
+.rootPath {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--dsw-alias-label-secondary);
+  font-size: 12px;
+}
+
 .rootActions {
+  grid-column: 1 / -1;
   display: flex;
+  justify-content: flex-end;
   align-items: center;
   gap: 6px;
 }

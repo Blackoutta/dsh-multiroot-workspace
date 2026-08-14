@@ -21,7 +21,7 @@ describe('multiroot Workspace presentation', () => {
       workspaceId: 'shadow-1' as WorkspaceId,
       cwd: '/repo/app',
       createdAt: 0,
-      label: 'product',
+      label: 'stale shadow title',
       sessionCount: 1,
       expanded: true,
       containsCurrent: false,
@@ -53,6 +53,8 @@ describe('multiroot Workspace presentation', () => {
     />)
 
     expect(screen.getByText('2 个根 · 主根 app')).toBeTruthy()
+    expect(screen.getByText('product')).toBeTruthy()
+    expect(document.body.textContent).not.toContain('stale shadow title')
     expect(document.body.textContent).not.toContain('🗂')
     fireEvent.click(screen.getByRole('button', { name: '工作区“product”的操作' }))
     fireEvent.click(screen.getByRole('menuitem', { name: '管理多根工作区' }))

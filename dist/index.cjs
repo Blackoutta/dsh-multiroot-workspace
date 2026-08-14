@@ -1,36 +1,7 @@
 window.__ModuleLoader__.load({ id: "dsh-multiroot-workspace", factory: function (require) { const module = { exports: {} }; const exports = module.exports;
 Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-//#region \0rolldown/runtime.js
-var __create = Object.create;
-var __defProp = Object.defineProperty;
-var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
-var __getOwnPropNames = Object.getOwnPropertyNames;
-var __getProtoOf = Object.getPrototypeOf;
-var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __copyProps = (to, from, except, desc) => {
-	if (from && typeof from === "object" || typeof from === "function") {
-		for (var keys = __getOwnPropNames(from), i = 0, n = keys.length, key; i < n; i++) {
-			key = keys[i];
-			if (!__hasOwnProp.call(to, key) && key !== except) {
-				__defProp(to, key, {
-					get: ((k) => from[k]).bind(null, key),
-					enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable
-				});
-			}
-		}
-	}
-	return to;
-};
-var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(isNodeMode || !mod || !mod.__esModule || !__hasOwnProp.call(mod, "default") ? __defProp(target, "default", {
-	value: mod,
-	enumerable: true
-}) : target, mod));
-
-//#endregion
 let _deepseek_ai_dsh_client_runtime_client = require("@deepseek-ai/dsh-client-runtime/client");
 let react = require("react");
-let clsx = require("clsx");
-clsx = __toESM(clsx, 1);
 let _deepseek_ai_dsh_client_ui_primitives = require("@deepseek-ai/dsh-client-ui-primitives");
 let react_jsx_runtime = require("react/jsx-runtime");
 
@@ -83,6 +54,22 @@ function createWorkspaceViewStore() {
 			}
 		}
 	});
+}
+
+//#endregion
+//#region node_modules/.pnpm/clsx@2.1.1/node_modules/clsx/dist/clsx.mjs
+function r(e) {
+	var t, f, n = "";
+	if ("string" == typeof e || "number" == typeof e) n += e;
+	else if ("object" == typeof e) if (Array.isArray(e)) {
+		var o = e.length;
+		for (t = 0; t < o; t++) e[t] && (f = r(e[t])) && (n && (n += " "), n += f);
+	} else for (f in e) e[f] && (n && (n += " "), n += f);
+	return n;
+}
+function clsx() {
+	for (var e, t, f = 0, n = "", o = arguments.length; f < o; f++) (e = arguments[f]) && (t = r(e)) && (n && (n += " "), n += t);
+	return n;
 }
 
 //#endregion
@@ -363,42 +350,42 @@ if (typeof document !== "undefined" && document.querySelector("style[data-plugin
 	document.head.appendChild(tag);
 }
 var Rows_module_css_default = {
-	"menuOpen": "Xn98xq_menuOpen",
-	"chevron": "Xn98xq_chevron",
-	"rowActions": "Xn98xq_rowActions",
-	"selected": "Xn98xq_selected",
-	"flatSessionRowWithoutStatus": "Xn98xq_flatSessionRowWithoutStatus",
-	"searchResultTitle": "Xn98xq_searchResultTitle",
-	"slot": "Xn98xq_slot",
-	"hoverContent": "Xn98xq_hoverContent",
-	"hoverPath": "Xn98xq_hoverPath",
-	"projectText": "Xn98xq_projectText",
-	"projectRow": "Xn98xq_projectRow",
-	"searchResultMeta": "Xn98xq_searchResultMeta",
-	"searchResultWorkspace": "Xn98xq_searchResultWorkspace",
-	"searchResultSnippet": "Xn98xq_searchResultSnippet",
-	"renameInput": "Xn98xq_renameInput",
-	"dropBefore": "Xn98xq_dropBefore",
-	"arrow": "Xn98xq_arrow",
-	"projectRowMultiroot": "Xn98xq_projectRowMultiroot",
-	"row-in": "Xn98xq_row-in",
-	"meta": "Xn98xq_meta",
-	"hoverTitle": "Xn98xq_hoverTitle",
-	"hoverTime": "Xn98xq_hoverTime",
-	"folderActive": "Xn98xq_folderActive",
+	"sessionRow": "Xn98xq_sessionRow",
 	"arrowOpen": "Xn98xq_arrowOpen",
-	"hoverStatus": "Xn98xq_hoverStatus",
-	"title": "Xn98xq_title",
-	"dot": "Xn98xq_dot",
-	"searchResultRow": "Xn98xq_searchResultRow",
-	"projectMeta": "Xn98xq_projectMeta",
-	"iconButton": "Xn98xq_iconButton",
-	"visuallyHidden": "Xn98xq_visuallyHidden",
-	"dropAfter": "Xn98xq_dropAfter",
+	"rowActions": "Xn98xq_rowActions",
+	"hoverPath": "Xn98xq_hoverPath",
+	"chevron": "Xn98xq_chevron",
+	"hoverTitle": "Xn98xq_hoverTitle",
+	"searchResultTitle": "Xn98xq_searchResultTitle",
 	"searchResultHeading": "Xn98xq_searchResultHeading",
+	"projectMeta": "Xn98xq_projectMeta",
+	"flatSessionRowWithoutStatus": "Xn98xq_flatSessionRowWithoutStatus",
 	"folder": "Xn98xq_folder",
+	"meta": "Xn98xq_meta",
+	"title": "Xn98xq_title",
+	"searchResultRow": "Xn98xq_searchResultRow",
+	"searchResultSnippet": "Xn98xq_searchResultSnippet",
+	"dot": "Xn98xq_dot",
+	"searchResultWorkspace": "Xn98xq_searchResultWorkspace",
+	"renameInput": "Xn98xq_renameInput",
+	"searchResultMeta": "Xn98xq_searchResultMeta",
+	"projectRow": "Xn98xq_projectRow",
 	"time": "Xn98xq_time",
-	"sessionRow": "Xn98xq_sessionRow"
+	"dropAfter": "Xn98xq_dropAfter",
+	"iconButton": "Xn98xq_iconButton",
+	"row-in": "Xn98xq_row-in",
+	"hoverContent": "Xn98xq_hoverContent",
+	"hoverTime": "Xn98xq_hoverTime",
+	"menuOpen": "Xn98xq_menuOpen",
+	"dropBefore": "Xn98xq_dropBefore",
+	"projectRowMultiroot": "Xn98xq_projectRowMultiroot",
+	"projectText": "Xn98xq_projectText",
+	"visuallyHidden": "Xn98xq_visuallyHidden",
+	"folderActive": "Xn98xq_folderActive",
+	"arrow": "Xn98xq_arrow",
+	"selected": "Xn98xq_selected",
+	"slot": "Xn98xq_slot",
+	"hoverStatus": "Xn98xq_hoverStatus"
 };
 
 //#endregion
@@ -477,7 +464,7 @@ function rowHalf(e) {
 */
 function ProjectRowItem({ group, onToggle, onCreate, actions, drag, multiroot, t }) {
 	const row = group;
-	const label = row.workspaceId === void 0 ? t("group.ungrouped") : row.label;
+	const label = multiroot?.logical.title ?? (row.workspaceId === void 0 ? t("group.ungrouped") : row.label);
 	const active = group.expanded && group.containsCurrent;
 	const [menuOpen, setMenuOpen] = (0, react.useState)(false);
 	const workspaceMenuItems = [
@@ -499,7 +486,7 @@ function ProjectRowItem({ group, onToggle, onCreate, actions, drag, multiroot, t
 		}
 	];
 	const ownRow = /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
-		className: (0, clsx.default)(Rows_module_css_default.projectRow, multiroot !== void 0 && Rows_module_css_default.projectRowMultiroot, menuOpen && Rows_module_css_default.menuOpen),
+		className: clsx(Rows_module_css_default.projectRow, multiroot !== void 0 && Rows_module_css_default.projectRowMultiroot, menuOpen && Rows_module_css_default.menuOpen),
 		role: "treeitem",
 		"aria-expanded": row.expanded,
 		onClick: onToggle,
@@ -512,12 +499,12 @@ function ProjectRowItem({ group, onToggle, onCreate, actions, drag, multiroot, t
 		onDragEnd: drag?.end,
 		children: [
 			/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
-				className: (0, clsx.default)(Rows_module_css_default.slot, Rows_module_css_default.folder, active && Rows_module_css_default.folderActive),
+				className: clsx(Rows_module_css_default.slot, Rows_module_css_default.folder, active && Rows_module_css_default.folderActive),
 				children: row.expanded ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_deepseek_ai_dsh_client_ui_primitives.IconFolderOpen16, {}) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_deepseek_ai_dsh_client_ui_primitives.IconFolderClose16, {})
 			}),
 			/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
-				className: (0, clsx.default)(Rows_module_css_default.slot, Rows_module_css_default.chevron),
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_deepseek_ai_dsh_client_ui_primitives.IconTriangleRightFill14, { className: (0, clsx.default)(Rows_module_css_default.arrow, row.expanded && Rows_module_css_default.arrowOpen) })
+				className: clsx(Rows_module_css_default.slot, Rows_module_css_default.chevron),
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_deepseek_ai_dsh_client_ui_primitives.IconTriangleRightFill14, { className: clsx(Rows_module_css_default.arrow, row.expanded && Rows_module_css_default.arrowOpen) })
 			}),
 			/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("span", {
 				className: Rows_module_css_default.projectText,
@@ -580,7 +567,7 @@ function ProjectRowItem({ group, onToggle, onCreate, actions, drag, multiroot, t
 	return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_deepseek_ai_dsh_client_ui_primitives.HoverCard, {
 		anchor: ownRow,
 		content: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(WorkspaceHoverContent, {
-			label: row.label,
+			label,
 			cwd: row.cwd,
 			createdAt: row.createdAt,
 			t
@@ -690,7 +677,7 @@ function SearchResultItem({ result, currentId, onOpen, t }) {
 	const primaryStatus = statuses[0];
 	return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("button", {
 		type: "button",
-		className: (0, clsx.default)(Rows_module_css_default.searchResultRow, selected && Rows_module_css_default.selected),
+		className: clsx(Rows_module_css_default.searchResultRow, selected && Rows_module_css_default.selected),
 		role: "treeitem",
 		"aria-selected": selected,
 		onClick: () => {
@@ -757,7 +744,7 @@ function SessionNodeItem({ node, currentId, now, onOpen, onRename, onFork, onArc
 		}
 	];
 	const ownRow = /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
-		className: (0, clsx.default)(Rows_module_css_default.sessionRow, selected && Rows_module_css_default.selected, menuOpen && Rows_module_css_default.menuOpen, flat && !showStatus && Rows_module_css_default.flatSessionRowWithoutStatus, drag?.marker === "before" && Rows_module_css_default.dropBefore, drag?.marker === "after" && Rows_module_css_default.dropAfter),
+		className: clsx(Rows_module_css_default.sessionRow, selected && Rows_module_css_default.selected, menuOpen && Rows_module_css_default.menuOpen, flat && !showStatus && Rows_module_css_default.flatSessionRowWithoutStatus, drag?.marker === "before" && Rows_module_css_default.dropBefore, drag?.marker === "after" && Rows_module_css_default.dropAfter),
 		role: "treeitem",
 		"aria-selected": selected,
 		onClick: () => {
@@ -936,7 +923,7 @@ function joinMultiroot(workspaces, records) {
 
 //#endregion
 //#region \0dsh-css:/Users/yang/Desktop/projects/deepseek-harness/tmp/logical-workspace/dsh-multiroot-workspace/src/client/multiroot/Dialogs.module.css.mjs
-const css$2 = "._1NmraW_form{flex-direction:column;gap:16px;min-width:min(520px,100vw - 64px);display:flex}._1NmraW_field{color:var(--dsw-alias-label-primary);flex-direction:column;gap:6px;font-size:13px;display:flex}._1NmraW_input{box-sizing:border-box;border:1px solid var(--dsw-alias-border-l2);background:var(--dsw-alias-button-elevated-fill);width:100%;color:var(--dsw-alias-label-primary);font:inherit;border-radius:8px;outline:none;padding:8px 10px}._1NmraW_input:focus{border-color:var(--dsw-alias-state-business-primary)}._1NmraW_roots{flex-direction:column;gap:8px;display:flex}._1NmraW_rootRow{border:1px solid var(--dsw-alias-border-l2);border-radius:10px;grid-template-columns:minmax(90px,.35fr) minmax(160px,1fr) auto;align-items:center;gap:8px;padding:8px;display:grid}._1NmraW_rootActions{align-items:center;gap:6px;display:flex}._1NmraW_primary{color:var(--dsw-alias-state-business-primary);white-space:nowrap;font-size:12px}._1NmraW_error{color:var(--dsw-alias-state-error-primary);font-size:12px}._1NmraW_hint{color:var(--dsw-alias-label-tertiary);font-size:12px}";
+const css$2 = "._1NmraW_form{flex-direction:column;gap:16px;width:100%;min-width:0;display:flex}._1NmraW_field{color:var(--dsw-alias-label-primary);flex-direction:column;gap:6px;font-size:13px;display:flex}._1NmraW_input{box-sizing:border-box;border:1px solid var(--dsw-alias-border-l2);background:var(--dsw-alias-button-elevated-fill);width:100%;color:var(--dsw-alias-label-primary);font:inherit;border-radius:8px;outline:none;padding:8px 10px}._1NmraW_input:focus{border-color:var(--dsw-alias-state-business-primary)}._1NmraW_roots{flex-direction:column;gap:8px;display:flex}._1NmraW_rootRow{border:1px solid var(--dsw-alias-border-l2);border-radius:10px;grid-template-columns:90px minmax(0,1fr);align-items:center;gap:8px;padding:8px;display:grid}._1NmraW_rootPath{text-overflow:ellipsis;white-space:nowrap;min-width:0;color:var(--dsw-alias-label-secondary);font-size:12px;overflow:hidden}._1NmraW_rootActions{grid-column:1/-1;justify-content:flex-end;align-items:center;gap:6px;display:flex}._1NmraW_primary{color:var(--dsw-alias-state-business-primary);white-space:nowrap;font-size:12px}._1NmraW_error{color:var(--dsw-alias-state-error-primary);font-size:12px}._1NmraW_hint{color:var(--dsw-alias-label-tertiary);font-size:12px}";
 const tagId$2 = "dsh-multiroot-workspace/Dialogs.module.css";
 if (typeof document !== "undefined" && document.querySelector("style[data-plugin-css=" + JSON.stringify(tagId$2) + "]") === null) {
 	const tag = document.createElement("style");
@@ -947,14 +934,15 @@ if (typeof document !== "undefined" && document.querySelector("style[data-plugin
 }
 var Dialogs_module_css_default = {
 	"form": "_1NmraW_form",
-	"input": "_1NmraW_input",
 	"primary": "_1NmraW_primary",
-	"rootRow": "_1NmraW_rootRow",
-	"rootActions": "_1NmraW_rootActions",
-	"hint": "_1NmraW_hint",
 	"error": "_1NmraW_error",
 	"roots": "_1NmraW_roots",
-	"field": "_1NmraW_field"
+	"rootActions": "_1NmraW_rootActions",
+	"rootRow": "_1NmraW_rootRow",
+	"field": "_1NmraW_field",
+	"rootPath": "_1NmraW_rootPath",
+	"input": "_1NmraW_input",
+	"hint": "_1NmraW_hint"
 };
 
 //#endregion
@@ -1105,6 +1093,7 @@ function MultirootDialog({ open, record, onClose, refresh, renderDirectoryFlow, 
 									}
 								}),
 								/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
+									className: Dialogs_module_css_default.rootPath,
 									title: root.path,
 									children: root.path
 								}),
@@ -1180,9 +1169,9 @@ if (typeof document !== "undefined" && document.querySelector("style[data-plugin
 	document.head.appendChild(tag);
 }
 var WorkspacePicker_module_css_default = {
-	"menuStatus": "zHy4Zq_menuStatus",
 	"modalAction": "zHy4Zq_modalAction",
-	"modalError": "zHy4Zq_modalError"
+	"modalError": "zHy4Zq_modalError",
+	"menuStatus": "zHy4Zq_menuStatus"
 };
 
 //#endregion
@@ -1352,43 +1341,43 @@ if (typeof document !== "undefined" && document.querySelector("style[data-plugin
 	document.head.appendChild(tag);
 }
 var WorkspaceBrowser_module_css_default = {
-	"fade": "Idd4fa_fade",
-	"headerActions": "Idd4fa_headerActions",
-	"searchButton": "Idd4fa_searchButton",
-	"flatList": "Idd4fa_flatList",
-	"deleteAction": "Idd4fa_deleteAction",
-	"listTopDropIndicator": "Idd4fa_listTopDropIndicator",
-	"searchWarning": "Idd4fa_searchWarning",
-	"rail": "Idd4fa_rail",
-	"iconButton": "Idd4fa_iconButton",
-	"listArea": "Idd4fa_listArea",
-	"listTopDropActive": "Idd4fa_listTopDropActive",
-	"renameError": "Idd4fa_renameError",
-	"workspaceDropBefore": "Idd4fa_workspaceDropBefore",
-	"sectionLabel": "Idd4fa_sectionLabel",
-	"searchTree": "Idd4fa_searchTree",
-	"treeBody": "Idd4fa_treeBody",
-	"sectionLabelHidden": "Idd4fa_sectionLabelHidden",
-	"search": "Idd4fa_search",
-	"wide-in": "Idd4fa_wide-in",
-	"deleteStatus": "Idd4fa_deleteStatus",
-	"searchSlotExpanded": "Idd4fa_searchSlotExpanded",
-	"list": "Idd4fa_list",
-	"groupSection": "Idd4fa_groupSection",
-	"headerActionsHidden": "Idd4fa_headerActionsHidden",
-	"workspaceDropAfter": "Idd4fa_workspaceDropAfter",
-	"searchSlot": "Idd4fa_searchSlot",
-	"sectionHeader": "Idd4fa_sectionHeader",
 	"searchExpanded": "Idd4fa_searchExpanded",
 	"searchInput": "Idd4fa_searchInput",
-	"wide": "Idd4fa_wide",
-	"empty": "Idd4fa_empty",
+	"searchTree": "Idd4fa_searchTree",
+	"searchSlotExpanded": "Idd4fa_searchSlotExpanded",
+	"searchSlot": "Idd4fa_searchSlot",
+	"list": "Idd4fa_list",
+	"groupSection": "Idd4fa_groupSection",
+	"fade": "Idd4fa_fade",
+	"renameInput": "Idd4fa_renameInput",
+	"search": "Idd4fa_search",
 	"root": "Idd4fa_root",
-	"multirootError": "Idd4fa_multirootError",
+	"iconButton": "Idd4fa_iconButton",
+	"listArea": "Idd4fa_listArea",
+	"searchWarning": "Idd4fa_searchWarning",
+	"empty": "Idd4fa_empty",
+	"sectionHeader": "Idd4fa_sectionHeader",
+	"deleteStatus": "Idd4fa_deleteStatus",
+	"rail": "Idd4fa_rail",
+	"deleteAction": "Idd4fa_deleteAction",
+	"sectionLabel": "Idd4fa_sectionLabel",
+	"headerActions": "Idd4fa_headerActions",
 	"clearButton": "Idd4fa_clearButton",
-	"searchStatus": "Idd4fa_searchStatus",
+	"wide-in": "Idd4fa_wide-in",
 	"sessionOverflowButton": "Idd4fa_sessionOverflowButton",
-	"renameInput": "Idd4fa_renameInput"
+	"sectionLabelHidden": "Idd4fa_sectionLabelHidden",
+	"searchStatus": "Idd4fa_searchStatus",
+	"wide": "Idd4fa_wide",
+	"workspaceDropAfter": "Idd4fa_workspaceDropAfter",
+	"listTopDropIndicator": "Idd4fa_listTopDropIndicator",
+	"listTopDropActive": "Idd4fa_listTopDropActive",
+	"renameError": "Idd4fa_renameError",
+	"headerActionsHidden": "Idd4fa_headerActionsHidden",
+	"treeBody": "Idd4fa_treeBody",
+	"multirootError": "Idd4fa_multirootError",
+	"searchButton": "Idd4fa_searchButton",
+	"flatList": "Idd4fa_flatList",
+	"workspaceDropBefore": "Idd4fa_workspaceDropBefore"
 };
 
 //#endregion
@@ -1559,7 +1548,7 @@ function ViewOptionsMenu({ groupBy, orderBy, onGroupPick, onOrderPick, t }) {
 			delayMs: 500,
 			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("button", {
 				type: "button",
-				className: (0, clsx.default)(WorkspaceBrowser_module_css_default.iconButton, WorkspaceBrowser_module_css_default.wide),
+				className: clsx(WorkspaceBrowser_module_css_default.iconButton, WorkspaceBrowser_module_css_default.wide),
 				"aria-label": t("viewOptions.label"),
 				onClick: () => {
 					setOpen((v) => !v);
@@ -1695,14 +1684,14 @@ function SessionTree({ useSessions, startSession, open, forkSession, workspaces,
 	};
 	const workspaceDropAtListStart = groups[0]?.workspaceId !== void 0 && workspaceDrag?.over?.id === groups[0].workspaceId && workspaceDrag.over.half === "before";
 	return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
-		className: (0, clsx.default)(WorkspaceBrowser_module_css_default.treeBody, WorkspaceBrowser_module_css_default.wide),
+		className: clsx(WorkspaceBrowser_module_css_default.treeBody, WorkspaceBrowser_module_css_default.wide),
 		children: [
 			workspaceDropAtListStart && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
 				className: WorkspaceBrowser_module_css_default.listTopDropIndicator,
 				"aria-hidden": "true"
 			}),
 			/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
-				className: (0, clsx.default)(WorkspaceBrowser_module_css_default.list, workspaceDropAtListStart && WorkspaceBrowser_module_css_default.listTopDropActive),
+				className: clsx(WorkspaceBrowser_module_css_default.list, workspaceDropAtListStart && WorkspaceBrowser_module_css_default.listTopDropActive),
 				role: "tree",
 				"aria-label": t("section.sessions"),
 				children: [groups.length === 0 && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
@@ -1742,7 +1731,7 @@ function SessionTree({ useSessions, startSession, open, forkSession, workspaces,
 						});
 					};
 					return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
-						className: (0, clsx.default)(WorkspaceBrowser_module_css_default.groupSection, workspaceMarker === "before" && WorkspaceBrowser_module_css_default.workspaceDropBefore, workspaceMarker === "after" && WorkspaceBrowser_module_css_default.workspaceDropAfter),
+						className: clsx(WorkspaceBrowser_module_css_default.groupSection, workspaceMarker === "before" && WorkspaceBrowser_module_css_default.workspaceDropBefore, workspaceMarker === "after" && WorkspaceBrowser_module_css_default.workspaceDropAfter),
 						onDragOver: workspaceDrag === null || hoverWorkspace === void 0 ? void 0 : (e) => {
 							e.preventDefault();
 							e.dataTransfer.dropEffect = "move";
@@ -1909,9 +1898,9 @@ function FlatList({ useSessions, open, forkSession, onSessionRename, onSessionAr
 	};
 	const now = Date.now();
 	return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
-		className: (0, clsx.default)(WorkspaceBrowser_module_css_default.treeBody, WorkspaceBrowser_module_css_default.wide),
+		className: clsx(WorkspaceBrowser_module_css_default.treeBody, WorkspaceBrowser_module_css_default.wide),
 		children: [/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
-			className: (0, clsx.default)(WorkspaceBrowser_module_css_default.list, WorkspaceBrowser_module_css_default.flatList),
+			className: clsx(WorkspaceBrowser_module_css_default.list, WorkspaceBrowser_module_css_default.flatList),
 			role: "tree",
 			"aria-label": t("section.sessions"),
 			children: [rows.length === 0 && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
@@ -1986,7 +1975,7 @@ function SearchResults({ useSessions, open, workspaces, archivedSessionIds, quer
 	const pending = currentRemote.status === "loading";
 	const failed = currentRemote.status === "error";
 	return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
-		className: (0, clsx.default)(WorkspaceBrowser_module_css_default.treeBody, WorkspaceBrowser_module_css_default.wide),
+		className: clsx(WorkspaceBrowser_module_css_default.treeBody, WorkspaceBrowser_module_css_default.wide),
 		children: [/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 			className: WorkspaceBrowser_module_css_default.list,
 			children: [
@@ -2234,20 +2223,20 @@ function WorkspaceBrowser({ wide, expandSidebar, useSessions, useWorkspaces, use
 		});
 	};
 	return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
-		className: (0, clsx.default)(WorkspaceBrowser_module_css_default.root, !wide && WorkspaceBrowser_module_css_default.rail),
+		className: clsx(WorkspaceBrowser_module_css_default.root, !wide && WorkspaceBrowser_module_css_default.rail),
 		children: [
 			/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 				className: WorkspaceBrowser_module_css_default.sectionHeader,
 				children: [
 					wide && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
-						className: (0, clsx.default)(WorkspaceBrowser_module_css_default.sectionLabel, WorkspaceBrowser_module_css_default.wide, searchExpanded && WorkspaceBrowser_module_css_default.sectionLabelHidden),
+						className: clsx(WorkspaceBrowser_module_css_default.sectionLabel, WorkspaceBrowser_module_css_default.wide, searchExpanded && WorkspaceBrowser_module_css_default.sectionLabelHidden),
 						children: groupBy === "flat" ? t("section.sessions") : t("section.workspaces")
 					}),
 					wide && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-						className: (0, clsx.default)(WorkspaceBrowser_module_css_default.searchSlot, searchExpanded && WorkspaceBrowser_module_css_default.searchSlotExpanded),
+						className: clsx(WorkspaceBrowser_module_css_default.searchSlot, searchExpanded && WorkspaceBrowser_module_css_default.searchSlotExpanded),
 						children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 							ref: searchRoot,
-							className: (0, clsx.default)(WorkspaceBrowser_module_css_default.search, searchExpanded && WorkspaceBrowser_module_css_default.searchExpanded),
+							className: clsx(WorkspaceBrowser_module_css_default.search, searchExpanded && WorkspaceBrowser_module_css_default.searchExpanded),
 							onClick: () => {
 								setWsPickerOpen(false);
 								setSearchExpanded(true);
@@ -2303,7 +2292,7 @@ function WorkspaceBrowser({ wide, expandSidebar, useSessions, useWorkspaces, use
 						})
 					}),
 					/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
-						className: (0, clsx.default)(WorkspaceBrowser_module_css_default.headerActions, wide && searchExpanded && WorkspaceBrowser_module_css_default.headerActionsHidden),
+						className: clsx(WorkspaceBrowser_module_css_default.headerActions, wide && searchExpanded && WorkspaceBrowser_module_css_default.headerActionsHidden),
 						children: [
 							wide && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ViewOptionsMenu, {
 								groupBy,

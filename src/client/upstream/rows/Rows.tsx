@@ -122,7 +122,8 @@ export function ProjectRowItem({ group, onToggle, onCreate, actions, drag, multi
 }) {
   const row = group
   // The ungrouped bucket has no workspace title: its label is dictionary copy.
-  const label = row.workspaceId === undefined ? t('group.ungrouped') : row.label
+  const label = multiroot?.logical.title
+    ?? (row.workspaceId === undefined ? t('group.ungrouped') : row.label)
   const active = group.expanded && group.containsCurrent
   const [menuOpen, setMenuOpen] = useState(false)
   const workspaceMenuItems = [
@@ -211,7 +212,7 @@ export function ProjectRowItem({ group, onToggle, onCreate, actions, drag, multi
   return (
     <HoverCard
       anchor={ownRow}
-      content={<WorkspaceHoverContent label={row.label} cwd={row.cwd} createdAt={row.createdAt} t={t} />}
+      content={<WorkspaceHoverContent label={label} cwd={row.cwd} createdAt={row.createdAt} t={t} />}
       disabled={menuOpen}
       copyText={row.cwd}
       copyLabel={t('copy')}

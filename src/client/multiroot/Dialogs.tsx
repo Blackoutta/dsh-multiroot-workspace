@@ -122,7 +122,7 @@ export function MultirootDialog({ open, record, onClose, refresh, renderDirector
                     const alias = event.target.value
                     setRoots(current => current.map((item, candidate) => candidate === index ? { ...item, alias } : item))
                   }} />
-                <span title={root.path}>{root.path}</span>
+                <span className={css.rootPath} title={root.path}>{root.path}</span>
                 <span className={css.rootActions}>
                   {root.primary
                     ? <span className={css.primary}>{t('multiroot.primary')}</span>
