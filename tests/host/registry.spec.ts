@@ -5,12 +5,15 @@ import { apply } from '../../index.js'
 class MemoryTable<T> {
   readonly values = new Map<string, T>()
 
+  constructor(private readonly onPut?: (id: string, value: T) => void) {}
+
   get(id: string): T | undefined {
     return this.values.get(id)
   }
 
   async put(id: string, value: T): Promise<void> {
     this.values.set(id, value)
+    this.onPut?.(id, value)
   }
 
   async delete(id: string): Promise<boolean> {
@@ -37,13 +40,19 @@ interface LogicalRegistry {
     id: string
     shadowWorkspaceId: string
   }>
+  get(id: string): { shadowWorkspaceId?: string } | undefined
+  setPrimary(id: string, alias: string): Promise<{ shadowWorkspaceId: string }>
   purge(): Promise<{ shadows: number; records: number }>
 }
 
-async function createRegistryHarness(options: { existingWorkspaceId?: string } = {}) {
+async function createRegistryHarness(options: { existingWorkspaceId?: string; failAttach?: string } = {}) {
   const primary = await realpath(process.cwd())
-  const workspaces = new MemoryTable<unknown>()
-  const derived = new MemoryTable<DerivedRecord>()
+  const docs = await realpath('..')
+  const calls: string[] = []
+  const workspaces = new MemoryTable<unknown>(() => { calls.push('put-record') })
+  const derived = new MemoryTable<DerivedRecord>((_id, value) => {
+    calls.push(`put-derived:${value.registryWorkspaceId}`)
+  })
   const globalState = { order: [] as string[] }
   const registryWorkspaces = new Map<string, {
     id: string
@@ -65,12 +74,15 @@ async function createRegistryHarness(options: { existingWorkspaceId?: string } =
   const workspaceRegistry = {
     create: vi.fn(async (path: string, title: string) => {
       const id = `workspace-${++sequence}`
+      calls.push(`create:${id}`)
       const workspace = {
         id,
         path,
         title,
         sessionIds: [] as string[],
         attachSession: vi.fn(async (sessionId: string) => {
+          calls.push(`attach:${id}:${sessionId}`)
+          if (options.failAttach === sessionId) throw new Error(`attach ${sessionId} failed`)
           workspace.sessionIds.push(sessionId)
         }),
       }
@@ -80,7 +92,10 @@ async function createRegistryHarness(options: { existingWorkspaceId?: string } =
     resolveByPath: vi.fn(async (path: string) =>
       [...registryWorkspaces.values()].find(workspace => workspace.path === path)),
     get: vi.fn((id: string) => registryWorkspaces.get(id)),
-    delete: vi.fn(async (id: string) => registryWorkspaces.delete(id)),
+    delete: vi.fn(async (id: string) => {
+      calls.push(`delete:${id}`)
+      return registryWorkspaces.delete(id)
+    }),
   }
   let registry: LogicalRegistry | undefined
   const ctx = {
@@ -104,7 +119,29 @@ async function createRegistryHarness(options: { existingWorkspaceId?: string } =
   }
   await apply(ctx, {})
   if (registry === undefined) throw new Error('multirootRegistry was not provided')
-  return { registry, derived, primary, workspaceRegistry }
+  const logicalRegistry = registry
+  const createLogicalWorkspaceWithSessions = async (sessionIds: string[]) => {
+    const record = await logicalRegistry.create({
+      title: 'product',
+      roots: [
+        { alias: 'app', path: primary, primary: true },
+        { alias: 'docs', path: docs, primary: false },
+      ],
+    })
+    const shadow = registryWorkspaces.get(record.shadowWorkspaceId)
+    if (shadow === undefined) throw new Error('created shadow is missing')
+    shadow.sessionIds.push(...sessionIds)
+    return record
+  }
+  return {
+    registry: logicalRegistry,
+    derived,
+    primary,
+    docs,
+    workspaceRegistry,
+    calls,
+    createLogicalWorkspaceWithSessions,
+  }
 }
 
 describe('multiroot Host registry', () => {
@@ -135,5 +172,33 @@ describe('multiroot Host registry', () => {
     expect(harness.derived.get(created.id)?.owned).toBe(false)
     await harness.registry.purge()
     expect(harness.workspaceRegistry.delete).not.toHaveBeenCalledWith('user-workspace')
+  })
+
+  it('moves membership before publishing a new primary shadow', async () => {
+    const harness = await createRegistryHarness()
+    const record = await harness.createLogicalWorkspaceWithSessions(['session-a', 'session-b'])
+    harness.calls.length = 0
+
+    const updated = await harness.registry.setPrimary(record.id, 'docs')
+
+    expect(updated.shadowWorkspaceId).toBe('workspace-2')
+    expect(harness.calls).toEqual([
+      'create:workspace-2',
+      'attach:workspace-2:session-a',
+      'attach:workspace-2:session-b',
+      'put-derived:workspace-2',
+      'put-record',
+      'delete:workspace-1',
+    ])
+  })
+
+  it('keeps the old primary when membership migration fails', async () => {
+    const harness = await createRegistryHarness({ failAttach: 'session-b' })
+    const record = await harness.createLogicalWorkspaceWithSessions(['session-a', 'session-b'])
+
+    await expect(harness.registry.setPrimary(record.id, 'docs')).rejects.toMatchObject({
+      code: 'shadow-migration-failed',
+    })
+    expect(harness.registry.get(record.id)?.shadowWorkspaceId).toBe('workspace-1')
   })
 })

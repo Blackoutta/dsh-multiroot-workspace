@@ -244,6 +244,43 @@ export async function apply(ctx, config) {
     await derivedTable.delete(multirootId)
   }
 
+  const migrateShadow = async (id, record, nextRoots) => {
+    const previous = derivedTable.get(id)
+    const prepared = await prepareShadow(record.title, nextRoots)
+    const previousWorkspace = previous === undefined
+      ? undefined
+      : ctx.workspaceRegistry.get(previous.registryWorkspaceId)
+    const sessionIds = [...(previousWorkspace?.sessionIds ?? [])]
+    const preparedWorkspace = ctx.workspaceRegistry.get(prepared.registryWorkspaceId)
+    if (preparedWorkspace === undefined) {
+      throw Object.assign(new Error('prepared shadow Workspace is missing'), { code: 'shadow-missing' })
+    }
+    try {
+      for (const sessionId of sessionIds) {
+        await preparedWorkspace.attachSession(sessionId)
+      }
+    } catch (cause) {
+      if (prepared.owned && ctx.workspaceRegistry.get(prepared.registryWorkspaceId) !== undefined) {
+        await ctx.workspaceRegistry.delete(prepared.registryWorkspaceId)
+      }
+      throw Object.assign(new Error('failed to migrate Session membership'), {
+        code: 'shadow-migration-failed',
+        cause,
+      })
+    }
+    await derivedTable.put(id, prepared)
+    const updated = await touch(id, { roots: nextRoots })
+    if (updated === undefined) {
+      throw Object.assign(new Error(`workspace "${id}" not found`), { code: 'workspace-not-found' })
+    }
+    if (previous?.owned === true
+      && previous.registryWorkspaceId !== prepared.registryWorkspaceId
+      && ctx.workspaceRegistry.get(previous.registryWorkspaceId) !== undefined) {
+      await ctx.workspaceRegistry.delete(previous.registryWorkspaceId)
+    }
+    return view(id, updated)
+  }
+
   /**
    * Reconcile every derived mapping against live state: drop mappings whose
    * multiroot workspace vanished, whose primary root moved, or whose registry
@@ -379,11 +416,19 @@ export async function apply(ctx, config) {
         patch.title = clean
       }
       if (roots !== undefined) {
-        patch.roots = await validateRoots(roots, { tolerateMissing: false })
+        const canonicalRoots = await validateRoots(roots, { tolerateMissing: false })
+        const currentPrimary = record.roots.find((root) => root.primary)
+        const nextPrimary = canonicalRoots.find((root) => root.primary)
+        if (currentPrimary?.alias.toLowerCase() !== nextPrimary?.alias.toLowerCase()) {
+          throw Object.assign(new Error('primary changes require the primary endpoint'), {
+            code: 'primary-change-requires-endpoint',
+          })
+        }
+        patch.roots = canonicalRoots
       }
       const updated = await touch(id, patch)
       await reconcileShadows()
-      return updated
+      return updated === undefined ? undefined : view(id, updated)
     },
     async setPrimary(id, alias) {
       const record = table.get(id)
@@ -397,10 +442,9 @@ export async function apply(ctx, config) {
       if (target === undefined) {
         throw Object.assign(new Error(`alias "${alias}" not found`), { code: 'alias-not-found' })
       }
+      if (target.primary) return view(id, record)
       const roots = record.roots.map((root) => ({ ...root, primary: root === target }))
-      const updated = await touch(id, { roots })
-      await reconcileShadows()
-      return updated
+      return migrateShadow(id, record, roots)
     },
     async delete(id) {
       if (id === CONFIG_WORKSPACE_ID) {
