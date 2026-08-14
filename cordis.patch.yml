@@ -1,0 +1,12 @@
+# dsh-multiroot-workspace bundle patch layer.
+# Applied after the web-app bundle's layer, so the id-targeted disable below
+# finds the ui-workspace row the web-app patch inserted.
+- id: ui-workspace
+  disabled: true
+- insert:
+    - id: multiroot-workspace
+      name: dsh-multiroot-workspace
+    - id: multiroot-workspace-tools
+      name: dsh-multiroot-workspace/tools
+      config:
+        crossRootBash: 'off'   # off | ancestor | unfenced
