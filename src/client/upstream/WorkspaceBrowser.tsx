@@ -12,7 +12,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import clsx from 'clsx'
 import {
-  Button, IconCloseFill14, IconPersonalizationOutline16,
+  Button, IconBranchOutline16, IconCloseFill14, IconPersonalizationOutline16,
   IconProjectAddOutline16, IconSearchOutline16, Menu, Modal, Tooltip,
 } from '@deepseek-ai/dsh-client-ui-primitives'
 import type {
@@ -23,6 +23,11 @@ import type { SessionNode, SessionOrderBy } from './tree.ts'
 import { deriveFlat, deriveGroups, deriveSearchResults, UNGROUPED_KEY } from './tree.ts'
 import { ProjectRowItem, SearchResultItem, SessionNodeItem } from './rows/Rows.tsx'
 import { FLAT_SESSION_ORDER_KEY } from './stores.ts'
+import { useMultirootRecords } from '../multiroot/api.ts'
+import { joinMultiroot } from '../multiroot/join.ts'
+import type { MultirootMetadata } from '../multiroot/types.ts'
+import type { MultirootWorkspaceRecord } from '../multiroot/types.ts'
+import { MultirootDialog } from '../multiroot/Dialogs.tsx'
 import { WorkspacePickFlow } from './WorkspacePicker.tsx'
 import css from './WorkspaceBrowser.module.css'
 
@@ -243,6 +248,10 @@ type SessionTreeProps = Pick<
   onSessionArchive: (sessionId: SessionNode['id']) => void
   /** Session order behavior: fixed after edits, or additionally promoted by user activity. */
   orderBy: SessionOrderBy
+  /** Logical metadata keyed by the Host Workspace shadow id. */
+  multirootMetadata: ReadonlyMap<string, MultirootMetadata>
+  /** Open logical Workspace management. */
+  onManageRequest: (workspaceId: WorkspaceId) => void
 }
 
 /** The scrolling session tree; unmounting drops the sessions subscription and expand-all state. */
@@ -250,6 +259,7 @@ function SessionTree({
   useSessions, startSession, open, forkSession, workspaces, archivedSessionIds,
   onRenameRequest, onDeleteRequest, onSessionRename, onSessionArchive,
   insertWorkspaceBefore, insertSessionBefore, orderBy,
+  multirootMetadata, onManageRequest,
   groupExpansion, setGroupExpanded,
   sessionOrderByAccount, sessionUpdatedAtByAccount, syncSessionOrderAccount, setSessionOrder, t,
 }: SessionTreeProps) {
@@ -450,6 +460,9 @@ function SessionTree({
             >
               <ProjectRowItem
                 group={group}
+                multiroot={group.workspaceId === undefined
+                  ? undefined
+                  : multirootMetadata.get(group.workspaceId as string)}
                 t={t}
                 onToggle={() => {
                   if (group.expanded) {
@@ -475,6 +488,9 @@ function SessionTree({
                     /* v8 ignore next -- narrowing guard: the actions object exists only for real-workspace groups. */
                       if (group.workspaceId !== undefined) onDeleteRequest(group.workspaceId, group.label)
                     },
+                    ...(multirootMetadata.has(group.workspaceId as string)
+                      ? { manage: () => { onManageRequest(group.workspaceId as WorkspaceId) } }
+                      : {}),
                   }}
               />
               {(expandedSessionGroups.includes(group.key)
@@ -757,11 +773,17 @@ export function WorkspaceBrowser({
   createWorkspace,
   searchSessions,
   searchResultLimit,
+  multirootEnabled,
   useDirectoryFlow,
   renderSlot,
   t,
 }: WorkspaceBrowserProps) {
   const workspaces = useWorkspaces(state => state.items)
+  const multirootQuery = useMultirootRecords(multirootEnabled === true)
+  const multirootJoin = useMemo(
+    () => joinMultiroot(workspaces, multirootQuery.records),
+    [multirootQuery.records, workspaces],
+  )
   const workspacePhase = useWorkspaces(state => state.phase)
   const archivedSessionIds = useWorkspaces(state => state.archivedSessionIds)
   // Live occupancy of this surface's directory-flow hole (the same source the
@@ -798,6 +820,7 @@ export function WorkspaceBrowser({
   const [wsPickerOpen, setWsPickerOpen] = useState(false)
   const wsPlusRef = useRef<HTMLButtonElement>(null)
   const composingRef = useRef(false)
+  const [multirootDialogRecord, setMultirootDialogRecord] = useState<MultirootWorkspaceRecord | null | undefined>(undefined)
 
   // Rail search = expand + land in the search box: the flag arms before the
   // expand request; once the shell flips wide the input mounts and takes focus.
@@ -1065,9 +1088,25 @@ export function WorkspaceBrowser({
               </button>
             </Tooltip>
           )}
+          {multirootEnabled === true && (
+            <Tooltip label={t('multiroot.add')} side="bottom" delayMs={500}>
+              <button
+                type="button"
+                className={css.iconButton}
+                aria-label={t('multiroot.add')}
+                disabled={!directoryFlowAvailable || multirootQuery.phase === 'error'}
+                onClick={() => {
+                  setWsPickerOpen(false)
+                  setMultirootDialogRecord(null)
+                }}
+              >
+                <IconBranchOutline16 size={wide ? 16 : 18} />
+              </button>
+            </Tooltip>
+          )}
         </div>
         {/* Add flow + its error dialog (same package — direct composition). */}
-        <WorkspacePickFlow
+        {multirootDialogRecord === undefined && <WorkspacePickFlow
           t={t}
           open={wsPickerOpen}
           anchorRef={wsPlusRef}
@@ -1082,7 +1121,7 @@ export function WorkspaceBrowser({
             startSession(workspaceId)
           }}
           onClose={() => { setWsPickerOpen(false) }}
-        />
+        />}
       </div>
 
       {/* The collapsed rail keeps search as its own 36px control. */}
@@ -1106,6 +1145,9 @@ export function WorkspaceBrowser({
       {/* Always-mounted seat keeps the region's flex slot while the list
           itself is wide-only. */}
       <div className={css.listArea}>
+        {wide && multirootQuery.error !== null && (
+          <div className={css.multirootError}>{t('multiroot.unavailable')}</div>
+        )}
         {wide && (normalizedQuery !== ''
           ? (
             <SearchResults
@@ -1152,6 +1194,11 @@ export function WorkspaceBrowser({
                 insertWorkspaceBefore={insertWorkspaceBefore}
                 insertSessionBefore={insertSessionBefore}
                 orderBy={orderBy}
+                multirootMetadata={multirootJoin.metadataByWorkspaceId}
+                onManageRequest={(workspaceId) => {
+                  const metadata = multirootJoin.metadataByWorkspaceId.get(workspaceId as string)
+                  if (metadata !== undefined) setMultirootDialogRecord(metadata.logical)
+                }}
                 t={t}
                 onRenameRequest={(workspaceId, currentTitle) => {
                   setRenameTarget({ workspaceId, currentTitle })
@@ -1165,6 +1212,17 @@ export function WorkspaceBrowser({
               />
             ))}
       </div>
+
+      {multirootDialogRecord !== undefined && (
+        <MultirootDialog
+          open
+          record={multirootDialogRecord}
+          onClose={() => { setMultirootDialogRecord(undefined) }}
+          refresh={multirootQuery.refresh}
+          renderDirectoryFlow={owner => renderSlot('sidebar.workspaces.directoryFlow', owner)}
+          t={t}
+        />
+      )}
 
       <Modal
         open={renameTarget !== null}

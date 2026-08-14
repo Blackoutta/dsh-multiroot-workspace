@@ -10,11 +10,12 @@ import clsx from 'clsx'
 import {
   HoverCard, IconArchiveOutline20, IconBranchOutline16, IconEditOutline16,
   IconEllipsisOutline16, IconFolderClose16, IconFolderOpen16, IconPlusOutline16,
-  IconTrashOutline16, IconTriangleRightFill14, Menu, StateDot,
+  IconSettingsOutline16, IconTrashOutline16, IconTriangleRightFill14, Menu, StateDot,
 } from '@deepseek-ai/dsh-client-ui-primitives'
 import type { StateDotState } from '@deepseek-ai/dsh-client-ui-primitives'
 import type { WorkspaceBrowserProps } from '../contract/slots.ts'
 import type { GroupNode, SearchResultNode, SessionNode } from '../tree.ts'
+import type { MultirootMetadata } from '../../multiroot/types.ts'
 import { relativeTime } from '../tree.ts'
 import css from './Rows.module.css'
 
@@ -107,14 +108,16 @@ function rowHalf(e: { clientY: number; currentTarget: HTMLElement }): 'before' |
  * @param props.t - the browser root's locale seat.
  * @returns the row element.
  */
-export function ProjectRowItem({ group, onToggle, onCreate, actions, drag, t }: {
+export function ProjectRowItem({ group, onToggle, onCreate, actions, drag, multiroot, t }: {
   group: GroupNode
   onToggle: () => void
   onCreate: () => void
   /** Real-Workspace actions; absent for the ungrouped bucket (no menu shown). */
-  actions?: { rename: () => void; delete: () => void } | undefined
+  actions?: { rename: () => void; delete: () => void; manage?: () => void } | undefined
   /** Present only for real Workspace rows in the grouped view. */
   drag?: WorkspaceRowDragProps | undefined
+  /** Logical multiroot decoration for this Host Workspace shadow. */
+  multiroot?: MultirootMetadata | undefined
   t: RowTranslate
 }) {
   const row = group
@@ -123,12 +126,15 @@ export function ProjectRowItem({ group, onToggle, onCreate, actions, drag, t }: 
   const active = group.expanded && group.containsCurrent
   const [menuOpen, setMenuOpen] = useState(false)
   const workspaceMenuItems = [
+    ...(actions?.manage === undefined
+      ? []
+      : [{ id: 'manage', label: t('multiroot.manage'), icon: <IconSettingsOutline16 /> }]),
     { id: 'rename', label: t('rename'), icon: <IconEditOutline16 /> },
     { id: 'delete', label: t('delete.workspace'), icon: <IconTrashOutline16 />, danger: true },
   ]
   const ownRow = (
     <div
-      className={clsx(css.projectRow, menuOpen && css.menuOpen)}
+      className={clsx(css.projectRow, multiroot !== undefined && css.projectRowMultiroot, menuOpen && css.menuOpen)}
       role="treeitem"
       aria-expanded={row.expanded}
       onClick={onToggle}
@@ -150,6 +156,11 @@ export function ProjectRowItem({ group, onToggle, onCreate, actions, drag, t }: 
       </span>
       <span className={css.projectText}>
         <span className={css.title}>{label}</span>
+        {multiroot !== undefined && (
+          <span className={css.projectMeta}>
+            {t('multiroot.meta', { count: multiroot.rootCount, primary: multiroot.primaryAlias })}
+          </span>
+        )}
       </span>
       <span className={css.rowActions}>
         {actions !== undefined && (
@@ -162,6 +173,10 @@ export function ProjectRowItem({ group, onToggle, onCreate, actions, drag, t }: 
               // Unknown ids leave before the dispatch: a future menu row must
               // not inherit the destructive branch as an else fallback.
               /* v8 ignore next -- workspaceMenuItems carries exactly these two rows today. */
+              if (id === 'manage') {
+                actions.manage?.()
+                return
+              }
               if (id !== 'rename' && id !== 'delete') return
               if (id === 'rename') actions.rename()
               else actions.delete()

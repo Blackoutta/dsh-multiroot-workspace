@@ -110,7 +110,7 @@
   display: flex;
   align-items: center;
   gap: 4px;
-  max-width: 60px;
+  max-width: 92px;
   opacity: 1;
   overflow: hidden;
   visibility: visible;
@@ -119,6 +119,13 @@
     opacity 120ms var(--ds-ease-in-out),
     transform 180ms var(--ds-ease-in-out),
     visibility 0s linear;
+}
+
+.multirootError {
+  padding: 4px 8px;
+  color: var(--dsw-alias-state-error-primary);
+  font-size: 12px;
+  line-height: 18px;
 }
 
 .headerActionsHidden {

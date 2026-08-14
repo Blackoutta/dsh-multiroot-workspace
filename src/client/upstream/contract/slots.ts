@@ -90,6 +90,8 @@ export type DirectoryPickingHooks = {
  * browsing region drives.
  */
 export type WorkspaceBrowserInjected = DirectoryPickingInjected & {
+  /** Enable the external bundle's logical multiroot API and row decoration. */
+  multirootEnabled?: boolean
   /**
    * Start a New Session in a Workspace: reuse-or-create its blank session and
    * open it; without an explicit workspace, inherit the current Session
@@ -152,6 +154,8 @@ export type WorkspaceBrowserProps =
  * supplies the implicit index signature required by the registry.
  */
 export type WorkspacePickerInjected = DirectoryPickingInjected & {
+  /** Enable logical multiroot creation from the hero picker. */
+  multirootEnabled?: boolean
   /** Adopt a picked host directory as a real Workspace before targeting a Session. */
   createWorkspace: (input: { path: string }) => Promise<WorkspaceView>
 }

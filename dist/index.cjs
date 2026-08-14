@@ -353,50 +353,52 @@ function relativeTime(updatedAt, now) {
 
 //#endregion
 //#region \0dsh-css:/Users/yang/Desktop/projects/deepseek-harness/tmp/logical-workspace/dsh-multiroot-workspace/src/client/upstream/rows/Rows.module.css.mjs
-const css$2 = ".Xn98xq_projectRow,.Xn98xq_sessionRow{cursor:pointer;user-select:none;color:var(--dsw-alias-label-primary);border-radius:8px;align-items:center;gap:6px;padding:0 8px;display:flex}.Xn98xq_projectRow:hover,.Xn98xq_sessionRow:hover,.Xn98xq_sessionRow.Xn98xq_selected{background:var(--dsw-alias-interactive-bg-hover)}.Xn98xq_searchResultRow{box-sizing:border-box;cursor:pointer;text-align:left;width:100%;min-height:48px;color:var(--dsw-alias-label-primary);background:0 0;border:none;border-radius:8px;flex-direction:column;align-items:stretch;padding:4px 8px;display:flex}.Xn98xq_searchResultRow:hover,.Xn98xq_searchResultRow.Xn98xq_selected{background:var(--dsw-alias-interactive-bg-hover)}.Xn98xq_searchResultHeading{align-items:center;min-width:0;display:flex}.Xn98xq_searchResultTitle{text-overflow:ellipsis;white-space:nowrap;min-width:0;margin-left:4px;font-size:14px;line-height:20px;overflow:hidden}.Xn98xq_searchResultMeta{align-items:center;gap:6px;min-width:0;margin-left:20px;display:flex}.Xn98xq_searchResultWorkspace,.Xn98xq_searchResultSnippet{text-overflow:ellipsis;white-space:nowrap;font-size:12px;line-height:17px;overflow:hidden}.Xn98xq_searchResultWorkspace{max-width:40%;color:var(--dsw-alias-label-tertiary);flex:none}.Xn98xq_searchResultSnippet{min-width:0;color:var(--dsw-alias-label-secondary);flex:1}.Xn98xq_projectRow{box-sizing:border-box;align-items:center;height:34px}.Xn98xq_projectRow .Xn98xq_rowActions{height:20px}.Xn98xq_sessionRow{height:32px;animation:Xn98xq_row-in .15s var(--ds-ease-in-out);gap:0}.Xn98xq_sessionRow .Xn98xq_title{margin:0 6px 0 4px}.Xn98xq_flatSessionRowWithoutStatus .Xn98xq_title{margin-left:0}@keyframes Xn98xq_row-in{0%{opacity:0}}.Xn98xq_slot{width:16px;height:20px;color:var(--dsw-alias-label-tertiary);flex:none;justify-content:center;align-items:center;display:inline-flex}.Xn98xq_visuallyHidden{clip:rect(0 0 0 0);white-space:nowrap;width:1px;height:1px;position:absolute;overflow:hidden}.Xn98xq_folderActive{color:var(--dsw-alias-state-business-primary)}.Xn98xq_projectRow .Xn98xq_chevron{display:none}.Xn98xq_projectRow:hover .Xn98xq_chevron{display:inline-flex}.Xn98xq_projectRow:hover .Xn98xq_folder{display:none}.Xn98xq_arrow{transition:transform .15s var(--ds-ease-in-out)}.Xn98xq_arrowOpen{transform:rotate(90deg)}.Xn98xq_projectText{flex-direction:column;flex:1;gap:2px;min-width:0;display:flex}.Xn98xq_title{text-overflow:ellipsis;white-space:nowrap;min-width:0;font-size:14px;line-height:20px;overflow:hidden}.Xn98xq_renameInput{border:1px solid var(--dsw-alias-border-l2);background:var(--dsw-alias-button-elevated-fill);min-width:0;color:inherit;border-radius:4px;outline:none;padding:0 2px;font-size:14px;line-height:20px}.Xn98xq_sessionRow .Xn98xq_title{flex:1}.Xn98xq_meta{text-overflow:ellipsis;white-space:nowrap;color:var(--dsw-alias-label-tertiary);font-size:12px;line-height:20px;overflow:hidden}.Xn98xq_time{color:var(--dsw-alias-label-tertiary);flex:none;font-size:12px;line-height:20px}.Xn98xq_dot{flex:none}.Xn98xq_rowActions{flex:none;align-items:center;gap:12px;display:none}.Xn98xq_projectRow:hover .Xn98xq_rowActions,.Xn98xq_sessionRow:hover .Xn98xq_rowActions,.Xn98xq_projectRow.Xn98xq_menuOpen .Xn98xq_rowActions,.Xn98xq_sessionRow.Xn98xq_menuOpen .Xn98xq_rowActions{display:inline-flex}.Xn98xq_sessionRow:hover .Xn98xq_time,.Xn98xq_sessionRow.Xn98xq_menuOpen .Xn98xq_time{display:none}.Xn98xq_projectRow.Xn98xq_menuOpen,.Xn98xq_sessionRow.Xn98xq_menuOpen{background:var(--dsw-alias-interactive-bg-hover)}.Xn98xq_sessionRow.Xn98xq_dropBefore,.Xn98xq_sessionRow.Xn98xq_dropAfter{position:relative}.Xn98xq_sessionRow.Xn98xq_dropBefore:before,.Xn98xq_sessionRow.Xn98xq_dropAfter:after{content:\"\";z-index:1;background:linear-gradient(55deg, transparent calc(50% - 1px), var(--dsw-alias-state-business-primary) calc(50% - 1px) calc(50% + 1px), transparent calc(50% + 1px)) 0 0 / 5px 7px no-repeat, linear-gradient(125deg, transparent calc(50% - 1px), var(--dsw-alias-state-business-primary) calc(50% - 1px) calc(50% + 1px), transparent calc(50% + 1px)) 0 5px / 5px 7px no-repeat, linear-gradient(var(--dsw-alias-state-business-primary) 0 0) 4px 5px / calc(100% - 4px) 2px no-repeat;pointer-events:none;height:12px;position:absolute;left:0;right:4px}.Xn98xq_sessionRow.Xn98xq_dropBefore:before{top:-7px}.Xn98xq_sessionRow.Xn98xq_dropAfter:after{bottom:-7px}.Xn98xq_hoverContent{flex-direction:column;gap:8px;display:flex}.Xn98xq_hoverTitle{color:#fff;overflow-wrap:break-word;font-size:14px;line-height:20px}.Xn98xq_hoverPath{color:#cfd3d6;word-break:break-all;font-size:12px;line-height:16px}.Xn98xq_hoverTime{color:#cfd3d6;font-size:12px;line-height:16px}.Xn98xq_hoverStatus{color:#adb2b8;align-items:center;gap:8px;font-size:12px;line-height:20px;display:flex}.Xn98xq_iconButton{cursor:pointer;width:16px;height:16px;color:var(--dsw-alias-label-tertiary);background:0 0;border:none;border-radius:4px;flex:none;justify-content:center;align-items:center;padding:0;display:inline-flex}.Xn98xq_iconButton:hover{color:var(--dsw-alias-label-primary)}.Xn98xq_chevron{color:var(--dsw-alias-label-caption)}@media (prefers-reduced-motion:reduce){.Xn98xq_sessionRow,.Xn98xq_arrow{transition:none;animation:none}}";
-const tagId$2 = "dsh-multiroot-workspace/Rows.module.css";
-if (typeof document !== "undefined" && document.querySelector("style[data-plugin-css=" + JSON.stringify(tagId$2) + "]") === null) {
+const css$3 = ".Xn98xq_projectRow,.Xn98xq_sessionRow{cursor:pointer;user-select:none;color:var(--dsw-alias-label-primary);border-radius:8px;align-items:center;gap:6px;padding:0 8px;display:flex}.Xn98xq_projectRow:hover,.Xn98xq_sessionRow:hover,.Xn98xq_sessionRow.Xn98xq_selected{background:var(--dsw-alias-interactive-bg-hover)}.Xn98xq_searchResultRow{box-sizing:border-box;cursor:pointer;text-align:left;width:100%;min-height:48px;color:var(--dsw-alias-label-primary);background:0 0;border:none;border-radius:8px;flex-direction:column;align-items:stretch;padding:4px 8px;display:flex}.Xn98xq_searchResultRow:hover,.Xn98xq_searchResultRow.Xn98xq_selected{background:var(--dsw-alias-interactive-bg-hover)}.Xn98xq_searchResultHeading{align-items:center;min-width:0;display:flex}.Xn98xq_searchResultTitle{text-overflow:ellipsis;white-space:nowrap;min-width:0;margin-left:4px;font-size:14px;line-height:20px;overflow:hidden}.Xn98xq_searchResultMeta{align-items:center;gap:6px;min-width:0;margin-left:20px;display:flex}.Xn98xq_searchResultWorkspace,.Xn98xq_searchResultSnippet{text-overflow:ellipsis;white-space:nowrap;font-size:12px;line-height:17px;overflow:hidden}.Xn98xq_searchResultWorkspace{max-width:40%;color:var(--dsw-alias-label-tertiary);flex:none}.Xn98xq_searchResultSnippet{min-width:0;color:var(--dsw-alias-label-secondary);flex:1}.Xn98xq_projectRow{box-sizing:border-box;align-items:center;height:34px}.Xn98xq_projectRowMultiroot{height:auto;min-height:46px}.Xn98xq_projectMeta{text-overflow:ellipsis;white-space:nowrap;color:var(--dsw-alias-label-tertiary);font-size:11px;line-height:16px;overflow:hidden}.Xn98xq_projectRow .Xn98xq_rowActions{height:20px}.Xn98xq_sessionRow{height:32px;animation:Xn98xq_row-in .15s var(--ds-ease-in-out);gap:0}.Xn98xq_sessionRow .Xn98xq_title{margin:0 6px 0 4px}.Xn98xq_flatSessionRowWithoutStatus .Xn98xq_title{margin-left:0}@keyframes Xn98xq_row-in{0%{opacity:0}}.Xn98xq_slot{width:16px;height:20px;color:var(--dsw-alias-label-tertiary);flex:none;justify-content:center;align-items:center;display:inline-flex}.Xn98xq_visuallyHidden{clip:rect(0 0 0 0);white-space:nowrap;width:1px;height:1px;position:absolute;overflow:hidden}.Xn98xq_folderActive{color:var(--dsw-alias-state-business-primary)}.Xn98xq_projectRow .Xn98xq_chevron{display:none}.Xn98xq_projectRow:hover .Xn98xq_chevron{display:inline-flex}.Xn98xq_projectRow:hover .Xn98xq_folder{display:none}.Xn98xq_arrow{transition:transform .15s var(--ds-ease-in-out)}.Xn98xq_arrowOpen{transform:rotate(90deg)}.Xn98xq_projectText{flex-direction:column;flex:1;gap:2px;min-width:0;display:flex}.Xn98xq_title{text-overflow:ellipsis;white-space:nowrap;min-width:0;font-size:14px;line-height:20px;overflow:hidden}.Xn98xq_renameInput{border:1px solid var(--dsw-alias-border-l2);background:var(--dsw-alias-button-elevated-fill);min-width:0;color:inherit;border-radius:4px;outline:none;padding:0 2px;font-size:14px;line-height:20px}.Xn98xq_sessionRow .Xn98xq_title{flex:1}.Xn98xq_meta{text-overflow:ellipsis;white-space:nowrap;color:var(--dsw-alias-label-tertiary);font-size:12px;line-height:20px;overflow:hidden}.Xn98xq_time{color:var(--dsw-alias-label-tertiary);flex:none;font-size:12px;line-height:20px}.Xn98xq_dot{flex:none}.Xn98xq_rowActions{flex:none;align-items:center;gap:12px;display:none}.Xn98xq_projectRow:hover .Xn98xq_rowActions,.Xn98xq_sessionRow:hover .Xn98xq_rowActions,.Xn98xq_projectRow.Xn98xq_menuOpen .Xn98xq_rowActions,.Xn98xq_sessionRow.Xn98xq_menuOpen .Xn98xq_rowActions{display:inline-flex}.Xn98xq_sessionRow:hover .Xn98xq_time,.Xn98xq_sessionRow.Xn98xq_menuOpen .Xn98xq_time{display:none}.Xn98xq_projectRow.Xn98xq_menuOpen,.Xn98xq_sessionRow.Xn98xq_menuOpen{background:var(--dsw-alias-interactive-bg-hover)}.Xn98xq_sessionRow.Xn98xq_dropBefore,.Xn98xq_sessionRow.Xn98xq_dropAfter{position:relative}.Xn98xq_sessionRow.Xn98xq_dropBefore:before,.Xn98xq_sessionRow.Xn98xq_dropAfter:after{content:\"\";z-index:1;background:linear-gradient(55deg, transparent calc(50% - 1px), var(--dsw-alias-state-business-primary) calc(50% - 1px) calc(50% + 1px), transparent calc(50% + 1px)) 0 0 / 5px 7px no-repeat, linear-gradient(125deg, transparent calc(50% - 1px), var(--dsw-alias-state-business-primary) calc(50% - 1px) calc(50% + 1px), transparent calc(50% + 1px)) 0 5px / 5px 7px no-repeat, linear-gradient(var(--dsw-alias-state-business-primary) 0 0) 4px 5px / calc(100% - 4px) 2px no-repeat;pointer-events:none;height:12px;position:absolute;left:0;right:4px}.Xn98xq_sessionRow.Xn98xq_dropBefore:before{top:-7px}.Xn98xq_sessionRow.Xn98xq_dropAfter:after{bottom:-7px}.Xn98xq_hoverContent{flex-direction:column;gap:8px;display:flex}.Xn98xq_hoverTitle{color:#fff;overflow-wrap:break-word;font-size:14px;line-height:20px}.Xn98xq_hoverPath{color:#cfd3d6;word-break:break-all;font-size:12px;line-height:16px}.Xn98xq_hoverTime{color:#cfd3d6;font-size:12px;line-height:16px}.Xn98xq_hoverStatus{color:#adb2b8;align-items:center;gap:8px;font-size:12px;line-height:20px;display:flex}.Xn98xq_iconButton{cursor:pointer;width:16px;height:16px;color:var(--dsw-alias-label-tertiary);background:0 0;border:none;border-radius:4px;flex:none;justify-content:center;align-items:center;padding:0;display:inline-flex}.Xn98xq_iconButton:hover{color:var(--dsw-alias-label-primary)}.Xn98xq_chevron{color:var(--dsw-alias-label-caption)}@media (prefers-reduced-motion:reduce){.Xn98xq_sessionRow,.Xn98xq_arrow{transition:none;animation:none}}";
+const tagId$3 = "dsh-multiroot-workspace/Rows.module.css";
+if (typeof document !== "undefined" && document.querySelector("style[data-plugin-css=" + JSON.stringify(tagId$3) + "]") === null) {
 	const tag = document.createElement("style");
 	tag.dataset.plugin = "dsh-multiroot-workspace";
-	tag.dataset.pluginCss = tagId$2;
-	tag.textContent = css$2;
+	tag.dataset.pluginCss = tagId$3;
+	tag.textContent = css$3;
 	document.head.appendChild(tag);
 }
 var Rows_module_css_default = {
-	"projectRow": "Xn98xq_projectRow",
-	"chevron": "Xn98xq_chevron",
-	"renameInput": "Xn98xq_renameInput",
-	"title": "Xn98xq_title",
-	"searchResultRow": "Xn98xq_searchResultRow",
-	"time": "Xn98xq_time",
 	"menuOpen": "Xn98xq_menuOpen",
-	"hoverTime": "Xn98xq_hoverTime",
-	"flatSessionRowWithoutStatus": "Xn98xq_flatSessionRowWithoutStatus",
-	"arrowOpen": "Xn98xq_arrowOpen",
-	"hoverPath": "Xn98xq_hoverPath",
-	"searchResultHeading": "Xn98xq_searchResultHeading",
-	"selected": "Xn98xq_selected",
-	"arrow": "Xn98xq_arrow",
-	"searchResultTitle": "Xn98xq_searchResultTitle",
-	"sessionRow": "Xn98xq_sessionRow",
-	"projectText": "Xn98xq_projectText",
-	"dropAfter": "Xn98xq_dropAfter",
-	"hoverContent": "Xn98xq_hoverContent",
-	"hoverStatus": "Xn98xq_hoverStatus",
-	"iconButton": "Xn98xq_iconButton",
-	"slot": "Xn98xq_slot",
+	"chevron": "Xn98xq_chevron",
 	"rowActions": "Xn98xq_rowActions",
-	"meta": "Xn98xq_meta",
-	"searchResultWorkspace": "Xn98xq_searchResultWorkspace",
-	"folderActive": "Xn98xq_folderActive",
-	"row-in": "Xn98xq_row-in",
-	"searchResultSnippet": "Xn98xq_searchResultSnippet",
-	"hoverTitle": "Xn98xq_hoverTitle",
+	"selected": "Xn98xq_selected",
+	"flatSessionRowWithoutStatus": "Xn98xq_flatSessionRowWithoutStatus",
+	"searchResultTitle": "Xn98xq_searchResultTitle",
+	"slot": "Xn98xq_slot",
+	"hoverContent": "Xn98xq_hoverContent",
+	"hoverPath": "Xn98xq_hoverPath",
+	"projectText": "Xn98xq_projectText",
+	"projectRow": "Xn98xq_projectRow",
 	"searchResultMeta": "Xn98xq_searchResultMeta",
-	"folder": "Xn98xq_folder",
-	"dot": "Xn98xq_dot",
+	"searchResultWorkspace": "Xn98xq_searchResultWorkspace",
+	"searchResultSnippet": "Xn98xq_searchResultSnippet",
+	"renameInput": "Xn98xq_renameInput",
 	"dropBefore": "Xn98xq_dropBefore",
-	"visuallyHidden": "Xn98xq_visuallyHidden"
+	"arrow": "Xn98xq_arrow",
+	"projectRowMultiroot": "Xn98xq_projectRowMultiroot",
+	"row-in": "Xn98xq_row-in",
+	"meta": "Xn98xq_meta",
+	"hoverTitle": "Xn98xq_hoverTitle",
+	"hoverTime": "Xn98xq_hoverTime",
+	"folderActive": "Xn98xq_folderActive",
+	"arrowOpen": "Xn98xq_arrowOpen",
+	"hoverStatus": "Xn98xq_hoverStatus",
+	"title": "Xn98xq_title",
+	"dot": "Xn98xq_dot",
+	"searchResultRow": "Xn98xq_searchResultRow",
+	"projectMeta": "Xn98xq_projectMeta",
+	"iconButton": "Xn98xq_iconButton",
+	"visuallyHidden": "Xn98xq_visuallyHidden",
+	"dropAfter": "Xn98xq_dropAfter",
+	"searchResultHeading": "Xn98xq_searchResultHeading",
+	"folder": "Xn98xq_folder",
+	"time": "Xn98xq_time",
+	"sessionRow": "Xn98xq_sessionRow"
 };
 
 //#endregion
@@ -473,23 +475,31 @@ function rowHalf(e) {
 * @param props.t - the browser root's locale seat.
 * @returns the row element.
 */
-function ProjectRowItem({ group, onToggle, onCreate, actions, drag, t }) {
+function ProjectRowItem({ group, onToggle, onCreate, actions, drag, multiroot, t }) {
 	const row = group;
 	const label = row.workspaceId === void 0 ? t("group.ungrouped") : row.label;
 	const active = group.expanded && group.containsCurrent;
 	const [menuOpen, setMenuOpen] = (0, react.useState)(false);
-	const workspaceMenuItems = [{
-		id: "rename",
-		label: t("rename"),
-		icon: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_deepseek_ai_dsh_client_ui_primitives.IconEditOutline16, {})
-	}, {
-		id: "delete",
-		label: t("delete.workspace"),
-		icon: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_deepseek_ai_dsh_client_ui_primitives.IconTrashOutline16, {}),
-		danger: true
-	}];
+	const workspaceMenuItems = [
+		...actions?.manage === void 0 ? [] : [{
+			id: "manage",
+			label: t("multiroot.manage"),
+			icon: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_deepseek_ai_dsh_client_ui_primitives.IconSettingsOutline16, {})
+		}],
+		{
+			id: "rename",
+			label: t("rename"),
+			icon: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_deepseek_ai_dsh_client_ui_primitives.IconEditOutline16, {})
+		},
+		{
+			id: "delete",
+			label: t("delete.workspace"),
+			icon: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_deepseek_ai_dsh_client_ui_primitives.IconTrashOutline16, {}),
+			danger: true
+		}
+	];
 	const ownRow = /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
-		className: (0, clsx.default)(Rows_module_css_default.projectRow, menuOpen && Rows_module_css_default.menuOpen),
+		className: (0, clsx.default)(Rows_module_css_default.projectRow, multiroot !== void 0 && Rows_module_css_default.projectRowMultiroot, menuOpen && Rows_module_css_default.menuOpen),
 		role: "treeitem",
 		"aria-expanded": row.expanded,
 		onClick: onToggle,
@@ -509,12 +519,18 @@ function ProjectRowItem({ group, onToggle, onCreate, actions, drag, t }) {
 				className: (0, clsx.default)(Rows_module_css_default.slot, Rows_module_css_default.chevron),
 				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_deepseek_ai_dsh_client_ui_primitives.IconTriangleRightFill14, { className: (0, clsx.default)(Rows_module_css_default.arrow, row.expanded && Rows_module_css_default.arrowOpen) })
 			}),
-			/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
+			/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("span", {
 				className: Rows_module_css_default.projectText,
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
+				children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
 					className: Rows_module_css_default.title,
 					children: label
-				})
+				}), multiroot !== void 0 && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
+					className: Rows_module_css_default.projectMeta,
+					children: t("multiroot.meta", {
+						count: multiroot.rootCount,
+						primary: multiroot.primaryAlias
+					})
+				})]
 			}),
 			/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("span", {
 				className: Rows_module_css_default.rowActions,
@@ -527,6 +543,10 @@ function ProjectRowItem({ group, onToggle, onCreate, actions, drag, t }) {
 					onSelect: (id) => {
 						setMenuOpen(false);
 						/* v8 ignore next -- workspaceMenuItems carries exactly these two rows today. */
+						if (id === "manage") {
+							actions.manage?.();
+							return;
+						}
 						if (id !== "rename" && id !== "delete") return;
 						if (id === "rename") actions.rename();
 						else actions.delete();
@@ -819,6 +839,336 @@ function SessionNodeItem({ node, currentId, now, onOpen, onRename, onFork, onArc
 }
 
 //#endregion
+//#region src/client/multiroot/api.ts
+const API_PREFIX = "/plugins/multiroot/api";
+function isRecord(value) {
+	return typeof value === "object" && value !== null;
+}
+function isEnvelope(value) {
+	return isRecord(value) && typeof value.ok === "boolean";
+}
+function errorMessage(payload, status) {
+	if (isEnvelope(payload) && payload.ok === false && isRecord(payload.error) && typeof payload.error.message === "string") return payload.error.message;
+	return `multiroot request failed: ${status}`;
+}
+/** Send one same-origin request to the multiroot Host API. */
+async function multirootRequest(path, init) {
+	const response = await fetch(`${API_PREFIX}${path}`, init);
+	const payload = await response.json();
+	if (!isEnvelope(payload) || payload.ok !== true) throw new Error(errorMessage(payload, response.status));
+	return payload.value;
+}
+function jsonRequest(path, method, body) {
+	return multirootRequest(path, {
+		method,
+		headers: { "content-type": "application/json" },
+		...body === void 0 ? {} : { body: JSON.stringify(body) }
+	});
+}
+/** Typed mutations used by the multiroot dialogs. */
+const multirootApi = {
+	list: () => multirootRequest("/workspaces"),
+	create: (input) => jsonRequest("/workspaces", "POST", input),
+	update: (id, input) => jsonRequest(`/workspaces/${encodeURIComponent(id)}`, "PATCH", input),
+	setPrimary: (id, alias) => jsonRequest(`/workspaces/${encodeURIComponent(id)}/primary`, "PUT", { alias }),
+	delete: (id) => jsonRequest(`/workspaces/${encodeURIComponent(id)}`, "DELETE")
+};
+/** Load logical Workspace records while retaining the last ready snapshot after a failed refresh. */
+function useMultirootRecords(enabled = true) {
+	const [state, setState] = (0, react.useState)({
+		phase: enabled ? "loading" : "ready",
+		records: [],
+		error: null
+	});
+	const refresh = (0, react.useCallback)(async () => {
+		if (!enabled) return;
+		try {
+			const records = await multirootApi.list();
+			setState({
+				phase: "ready",
+				records,
+				error: null
+			});
+		} catch (cause) {
+			setState((previous) => ({
+				phase: "error",
+				records: previous.records,
+				error: cause instanceof Error ? cause.message : String(cause)
+			}));
+			throw cause;
+		}
+	}, [enabled]);
+	(0, react.useEffect)(() => {
+		refresh().catch(() => {});
+	}, [refresh]);
+	return {
+		...state,
+		refresh
+	};
+}
+
+//#endregion
+//#region src/client/multiroot/join.ts
+/** Join logical metadata to Host Workspaces without path inference. */
+function joinMultiroot(workspaces, records) {
+	const workspaceIds = new Set(workspaces.map((workspace) => workspace.workspaceId));
+	const metadataByWorkspaceId = /* @__PURE__ */ new Map();
+	const missingShadowIds = [];
+	for (const logical of records) {
+		if (!workspaceIds.has(logical.shadowWorkspaceId)) {
+			missingShadowIds.push(logical.id);
+			continue;
+		}
+		const primary = logical.roots.find((root) => root.primary);
+		if (primary === void 0) continue;
+		metadataByWorkspaceId.set(logical.shadowWorkspaceId, {
+			logical,
+			rootCount: logical.roots.length,
+			primaryAlias: primary.alias
+		});
+	}
+	return {
+		workspaces: [...workspaces],
+		metadataByWorkspaceId,
+		missingShadowIds
+	};
+}
+
+//#endregion
+//#region \0dsh-css:/Users/yang/Desktop/projects/deepseek-harness/tmp/logical-workspace/dsh-multiroot-workspace/src/client/multiroot/Dialogs.module.css.mjs
+const css$2 = "._1NmraW_form{flex-direction:column;gap:16px;min-width:min(520px,100vw - 64px);display:flex}._1NmraW_field{color:var(--dsw-alias-label-primary);flex-direction:column;gap:6px;font-size:13px;display:flex}._1NmraW_input{box-sizing:border-box;border:1px solid var(--dsw-alias-border-l2);background:var(--dsw-alias-button-elevated-fill);width:100%;color:var(--dsw-alias-label-primary);font:inherit;border-radius:8px;outline:none;padding:8px 10px}._1NmraW_input:focus{border-color:var(--dsw-alias-state-business-primary)}._1NmraW_roots{flex-direction:column;gap:8px;display:flex}._1NmraW_rootRow{border:1px solid var(--dsw-alias-border-l2);border-radius:10px;grid-template-columns:minmax(90px,.35fr) minmax(160px,1fr) auto;align-items:center;gap:8px;padding:8px;display:grid}._1NmraW_rootActions{align-items:center;gap:6px;display:flex}._1NmraW_primary{color:var(--dsw-alias-state-business-primary);white-space:nowrap;font-size:12px}._1NmraW_error{color:var(--dsw-alias-state-error-primary);font-size:12px}._1NmraW_hint{color:var(--dsw-alias-label-tertiary);font-size:12px}";
+const tagId$2 = "dsh-multiroot-workspace/Dialogs.module.css";
+if (typeof document !== "undefined" && document.querySelector("style[data-plugin-css=" + JSON.stringify(tagId$2) + "]") === null) {
+	const tag = document.createElement("style");
+	tag.dataset.plugin = "dsh-multiroot-workspace";
+	tag.dataset.pluginCss = tagId$2;
+	tag.textContent = css$2;
+	document.head.appendChild(tag);
+}
+var Dialogs_module_css_default = {
+	"form": "_1NmraW_form",
+	"input": "_1NmraW_input",
+	"primary": "_1NmraW_primary",
+	"rootRow": "_1NmraW_rootRow",
+	"rootActions": "_1NmraW_rootActions",
+	"hint": "_1NmraW_hint",
+	"error": "_1NmraW_error",
+	"roots": "_1NmraW_roots",
+	"field": "_1NmraW_field"
+};
+
+//#endregion
+//#region src/client/multiroot/Dialogs.tsx
+function basename(path) {
+	return path.split(/[\\/]/).filter(Boolean).at(-1) ?? path;
+}
+function uniqueAlias(path, roots) {
+	const base = basename(path) || "root";
+	let alias = base;
+	let suffix = 2;
+	const used = new Set(roots.map((root) => root.alias.toLowerCase()));
+	while (used.has(alias.toLowerCase())) alias = `${base}-${suffix++}`;
+	return alias;
+}
+function MultirootDialog({ open, record, onClose, refresh, renderDirectoryFlow, t }) {
+	const [title, setTitle] = (0, react.useState)("");
+	const [roots, setRoots] = (0, react.useState)([]);
+	const [picking, setPicking] = (0, react.useState)(false);
+	const [saving, setSaving] = (0, react.useState)(false);
+	const [error, setError] = (0, react.useState)(null);
+	(0, react.useEffect)(() => {
+		if (!open) return;
+		setTitle(record?.title ?? "");
+		setRoots(record?.roots.map((root) => ({ ...root })) ?? []);
+		setPicking(false);
+		setSaving(false);
+		setError(null);
+	}, [open, record]);
+	const appendRoot = (path) => {
+		setRoots((current) => {
+			if (current.some((root) => root.path === path)) return current;
+			const alias = uniqueAlias(path, current);
+			if (current.length === 0 && title.trim() === "") setTitle(alias);
+			return [...current, {
+				alias,
+				path,
+				primary: current.length === 0
+			}];
+		});
+		setPicking(false);
+	};
+	const save = async () => {
+		if (saving || title.trim() === "" || roots.length === 0) return;
+		setSaving(true);
+		setError(null);
+		try {
+			if (record === null) await multirootApi.create({
+				title: title.trim(),
+				roots
+			});
+			else {
+				const oldPrimary = record.roots.find((root) => root.primary)?.alias;
+				const nextPrimary = roots.find((root) => root.primary)?.alias;
+				const rootsWithOldPrimary = roots.map((root) => ({
+					...root,
+					primary: root.alias.toLowerCase() === oldPrimary?.toLowerCase()
+				}));
+				await multirootApi.update(record.id, {
+					title: title.trim(),
+					roots: rootsWithOldPrimary
+				});
+				if (nextPrimary !== void 0 && nextPrimary.toLowerCase() !== oldPrimary?.toLowerCase()) await multirootApi.setPrimary(record.id, nextPrimary);
+			}
+			await refresh();
+			onClose();
+		} catch (cause) {
+			setError(cause instanceof Error ? cause.message : String(cause));
+		} finally {
+			setSaving(false);
+		}
+	};
+	const remove = (index) => {
+		setRoots((current) => {
+			const next = current.filter((_, candidate) => candidate !== index);
+			if (next.length > 0 && !next.some((root) => root.primary)) next[0] = {
+				...next[0],
+				primary: true
+			};
+			return next;
+		});
+	};
+	return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_deepseek_ai_dsh_client_ui_primitives.Modal, {
+		open,
+		onClose: () => {
+			if (!saving) onClose();
+		},
+		closeLabel: t("close"),
+		title: record === null ? t("multiroot.add") : t("multiroot.manage.title"),
+		footer: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [
+			record !== null && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_deepseek_ai_dsh_client_ui_primitives.Button, {
+				variant: "outline",
+				disabled: saving,
+				onClick: () => {
+					setSaving(true);
+					multirootApi.delete(record.id).then(refresh).then(onClose).catch((cause) => {
+						setError(cause instanceof Error ? cause.message : String(cause));
+						setSaving(false);
+					});
+				},
+				children: t("multiroot.delete")
+			}),
+			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_deepseek_ai_dsh_client_ui_primitives.Button, {
+				variant: "outline",
+				disabled: saving,
+				onClick: onClose,
+				children: t("cancel")
+			}),
+			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_deepseek_ai_dsh_client_ui_primitives.Button, {
+				variant: "primary",
+				disabled: saving || title.trim() === "" || roots.length === 0,
+				onClick: () => {
+					save();
+				},
+				children: record === null ? t("multiroot.create") : t("save")
+			})
+		] }),
+		children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
+			className: Dialogs_module_css_default.form,
+			children: [
+				/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("label", {
+					className: Dialogs_module_css_default.field,
+					children: [t("field.workspaceName"), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("input", {
+						className: Dialogs_module_css_default.input,
+						"aria-label": t("field.workspaceName"),
+						value: title,
+						onChange: (event) => {
+							setTitle(event.target.value);
+						}
+					})]
+				}),
+				/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
+					className: Dialogs_module_css_default.roots,
+					children: [
+						roots.map((root, index) => /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
+							className: Dialogs_module_css_default.rootRow,
+							children: [
+								/* @__PURE__ */ (0, react_jsx_runtime.jsx)("input", {
+									className: Dialogs_module_css_default.input,
+									"aria-label": t("multiroot.alias", { n: index + 1 }),
+									value: root.alias,
+									onChange: (event) => {
+										const alias = event.target.value;
+										setRoots((current) => current.map((item, candidate) => candidate === index ? {
+											...item,
+											alias
+										} : item));
+									}
+								}),
+								/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
+									title: root.path,
+									children: root.path
+								}),
+								/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("span", {
+									className: Dialogs_module_css_default.rootActions,
+									children: [root.primary ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
+										className: Dialogs_module_css_default.primary,
+										children: t("multiroot.primary")
+									}) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_deepseek_ai_dsh_client_ui_primitives.Button, {
+										variant: "ghost",
+										disabled: saving,
+										onClick: () => {
+											setRoots((current) => current.map((item, candidate) => ({
+												...item,
+												primary: candidate === index
+											})));
+										},
+										children: t("multiroot.makePrimary", { name: root.alias })
+									}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_deepseek_ai_dsh_client_ui_primitives.Button, {
+										variant: "ghost",
+										disabled: saving || roots.length === 1,
+										onClick: () => {
+											remove(index);
+										},
+										children: t("multiroot.remove")
+									})]
+								})
+							]
+						}, `${root.path}:${index}`)),
+						roots.length === 0 && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
+							className: Dialogs_module_css_default.hint,
+							children: t("multiroot.empty")
+						}),
+						/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_deepseek_ai_dsh_client_ui_primitives.Button, {
+							variant: "outline",
+							disabled: saving || picking,
+							onClick: () => {
+								setPicking(true);
+							},
+							children: t("multiroot.addFolder")
+						})
+					]
+				}),
+				error !== null && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+					className: Dialogs_module_css_default.error,
+					children: error
+				})
+			]
+		})
+	}), renderDirectoryFlow({
+		open: open && picking,
+		busy: saving,
+		onPicked: appendRoot,
+		onCancel: () => {
+			setPicking(false);
+		},
+		onError: (message) => {
+			setPicking(false);
+			setError(message);
+		}
+	})] });
+}
+
+//#endregion
 //#region \0dsh-css:/Users/yang/Desktop/projects/deepseek-harness/tmp/logical-workspace/dsh-multiroot-workspace/src/client/upstream/WorkspacePicker.module.css.mjs
 const css$1 = ".zHy4Zq_modalAction{min-width:72px}.zHy4Zq_modalError,.zHy4Zq_menuStatus{margin-top:8px;font-size:12px;line-height:18px}.zHy4Zq_modalError{color:var(--dsw-alias-state-error-primary)}.zHy4Zq_menuStatus{color:var(--dsw-alias-label-secondary)}";
 const tagId$1 = "dsh-multiroot-workspace/WorkspacePicker.module.css";
@@ -992,7 +1342,7 @@ function WorkspacePicker({ open, anchorRef, useWorkspaces, selectedId, onPick, o
 
 //#endregion
 //#region \0dsh-css:/Users/yang/Desktop/projects/deepseek-harness/tmp/logical-workspace/dsh-multiroot-workspace/src/client/upstream/WorkspaceBrowser.module.css.mjs
-const css = ".Idd4fa_root{--dsh-session-list-edge-inset:var(--dsh-sidebar-inline-padding);--dsh-session-list-scrollbar-width:8px;--dsh-session-list-scrollbar-offset:2px;box-sizing:border-box;min-height:0;padding-right:var(--dsh-session-list-edge-inset);flex-direction:column;flex:1;display:flex}.Idd4fa_root.Idd4fa_rail{padding-right:0}.Idd4fa_iconButton{cursor:pointer;width:28px;height:28px;color:var(--dsw-alias-label-secondary);background:0 0;border:none;border-radius:50%;flex:none;justify-content:center;align-items:center;padding:0;display:inline-flex}.Idd4fa_iconButton:hover{background:var(--dsw-alias-interactive-bg-hover)}.Idd4fa_sectionHeader{box-sizing:border-box;height:36px;color:var(--dsw-alias-label-tertiary);border-radius:12px;flex:none;justify-content:flex-end;align-items:center;gap:4px;margin-bottom:4px;padding-left:4px;display:flex;overflow:hidden}.Idd4fa_root:not(.Idd4fa_rail) .Idd4fa_sectionHeader{margin-top:2px;margin-right:-4px}.Idd4fa_sectionLabel{white-space:nowrap;opacity:1;visibility:visible;min-width:0;max-width:45%;transition:max-width .18s var(--ds-ease-in-out), margin-right .18s var(--ds-ease-in-out), opacity .12s var(--ds-ease-in-out), transform .18s var(--ds-ease-in-out), visibility 0s linear;flex:none;line-height:20px;overflow:hidden}.Idd4fa_sectionLabelHidden{opacity:0;visibility:hidden;max-width:0;margin-right:-4px;transition-delay:0s,0s,0s,0s,.18s;transform:translate(-4px)}.Idd4fa_searchSlot{box-sizing:border-box;min-width:0;max-width:28px;transition:max-width .18s var(--ds-ease-in-out), padding-left .18s var(--ds-ease-in-out);flex:1;align-items:center;margin-left:auto;padding-left:0;display:flex}.Idd4fa_searchSlotExpanded{max-width:100%;padding-left:0}.Idd4fa_headerActions{opacity:1;visibility:visible;max-width:60px;transition:max-width .18s var(--ds-ease-in-out), opacity .12s var(--ds-ease-in-out), transform .18s var(--ds-ease-in-out), visibility 0s linear;flex:none;align-items:center;gap:4px;display:flex;overflow:hidden}.Idd4fa_headerActionsHidden{opacity:0;visibility:hidden;pointer-events:none;max-width:0;transition-delay:0s,0s,0s,.18s;transform:translate(4px)}.Idd4fa_search{box-sizing:border-box;cursor:text;width:100%;height:28px;color:var(--dsw-alias-label-secondary);transition:width .18s var(--ds-ease-in-out), padding .18s var(--ds-ease-in-out), border-color .18s var(--ds-ease-in-out), background-color .18s var(--ds-ease-in-out);background:0 0;border:none;border-radius:50%;flex:none;align-items:center;gap:0;margin:0;padding:0;display:flex;overflow:hidden}.Idd4fa_searchExpanded{border:1px solid var(--dsw-alias-border-l2);width:calc(100% + 4px);height:30px;color:var(--dsw-alias-label-caption);background:0 0;border-radius:10px;margin-inline:-2px;padding:0 4px 0 0}.Idd4fa_searchButton{cursor:pointer;width:28px;height:28px;color:inherit;background:0 0;border:none;border-radius:50%;flex:none;justify-content:center;align-items:center;padding:0;display:inline-flex}.Idd4fa_searchExpanded .Idd4fa_searchButton{width:28px;height:30px}.Idd4fa_searchButton:hover{background:var(--dsw-alias-interactive-bg-hover)}.Idd4fa_searchExpanded .Idd4fa_searchButton:hover{background:0 0}.Idd4fa_searchInput{opacity:0;pointer-events:none;width:0;min-width:0;color:var(--dsw-alias-label-primary);transition:opacity .12s var(--ds-ease-in-out);background:0 0;border:none;outline:none;flex:1;font-size:13px;line-height:18px}.Idd4fa_searchExpanded .Idd4fa_searchInput{opacity:1;pointer-events:auto;margin-left:-2px}.Idd4fa_searchInput::placeholder{color:var(--dsw-alias-label-tertiary)}.Idd4fa_clearButton{cursor:pointer;width:24px;height:24px;color:var(--dsw-alias-label-secondary);background:0 0;border:none;border-radius:50%;flex:none;justify-content:center;align-items:center;padding:0;display:inline-flex}.Idd4fa_clearButton:hover{background:var(--dsw-alias-interactive-bg-hover)}.Idd4fa_rail .Idd4fa_sectionHeader{justify-content:flex-start;gap:0;margin-bottom:12px;padding-left:0}.Idd4fa_rail .Idd4fa_headerActions{max-width:none}.Idd4fa_rail .Idd4fa_iconButton{width:36px;height:36px;color:var(--dsw-alias-label-primary)}.Idd4fa_rail .Idd4fa_search{background:0 0;border-color:#0000;gap:0;width:36px;height:36px;margin:0 0 12px;padding:0}.Idd4fa_rail .Idd4fa_searchButton{width:36px;height:36px;color:var(--dsw-alias-label-primary)}.Idd4fa_rail .Idd4fa_searchButton:hover{background:var(--dsw-alias-interactive-bg-hover)}.Idd4fa_listArea{min-height:0;margin-left:-4px;margin-right:calc(-1 * var(--dsh-session-list-edge-inset));flex-direction:column;flex:1;padding-left:4px;display:flex;overflow:visible}.Idd4fa_rail .Idd4fa_listArea{margin-left:0;margin-right:0;padding-left:0}.Idd4fa_treeBody{flex-direction:column;flex:1;min-height:0;display:flex;position:relative}.Idd4fa_fade{left:0;right:var(--dsh-session-list-edge-inset);background:linear-gradient(to bottom, transparent, var(--dsw-specific-sidebar-fill));pointer-events:none;height:24px;position:absolute;bottom:0}.Idd4fa_wide{animation:Idd4fa_wide-in .2s var(--ds-ease-in-out)}@keyframes Idd4fa_wide-in{0%{opacity:0}}.Idd4fa_list{min-height:0;margin-left:-4px;margin-right:var(--dsh-session-list-scrollbar-offset);padding-left:4px;padding-right:calc(var(--dsh-session-list-edge-inset) - var(--dsh-session-list-scrollbar-width) - var(--dsh-session-list-scrollbar-offset));scrollbar-gutter:stable;flex:1;padding-bottom:16px;overflow-y:auto}.Idd4fa_flatList>*+*,.Idd4fa_searchTree>[role=treeitem]+[role=treeitem],.Idd4fa_groupSection>*+*{margin-top:2px}.Idd4fa_searchStatus,.Idd4fa_searchWarning{color:var(--dsw-alias-label-tertiary);padding:10px 12px;font-size:12px;line-height:18px}.Idd4fa_searchWarning{color:var(--dsw-alias-label-secondary)}.Idd4fa_groupSection{position:relative}.Idd4fa_groupSection+.Idd4fa_groupSection{margin-top:4px}.Idd4fa_listTopDropIndicator,.Idd4fa_workspaceDropBefore:before,.Idd4fa_workspaceDropAfter:after{content:\"\";z-index:1;background:linear-gradient(55deg, transparent calc(50% - 1px), var(--dsw-alias-state-business-primary) calc(50% - 1px) calc(50% + 1px), transparent calc(50% + 1px)) 0 0 / 5px 7px no-repeat, linear-gradient(125deg, transparent calc(50% - 1px), var(--dsw-alias-state-business-primary) calc(50% - 1px) calc(50% + 1px), transparent calc(50% + 1px)) 0 5px / 5px 7px no-repeat, linear-gradient(var(--dsw-alias-state-business-primary) 0 0) 4px 5px / calc(100% - 4px) 2px no-repeat;pointer-events:none;height:12px;position:absolute;left:0;right:0}.Idd4fa_listTopDropIndicator{top:-8px;left:0;right:var(--dsh-session-list-edge-inset)}.Idd4fa_listTopDropActive>.Idd4fa_workspaceDropBefore:first-child:before{display:none}.Idd4fa_workspaceDropBefore:before{top:-8px}.Idd4fa_workspaceDropAfter:after{bottom:-8px}.Idd4fa_sessionOverflowButton{cursor:pointer;text-align:left;width:100%;height:28px;color:var(--dsw-alias-label-tertiary);background:0 0;border:none;border-radius:8px;padding:0 12px 0 28px;font-size:12px}.Idd4fa_groupSection>.Idd4fa_sessionOverflowButton{margin-top:0}.Idd4fa_sessionOverflowButton:hover{color:var(--dsw-alias-label-secondary);background:0 0}.Idd4fa_empty{color:var(--dsw-alias-label-tertiary);padding:16px 12px;font-size:13px}.Idd4fa_renameInput{box-sizing:border-box;border:1px solid var(--dsw-alias-border-l2);width:100%;height:44px;color:var(--dsw-alias-label-primary);background:0 0;border-radius:22px;outline:none;padding:7px 14px;font-size:14px;font-weight:400;line-height:22px}.Idd4fa_renameInput:disabled{color:var(--dsw-alias-label-dimmed)}.Idd4fa_renameError{color:var(--dsw-alias-state-error-primary);margin-top:8px;font-size:12px;line-height:18px}.Idd4fa_deleteAction:not(:disabled){color:var(--dsw-alias-state-error-primary)}.Idd4fa_deleteStatus{color:var(--dsw-alias-label-secondary);font-size:12px;line-height:18px}@media (prefers-reduced-motion:reduce){.Idd4fa_wide{animation:none}.Idd4fa_search,.Idd4fa_sectionLabel,.Idd4fa_searchSlot,.Idd4fa_searchInput,.Idd4fa_headerActions{transition:none}}";
+const css = ".Idd4fa_root{--dsh-session-list-edge-inset:var(--dsh-sidebar-inline-padding);--dsh-session-list-scrollbar-width:8px;--dsh-session-list-scrollbar-offset:2px;box-sizing:border-box;min-height:0;padding-right:var(--dsh-session-list-edge-inset);flex-direction:column;flex:1;display:flex}.Idd4fa_root.Idd4fa_rail{padding-right:0}.Idd4fa_iconButton{cursor:pointer;width:28px;height:28px;color:var(--dsw-alias-label-secondary);background:0 0;border:none;border-radius:50%;flex:none;justify-content:center;align-items:center;padding:0;display:inline-flex}.Idd4fa_iconButton:hover{background:var(--dsw-alias-interactive-bg-hover)}.Idd4fa_sectionHeader{box-sizing:border-box;height:36px;color:var(--dsw-alias-label-tertiary);border-radius:12px;flex:none;justify-content:flex-end;align-items:center;gap:4px;margin-bottom:4px;padding-left:4px;display:flex;overflow:hidden}.Idd4fa_root:not(.Idd4fa_rail) .Idd4fa_sectionHeader{margin-top:2px;margin-right:-4px}.Idd4fa_sectionLabel{white-space:nowrap;opacity:1;visibility:visible;min-width:0;max-width:45%;transition:max-width .18s var(--ds-ease-in-out), margin-right .18s var(--ds-ease-in-out), opacity .12s var(--ds-ease-in-out), transform .18s var(--ds-ease-in-out), visibility 0s linear;flex:none;line-height:20px;overflow:hidden}.Idd4fa_sectionLabelHidden{opacity:0;visibility:hidden;max-width:0;margin-right:-4px;transition-delay:0s,0s,0s,0s,.18s;transform:translate(-4px)}.Idd4fa_searchSlot{box-sizing:border-box;min-width:0;max-width:28px;transition:max-width .18s var(--ds-ease-in-out), padding-left .18s var(--ds-ease-in-out);flex:1;align-items:center;margin-left:auto;padding-left:0;display:flex}.Idd4fa_searchSlotExpanded{max-width:100%;padding-left:0}.Idd4fa_headerActions{opacity:1;visibility:visible;max-width:92px;transition:max-width .18s var(--ds-ease-in-out), opacity .12s var(--ds-ease-in-out), transform .18s var(--ds-ease-in-out), visibility 0s linear;flex:none;align-items:center;gap:4px;display:flex;overflow:hidden}.Idd4fa_multirootError{color:var(--dsw-alias-state-error-primary);padding:4px 8px;font-size:12px;line-height:18px}.Idd4fa_headerActionsHidden{opacity:0;visibility:hidden;pointer-events:none;max-width:0;transition-delay:0s,0s,0s,.18s;transform:translate(4px)}.Idd4fa_search{box-sizing:border-box;cursor:text;width:100%;height:28px;color:var(--dsw-alias-label-secondary);transition:width .18s var(--ds-ease-in-out), padding .18s var(--ds-ease-in-out), border-color .18s var(--ds-ease-in-out), background-color .18s var(--ds-ease-in-out);background:0 0;border:none;border-radius:50%;flex:none;align-items:center;gap:0;margin:0;padding:0;display:flex;overflow:hidden}.Idd4fa_searchExpanded{border:1px solid var(--dsw-alias-border-l2);width:calc(100% + 4px);height:30px;color:var(--dsw-alias-label-caption);background:0 0;border-radius:10px;margin-inline:-2px;padding:0 4px 0 0}.Idd4fa_searchButton{cursor:pointer;width:28px;height:28px;color:inherit;background:0 0;border:none;border-radius:50%;flex:none;justify-content:center;align-items:center;padding:0;display:inline-flex}.Idd4fa_searchExpanded .Idd4fa_searchButton{width:28px;height:30px}.Idd4fa_searchButton:hover{background:var(--dsw-alias-interactive-bg-hover)}.Idd4fa_searchExpanded .Idd4fa_searchButton:hover{background:0 0}.Idd4fa_searchInput{opacity:0;pointer-events:none;width:0;min-width:0;color:var(--dsw-alias-label-primary);transition:opacity .12s var(--ds-ease-in-out);background:0 0;border:none;outline:none;flex:1;font-size:13px;line-height:18px}.Idd4fa_searchExpanded .Idd4fa_searchInput{opacity:1;pointer-events:auto;margin-left:-2px}.Idd4fa_searchInput::placeholder{color:var(--dsw-alias-label-tertiary)}.Idd4fa_clearButton{cursor:pointer;width:24px;height:24px;color:var(--dsw-alias-label-secondary);background:0 0;border:none;border-radius:50%;flex:none;justify-content:center;align-items:center;padding:0;display:inline-flex}.Idd4fa_clearButton:hover{background:var(--dsw-alias-interactive-bg-hover)}.Idd4fa_rail .Idd4fa_sectionHeader{justify-content:flex-start;gap:0;margin-bottom:12px;padding-left:0}.Idd4fa_rail .Idd4fa_headerActions{max-width:none}.Idd4fa_rail .Idd4fa_iconButton{width:36px;height:36px;color:var(--dsw-alias-label-primary)}.Idd4fa_rail .Idd4fa_search{background:0 0;border-color:#0000;gap:0;width:36px;height:36px;margin:0 0 12px;padding:0}.Idd4fa_rail .Idd4fa_searchButton{width:36px;height:36px;color:var(--dsw-alias-label-primary)}.Idd4fa_rail .Idd4fa_searchButton:hover{background:var(--dsw-alias-interactive-bg-hover)}.Idd4fa_listArea{min-height:0;margin-left:-4px;margin-right:calc(-1 * var(--dsh-session-list-edge-inset));flex-direction:column;flex:1;padding-left:4px;display:flex;overflow:visible}.Idd4fa_rail .Idd4fa_listArea{margin-left:0;margin-right:0;padding-left:0}.Idd4fa_treeBody{flex-direction:column;flex:1;min-height:0;display:flex;position:relative}.Idd4fa_fade{left:0;right:var(--dsh-session-list-edge-inset);background:linear-gradient(to bottom, transparent, var(--dsw-specific-sidebar-fill));pointer-events:none;height:24px;position:absolute;bottom:0}.Idd4fa_wide{animation:Idd4fa_wide-in .2s var(--ds-ease-in-out)}@keyframes Idd4fa_wide-in{0%{opacity:0}}.Idd4fa_list{min-height:0;margin-left:-4px;margin-right:var(--dsh-session-list-scrollbar-offset);padding-left:4px;padding-right:calc(var(--dsh-session-list-edge-inset) - var(--dsh-session-list-scrollbar-width) - var(--dsh-session-list-scrollbar-offset));scrollbar-gutter:stable;flex:1;padding-bottom:16px;overflow-y:auto}.Idd4fa_flatList>*+*,.Idd4fa_searchTree>[role=treeitem]+[role=treeitem],.Idd4fa_groupSection>*+*{margin-top:2px}.Idd4fa_searchStatus,.Idd4fa_searchWarning{color:var(--dsw-alias-label-tertiary);padding:10px 12px;font-size:12px;line-height:18px}.Idd4fa_searchWarning{color:var(--dsw-alias-label-secondary)}.Idd4fa_groupSection{position:relative}.Idd4fa_groupSection+.Idd4fa_groupSection{margin-top:4px}.Idd4fa_listTopDropIndicator,.Idd4fa_workspaceDropBefore:before,.Idd4fa_workspaceDropAfter:after{content:\"\";z-index:1;background:linear-gradient(55deg, transparent calc(50% - 1px), var(--dsw-alias-state-business-primary) calc(50% - 1px) calc(50% + 1px), transparent calc(50% + 1px)) 0 0 / 5px 7px no-repeat, linear-gradient(125deg, transparent calc(50% - 1px), var(--dsw-alias-state-business-primary) calc(50% - 1px) calc(50% + 1px), transparent calc(50% + 1px)) 0 5px / 5px 7px no-repeat, linear-gradient(var(--dsw-alias-state-business-primary) 0 0) 4px 5px / calc(100% - 4px) 2px no-repeat;pointer-events:none;height:12px;position:absolute;left:0;right:0}.Idd4fa_listTopDropIndicator{top:-8px;left:0;right:var(--dsh-session-list-edge-inset)}.Idd4fa_listTopDropActive>.Idd4fa_workspaceDropBefore:first-child:before{display:none}.Idd4fa_workspaceDropBefore:before{top:-8px}.Idd4fa_workspaceDropAfter:after{bottom:-8px}.Idd4fa_sessionOverflowButton{cursor:pointer;text-align:left;width:100%;height:28px;color:var(--dsw-alias-label-tertiary);background:0 0;border:none;border-radius:8px;padding:0 12px 0 28px;font-size:12px}.Idd4fa_groupSection>.Idd4fa_sessionOverflowButton{margin-top:0}.Idd4fa_sessionOverflowButton:hover{color:var(--dsw-alias-label-secondary);background:0 0}.Idd4fa_empty{color:var(--dsw-alias-label-tertiary);padding:16px 12px;font-size:13px}.Idd4fa_renameInput{box-sizing:border-box;border:1px solid var(--dsw-alias-border-l2);width:100%;height:44px;color:var(--dsw-alias-label-primary);background:0 0;border-radius:22px;outline:none;padding:7px 14px;font-size:14px;font-weight:400;line-height:22px}.Idd4fa_renameInput:disabled{color:var(--dsw-alias-label-dimmed)}.Idd4fa_renameError{color:var(--dsw-alias-state-error-primary);margin-top:8px;font-size:12px;line-height:18px}.Idd4fa_deleteAction:not(:disabled){color:var(--dsw-alias-state-error-primary)}.Idd4fa_deleteStatus{color:var(--dsw-alias-label-secondary);font-size:12px;line-height:18px}@media (prefers-reduced-motion:reduce){.Idd4fa_wide{animation:none}.Idd4fa_search,.Idd4fa_sectionLabel,.Idd4fa_searchSlot,.Idd4fa_searchInput,.Idd4fa_headerActions{transition:none}}";
 const tagId = "dsh-multiroot-workspace/WorkspaceBrowser.module.css";
 if (typeof document !== "undefined" && document.querySelector("style[data-plugin-css=" + JSON.stringify(tagId) + "]") === null) {
 	const tag = document.createElement("style");
@@ -1002,42 +1352,43 @@ if (typeof document !== "undefined" && document.querySelector("style[data-plugin
 	document.head.appendChild(tag);
 }
 var WorkspaceBrowser_module_css_default = {
-	"searchSlotExpanded": "Idd4fa_searchSlotExpanded",
-	"iconButton": "Idd4fa_iconButton",
-	"clearButton": "Idd4fa_clearButton",
-	"workspaceDropAfter": "Idd4fa_workspaceDropAfter",
-	"sectionLabel": "Idd4fa_sectionLabel",
-	"sessionOverflowButton": "Idd4fa_sessionOverflowButton",
-	"wide": "Idd4fa_wide",
-	"headerActions": "Idd4fa_headerActions",
-	"listTopDropActive": "Idd4fa_listTopDropActive",
-	"empty": "Idd4fa_empty",
-	"rail": "Idd4fa_rail",
-	"wide-in": "Idd4fa_wide-in",
 	"fade": "Idd4fa_fade",
-	"renameError": "Idd4fa_renameError",
-	"flatList": "Idd4fa_flatList",
-	"searchExpanded": "Idd4fa_searchExpanded",
-	"searchWarning": "Idd4fa_searchWarning",
-	"listTopDropIndicator": "Idd4fa_listTopDropIndicator",
-	"workspaceDropBefore": "Idd4fa_workspaceDropBefore",
-	"list": "Idd4fa_list",
-	"searchTree": "Idd4fa_searchTree",
-	"sectionLabelHidden": "Idd4fa_sectionLabelHidden",
-	"groupSection": "Idd4fa_groupSection",
+	"headerActions": "Idd4fa_headerActions",
 	"searchButton": "Idd4fa_searchButton",
-	"renameInput": "Idd4fa_renameInput",
+	"flatList": "Idd4fa_flatList",
 	"deleteAction": "Idd4fa_deleteAction",
-	"search": "Idd4fa_search",
+	"listTopDropIndicator": "Idd4fa_listTopDropIndicator",
+	"searchWarning": "Idd4fa_searchWarning",
+	"rail": "Idd4fa_rail",
+	"iconButton": "Idd4fa_iconButton",
+	"listArea": "Idd4fa_listArea",
+	"listTopDropActive": "Idd4fa_listTopDropActive",
+	"renameError": "Idd4fa_renameError",
+	"workspaceDropBefore": "Idd4fa_workspaceDropBefore",
+	"sectionLabel": "Idd4fa_sectionLabel",
+	"searchTree": "Idd4fa_searchTree",
 	"treeBody": "Idd4fa_treeBody",
-	"searchStatus": "Idd4fa_searchStatus",
-	"root": "Idd4fa_root",
-	"sectionHeader": "Idd4fa_sectionHeader",
-	"searchInput": "Idd4fa_searchInput",
-	"searchSlot": "Idd4fa_searchSlot",
+	"sectionLabelHidden": "Idd4fa_sectionLabelHidden",
+	"search": "Idd4fa_search",
+	"wide-in": "Idd4fa_wide-in",
 	"deleteStatus": "Idd4fa_deleteStatus",
+	"searchSlotExpanded": "Idd4fa_searchSlotExpanded",
+	"list": "Idd4fa_list",
+	"groupSection": "Idd4fa_groupSection",
 	"headerActionsHidden": "Idd4fa_headerActionsHidden",
-	"listArea": "Idd4fa_listArea"
+	"workspaceDropAfter": "Idd4fa_workspaceDropAfter",
+	"searchSlot": "Idd4fa_searchSlot",
+	"sectionHeader": "Idd4fa_sectionHeader",
+	"searchExpanded": "Idd4fa_searchExpanded",
+	"searchInput": "Idd4fa_searchInput",
+	"wide": "Idd4fa_wide",
+	"empty": "Idd4fa_empty",
+	"root": "Idd4fa_root",
+	"multirootError": "Idd4fa_multirootError",
+	"clearButton": "Idd4fa_clearButton",
+	"searchStatus": "Idd4fa_searchStatus",
+	"sessionOverflowButton": "Idd4fa_sessionOverflowButton",
+	"renameInput": "Idd4fa_renameInput"
 };
 
 //#endregion
@@ -1224,7 +1575,7 @@ function workspaceGroupHalf(e) {
 	return e.clientY < rect.top + rect.height / 2 ? "before" : "after";
 }
 /** The scrolling session tree; unmounting drops the sessions subscription and expand-all state. */
-function SessionTree({ useSessions, startSession, open, forkSession, workspaces, archivedSessionIds, onRenameRequest, onDeleteRequest, onSessionRename, onSessionArchive, insertWorkspaceBefore, insertSessionBefore, orderBy, groupExpansion, setGroupExpanded, sessionOrderByAccount, sessionUpdatedAtByAccount, syncSessionOrderAccount, setSessionOrder, t }) {
+function SessionTree({ useSessions, startSession, open, forkSession, workspaces, archivedSessionIds, onRenameRequest, onDeleteRequest, onSessionRename, onSessionArchive, insertWorkspaceBefore, insertSessionBefore, orderBy, multirootMetadata, onManageRequest, groupExpansion, setGroupExpanded, sessionOrderByAccount, sessionUpdatedAtByAccount, syncSessionOrderAccount, setSessionOrder, t }) {
 	const list = useSessions((s) => s);
 	const current = list.current;
 	const [expandedSessionGroups, setExpandedSessionGroups] = (0, react.useState)([]);
@@ -1404,6 +1755,7 @@ function SessionTree({ useSessions, startSession, open, forkSession, workspaces,
 						children: [
 							/* @__PURE__ */ (0, react_jsx_runtime.jsx)(ProjectRowItem, {
 								group,
+								multiroot: group.workspaceId === void 0 ? void 0 : multirootMetadata.get(group.workspaceId),
 								t,
 								onToggle: () => {
 									if (group.expanded) setExpandedSessionGroups((keys) => keys.filter((key) => key !== group.key));
@@ -1424,7 +1776,10 @@ function SessionTree({ useSessions, startSession, open, forkSession, workspaces,
 									delete: () => {
 										/* v8 ignore next -- narrowing guard: the actions object exists only for real-workspace groups. */
 										if (group.workspaceId !== void 0) onDeleteRequest(group.workspaceId, group.label);
-									}
+									},
+									...multirootMetadata.has(group.workspaceId) ? { manage: () => {
+										onManageRequest(group.workspaceId);
+									} } : {}
 								}
 							}),
 							(expandedSessionGroups.includes(group.key) ? group.sessions : group.sessions.slice(0, COLLAPSED_SESSION_LIMIT)).map((node) => {
@@ -1673,8 +2028,10 @@ function SearchResults({ useSessions, open, workspaces, archivedSessionIds, quer
 * @param props - composed slot props (shell owner share + store + injected actions).
 * @returns the region element tree.
 */
-function WorkspaceBrowser({ wide, expandSidebar, useSessions, useWorkspaces, useStore, actions, startSession, open, renameSession, forkSession, renameWorkspace, deleteWorkspace, insertWorkspaceBefore, archiveSession, insertSessionBefore, createWorkspace, searchSessions, searchResultLimit, useDirectoryFlow, renderSlot, t }) {
+function WorkspaceBrowser({ wide, expandSidebar, useSessions, useWorkspaces, useStore, actions, startSession, open, renameSession, forkSession, renameWorkspace, deleteWorkspace, insertWorkspaceBefore, archiveSession, insertSessionBefore, createWorkspace, searchSessions, searchResultLimit, multirootEnabled, useDirectoryFlow, renderSlot, t }) {
 	const workspaces = useWorkspaces((state) => state.items);
+	const multirootQuery = useMultirootRecords(multirootEnabled === true);
+	const multirootJoin = (0, react.useMemo)(() => joinMultiroot(workspaces, multirootQuery.records), [multirootQuery.records, workspaces]);
 	const workspacePhase = useWorkspaces((state) => state.phase);
 	const archivedSessionIds = useWorkspaces((state) => state.archivedSessionIds);
 	const directoryFlowAvailable = useDirectoryFlow((occupied) => occupied);
@@ -1709,6 +2066,7 @@ function WorkspaceBrowser({ wide, expandSidebar, useSessions, useWorkspaces, use
 	const [wsPickerOpen, setWsPickerOpen] = (0, react.useState)(false);
 	const wsPlusRef = (0, react.useRef)(null);
 	const composingRef = (0, react.useRef)(false);
+	const [multirootDialogRecord, setMultirootDialogRecord] = (0, react.useState)(void 0);
 	const [searchOnExpand, setSearchOnExpand] = (0, react.useState)(false);
 	(0, react.useEffect)(() => {
 		if (wide && searchOnExpand) {
@@ -1946,33 +2304,52 @@ function WorkspaceBrowser({ wide, expandSidebar, useSessions, useWorkspaces, use
 					}),
 					/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 						className: (0, clsx.default)(WorkspaceBrowser_module_css_default.headerActions, wide && searchExpanded && WorkspaceBrowser_module_css_default.headerActionsHidden),
-						children: [wide && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ViewOptionsMenu, {
-							groupBy,
-							orderBy,
-							onGroupPick: (mode) => {
-								actions.setGroupBy(mode);
-							},
-							onOrderPick: (mode) => {
-								actions.setOrderBy(mode);
-							},
-							t
-						}), directoryFlowAvailable && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_deepseek_ai_dsh_client_ui_primitives.Tooltip, {
-							label: t("workspace.add"),
-							side: "bottom",
-							delayMs: 500,
-							children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("button", {
-								ref: wsPlusRef,
-								type: "button",
-								className: WorkspaceBrowser_module_css_default.iconButton,
-								"aria-label": t("workspace.add"),
-								onClick: () => {
-									setWsPickerOpen((v) => !v);
+						children: [
+							wide && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ViewOptionsMenu, {
+								groupBy,
+								orderBy,
+								onGroupPick: (mode) => {
+									actions.setGroupBy(mode);
 								},
-								children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_deepseek_ai_dsh_client_ui_primitives.IconProjectAddOutline16, { size: wide ? 16 : 18 })
+								onOrderPick: (mode) => {
+									actions.setOrderBy(mode);
+								},
+								t
+							}),
+							directoryFlowAvailable && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_deepseek_ai_dsh_client_ui_primitives.Tooltip, {
+								label: t("workspace.add"),
+								side: "bottom",
+								delayMs: 500,
+								children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("button", {
+									ref: wsPlusRef,
+									type: "button",
+									className: WorkspaceBrowser_module_css_default.iconButton,
+									"aria-label": t("workspace.add"),
+									onClick: () => {
+										setWsPickerOpen((v) => !v);
+									},
+									children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_deepseek_ai_dsh_client_ui_primitives.IconProjectAddOutline16, { size: wide ? 16 : 18 })
+								})
+							}),
+							multirootEnabled === true && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_deepseek_ai_dsh_client_ui_primitives.Tooltip, {
+								label: t("multiroot.add"),
+								side: "bottom",
+								delayMs: 500,
+								children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("button", {
+									type: "button",
+									className: WorkspaceBrowser_module_css_default.iconButton,
+									"aria-label": t("multiroot.add"),
+									disabled: !directoryFlowAvailable || multirootQuery.phase === "error",
+									onClick: () => {
+										setWsPickerOpen(false);
+										setMultirootDialogRecord(null);
+									},
+									children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_deepseek_ai_dsh_client_ui_primitives.IconBranchOutline16, { size: wide ? 16 : 18 })
+								})
 							})
-						})]
+						]
 					}),
-					/* @__PURE__ */ (0, react_jsx_runtime.jsx)(WorkspacePickFlow, {
+					multirootDialogRecord === void 0 && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(WorkspacePickFlow, {
 						t,
 						open: wsPickerOpen,
 						anchorRef: wsPlusRef,
@@ -2009,9 +2386,12 @@ function WorkspaceBrowser({ wide, expandSidebar, useSessions, useWorkspaces, use
 					})
 				})
 			}),
-			/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+			/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 				className: WorkspaceBrowser_module_css_default.listArea,
-				children: wide && (normalizedQuery !== "" ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SearchResults, {
+				children: [wide && multirootQuery.error !== null && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+					className: WorkspaceBrowser_module_css_default.multirootError,
+					children: t("multiroot.unavailable")
+				}), wide && (normalizedQuery !== "" ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SearchResults, {
 					useSessions,
 					open,
 					workspaces,
@@ -2051,6 +2431,11 @@ function WorkspaceBrowser({ wide, expandSidebar, useSessions, useWorkspaces, use
 					insertWorkspaceBefore,
 					insertSessionBefore,
 					orderBy,
+					multirootMetadata: multirootJoin.metadataByWorkspaceId,
+					onManageRequest: (workspaceId) => {
+						const metadata = multirootJoin.metadataByWorkspaceId.get(workspaceId);
+						if (metadata !== void 0) setMultirootDialogRecord(metadata.logical);
+					},
 					t,
 					onRenameRequest: (workspaceId, currentTitle) => {
 						setRenameTarget({
@@ -2067,7 +2452,17 @@ function WorkspaceBrowser({ wide, expandSidebar, useSessions, useWorkspaces, use
 						});
 						setDeleteError(null);
 					}
-				}))
+				}))]
+			}),
+			multirootDialogRecord !== void 0 && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MultirootDialog, {
+				open: true,
+				record: multirootDialogRecord,
+				onClose: () => {
+					setMultirootDialogRecord(void 0);
+				},
+				refresh: multirootQuery.refresh,
+				renderDirectoryFlow: (owner) => renderSlot("sidebar.workspaces.directoryFlow", owner),
+				t
 			}),
 			/* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_deepseek_ai_dsh_client_ui_primitives.Modal, {
 				open: renameTarget !== null,
@@ -2219,7 +2614,7 @@ const zh = {
 	"viewOptions.label": "视图选项",
 	"groupBy.label": "分组方式",
 	"groupBy.workspace": "按工作区",
-	"groupBy.flat": "单列表",
+	"groupBy.flat": "全部会话",
 	"orderBy.label": "排序方式",
 	"orderBy.manual": "手动排序",
 	"orderBy.updated": "最近更新",
@@ -2237,6 +2632,19 @@ const zh = {
 	"search.noMatches": "无匹配会话",
 	"search.hasMore": "仅显示前 {n} 条结果，请缩小搜索范围。",
 	"menu.addWorkspace": "添加工作区…",
+	"multiroot.manage": "管理多根工作区",
+	"multiroot.manage.title": "管理多根工作区",
+	"multiroot.add": "添加多根工作区",
+	"multiroot.create": "创建",
+	"multiroot.delete": "删除多根工作区",
+	"multiroot.addFolder": "添加文件夹…",
+	"multiroot.remove": "移除",
+	"multiroot.primary": "主根",
+	"multiroot.makePrimary": "设“{name}”为主根",
+	"multiroot.alias": "根 {n} 的别名",
+	"multiroot.empty": "至少添加一个文件夹。",
+	"multiroot.unavailable": "多根工作区暂不可用",
+	"multiroot.meta": "{count} 个根 · 主根 {primary}",
 	"picker.loading": "正在加载工作区…",
 	"conflict.named": "已存在名为“{name}”的工作区。",
 	"folderError.title": "无法打开文件夹",
@@ -2283,8 +2691,8 @@ const en = {
 	"section.sessions": "Sessions",
 	"viewOptions.label": "View options",
 	"groupBy.label": "Group by",
-	"groupBy.workspace": "WorkSpace",
-	"groupBy.flat": "In one list",
+	"groupBy.workspace": "By workspace",
+	"groupBy.flat": "All sessions",
 	"orderBy.label": "Order by",
 	"orderBy.manual": "Manual",
 	"orderBy.updated": "Last updated",
@@ -2302,6 +2710,19 @@ const en = {
 	"search.noMatches": "No matching sessions",
 	"search.hasMore": "Showing the first {n} results. Narrow your search.",
 	"menu.addWorkspace": "Add workspace…",
+	"multiroot.manage": "Manage multiroot workspace",
+	"multiroot.manage.title": "Manage multiroot workspace",
+	"multiroot.add": "Add multiroot workspace",
+	"multiroot.create": "Create",
+	"multiroot.delete": "Delete multiroot workspace",
+	"multiroot.addFolder": "Add folder…",
+	"multiroot.remove": "Remove",
+	"multiroot.primary": "Primary",
+	"multiroot.makePrimary": "Make {name} primary",
+	"multiroot.alias": "Alias for root {n}",
+	"multiroot.empty": "Add at least one folder.",
+	"multiroot.unavailable": "Multiroot workspaces are unavailable",
+	"multiroot.meta": "{count} roots · primary {primary}",
 	"picker.loading": "Loading workspaces…",
 	"conflict.named": "A workspace named “{name}” already exists.",
 	"folderError.title": "Couldn’t open folder",
@@ -2365,7 +2786,7 @@ const inject = [
 * framework's global hooks.
 * @param ctx - client root context.
 */
-function apply(ctx) {
+function apply$1(ctx, options = {}) {
 	ctx.effect(() => ctx.locale.register(NS, {
 		zh,
 		en
@@ -2382,6 +2803,7 @@ function apply(ctx) {
 	const browserFlowSource = flowSource("sidebar.workspaces.directoryFlow");
 	const pickerFlowSource = flowSource("conversation.hero.workspace.directoryFlow");
 	const browserInjected = () => ({
+		...options.multiroot === true ? { multirootEnabled: true } : {},
 		startSession: (workspaceId) => {
 			ctx.workspaces.startSession(workspaceId);
 		},
@@ -2423,6 +2845,7 @@ function apply(ctx) {
 		hooks: { directoryFlow: browserFlowSource }
 	});
 	const pickerInjected = () => ({
+		...options.multiroot === true ? { multirootEnabled: true } : {},
 		createWorkspace: (input) => ctx.workspaces.create(input),
 		hooks: { directoryFlow: pickerFlowSource }
 	});
@@ -2445,6 +2868,13 @@ function apply(ctx) {
 		inject: pickerInjected,
 		locale: NS
 	}, WorkspacePicker));
+}
+
+//#endregion
+//#region src/client/index.ts
+/** Register the stock Workspace UI with the external multiroot extension enabled. */
+function apply(ctx) {
+	apply$1(ctx, { multiroot: true });
 }
 
 //#endregion

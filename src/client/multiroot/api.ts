@@ -68,26 +68,30 @@ export interface MultirootQuery {
   phase: 'loading' | 'ready' | 'error'
   records: readonly MultirootWorkspaceRecord[]
   error: string | null
-  refresh: () => void
+  refresh: () => Promise<void>
 }
 
 /** Load logical Workspace records while retaining the last ready snapshot after a failed refresh. */
-export function useMultirootRecords(): MultirootQuery {
+export function useMultirootRecords(enabled = true): MultirootQuery {
   const [state, setState] = useState<Omit<MultirootQuery, 'refresh'>>({
-    phase: 'loading',
+    phase: enabled ? 'loading' : 'ready',
     records: [],
     error: null,
   })
-  const refresh = useCallback(() => {
-    void multirootApi.list().then(
-      records => setState({ phase: 'ready', records, error: null }),
-      (cause: unknown) => setState(previous => ({
+  const refresh = useCallback(async () => {
+    if (!enabled) return
+    try {
+      const records = await multirootApi.list()
+      setState({ phase: 'ready', records, error: null })
+    } catch (cause) {
+      setState(previous => ({
         phase: 'error',
         records: previous.records,
         error: cause instanceof Error ? cause.message : String(cause),
-      })),
-    )
-  }, [])
-  useEffect(refresh, [refresh])
+      }))
+      throw cause
+    }
+  }, [enabled])
+  useEffect(() => { void refresh().catch(() => {}) }, [refresh])
   return { ...state, refresh }
 }
