@@ -13,6 +13,7 @@
     "exactOptionalPropertyTypes": true,
     "verbatimModuleSyntax": true,
     "allowImportingTsExtensions": true,
+    "allowJs": true,
     "noEmit": true,
     "skipLibCheck": true,
     "types": ["node"]
