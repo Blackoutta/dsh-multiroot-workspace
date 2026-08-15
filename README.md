@@ -14,10 +14,12 @@ pnpm run test
 pnpm run typecheck
 pnpm run build
 pnpm exec playwright install chromium
-DSH_WEB_URL=http://127.0.0.1:3090 pnpm run test:browser
+pnpm run test:browser
 ```
 
-The browser check expects an installed profile containing this bundle to be running at `DSH_WEB_URL`. It creates and removes its own temporary logical Workspace and root directories.
+The browser check packs the current plugin, creates an isolated temporary DSH home, installs it through the exact public `@deepseek-ai/dsh@0.1.0-rc.6` CLI, and starts Web on a random loopback port. It exercises the public UI with stable fixture titles, aliases, and path suffixes, then stops the server and removes the temporary profile and directories in `finally`; no sibling Harness checkout or manually managed `DSH_WEB_URL` is used.
+
+The check writes ten review screenshots under `tests/browser/screenshots/`: light and dark variants of the wide sidebar, rail, create dialog, manage dialog, and Hero picker. Runtime directories remain exclusive temporary paths, while their visible screenshot text is normalized to a stable display prefix. These generated PNGs are local review artifacts and are intentionally not staged with release commits; the directory itself is retained by `.gitkeep`.
 
 The Host API is served under `/plugins/multiroot/api`. Creating a logical Workspace immediately creates or adopts its primary Host Workspace and returns `shadowWorkspaceId`. The browser joins logical metadata by that id and leaves the stock Workspace list authoritative for Session membership, search, grouping, ordering, and selection.
 
