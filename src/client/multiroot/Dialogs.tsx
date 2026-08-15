@@ -90,6 +90,8 @@ export function MultirootDialog({ open, record, onClose, refresh, renderDirector
         onClose={() => { if (!saving) onClose() }}
         closeLabel={t('close')}
         title={record === null ? t('multiroot.add') : t('multiroot.manage.title')}
+        className={css.dialog!}
+        contentClassName={css.dialogContent!}
         footer={(
           <>
             {record !== null && (
@@ -114,32 +116,46 @@ export function MultirootDialog({ open, record, onClose, refresh, renderDirector
             <input className={css.input} aria-label={t('field.workspaceName')} value={title}
               onChange={event => { setTitle(event.target.value) }} />
           </label>
-          <div className={css.roots}>
-            {roots.map((root, index) => (
-              <div className={css.rootRow} key={`${root.path}:${index}`}>
-                <input className={css.input} aria-label={t('multiroot.alias', { n: index + 1 })}
-                  value={root.alias} onChange={event => {
-                    const alias = event.target.value
-                    setRoots(current => current.map((item, candidate) => candidate === index ? { ...item, alias } : item))
-                  }} />
-                <span className={css.rootPath} title={root.path}>{root.path}</span>
-                <span className={css.rootActions}>
-                  {root.primary
-                    ? <span className={css.primary}>{t('multiroot.primary')}</span>
-                    : <Button variant="ghost" disabled={saving} onClick={() => {
-                      setRoots(current => current.map((item, candidate) => ({ ...item, primary: candidate === index })))
-                    }}>{t('multiroot.makePrimary', { name: root.alias })}</Button>}
-                  <Button variant="ghost" disabled={saving || roots.length === 1} onClick={() => { remove(index) }}>
-                    {t('multiroot.remove')}
-                  </Button>
-                </span>
-              </div>
-            ))}
-            {roots.length === 0 && <span className={css.hint}>{t('multiroot.empty')}</span>}
-            <Button variant="outline" disabled={saving || picking} onClick={() => { setPicking(true) }}>
-              {t('multiroot.addFolder')}
-            </Button>
+          <div className={css.rootList}>
+            <div className={css.rootListHeader}>
+              <span>{t('multiroot.roots')}</span>
+              <span>{t('multiroot.rootCount', { count: roots.length })}</span>
+            </div>
+            <div className={css.rootScroller} role="region" aria-label={t('multiroot.roots')}>
+              {roots.map((root, index) => (
+                <div className={css.rootRow} key={`${root.path}:${index}`}>
+                  <div className={css.rootFields}>
+                    <label className={css.field}>
+                      {t('multiroot.directoryName')}
+                      <input className={css.input} aria-label={t('multiroot.alias', { n: index + 1 })}
+                        value={root.alias} onChange={event => {
+                          const alias = event.target.value
+                          setRoots(current => current.map((item, candidate) => candidate === index ? { ...item, alias } : item))
+                        }} />
+                    </label>
+                    <div className={css.field}>
+                      {t('multiroot.directoryPath')}
+                      <span className={css.rootPath} title={root.path}>{root.path}</span>
+                    </div>
+                  </div>
+                  <div className={css.rootActions}>
+                    {root.primary
+                      ? <span className={css.primary}><span className={css.radioSelected} aria-hidden="true" />{t('multiroot.currentPrimary')}</span>
+                      : <Button variant="ghost" size="sm" disabled={saving} onClick={() => {
+                        setRoots(current => current.map((item, candidate) => ({ ...item, primary: candidate === index })))
+                      }}><span className={css.makePrimary}><span className={css.radio} aria-hidden="true" />{t('multiroot.makePrimary', { name: root.alias })}</span></Button>}
+                    <Button className={css.removeButton} variant="ghost" size="sm" disabled={saving || roots.length === 1} onClick={() => { remove(index) }}>
+                      {t('multiroot.remove')}
+                    </Button>
+                  </div>
+                </div>
+              ))}
+              {roots.length === 0 && <span className={css.hint}>{t('multiroot.empty')}</span>}
+            </div>
           </div>
+          <Button variant="outline" disabled={saving || picking} onClick={() => { setPicking(true) }}>
+            {t('multiroot.addFolder')}
+          </Button>
           {error !== null && <div className={css.error}>{error}</div>}
         </div>
       </Modal>

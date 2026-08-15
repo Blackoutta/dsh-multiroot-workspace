@@ -350,42 +350,42 @@ if (typeof document !== "undefined" && document.querySelector("style[data-plugin
 	document.head.appendChild(tag);
 }
 var Rows_module_css_default = {
-	"sessionRow": "Xn98xq_sessionRow",
-	"arrowOpen": "Xn98xq_arrowOpen",
-	"rowActions": "Xn98xq_rowActions",
-	"hoverPath": "Xn98xq_hoverPath",
-	"chevron": "Xn98xq_chevron",
-	"hoverTitle": "Xn98xq_hoverTitle",
+	"searchResultWorkspace": "Xn98xq_searchResultWorkspace",
 	"searchResultTitle": "Xn98xq_searchResultTitle",
-	"searchResultHeading": "Xn98xq_searchResultHeading",
-	"projectMeta": "Xn98xq_projectMeta",
 	"flatSessionRowWithoutStatus": "Xn98xq_flatSessionRowWithoutStatus",
-	"folder": "Xn98xq_folder",
-	"meta": "Xn98xq_meta",
-	"title": "Xn98xq_title",
 	"searchResultRow": "Xn98xq_searchResultRow",
 	"searchResultSnippet": "Xn98xq_searchResultSnippet",
-	"dot": "Xn98xq_dot",
-	"searchResultWorkspace": "Xn98xq_searchResultWorkspace",
-	"renameInput": "Xn98xq_renameInput",
-	"searchResultMeta": "Xn98xq_searchResultMeta",
-	"projectRow": "Xn98xq_projectRow",
-	"time": "Xn98xq_time",
-	"dropAfter": "Xn98xq_dropAfter",
-	"iconButton": "Xn98xq_iconButton",
-	"row-in": "Xn98xq_row-in",
-	"hoverContent": "Xn98xq_hoverContent",
+	"meta": "Xn98xq_meta",
 	"hoverTime": "Xn98xq_hoverTime",
-	"menuOpen": "Xn98xq_menuOpen",
-	"dropBefore": "Xn98xq_dropBefore",
+	"rowActions": "Xn98xq_rowActions",
 	"projectRowMultiroot": "Xn98xq_projectRowMultiroot",
-	"projectText": "Xn98xq_projectText",
-	"visuallyHidden": "Xn98xq_visuallyHidden",
-	"folderActive": "Xn98xq_folderActive",
-	"arrow": "Xn98xq_arrow",
-	"selected": "Xn98xq_selected",
+	"dot": "Xn98xq_dot",
+	"folder": "Xn98xq_folder",
+	"renameInput": "Xn98xq_renameInput",
 	"slot": "Xn98xq_slot",
-	"hoverStatus": "Xn98xq_hoverStatus"
+	"sessionRow": "Xn98xq_sessionRow",
+	"iconButton": "Xn98xq_iconButton",
+	"time": "Xn98xq_time",
+	"hoverPath": "Xn98xq_hoverPath",
+	"dropAfter": "Xn98xq_dropAfter",
+	"projectText": "Xn98xq_projectText",
+	"arrowOpen": "Xn98xq_arrowOpen",
+	"projectMeta": "Xn98xq_projectMeta",
+	"chevron": "Xn98xq_chevron",
+	"hoverStatus": "Xn98xq_hoverStatus",
+	"projectRow": "Xn98xq_projectRow",
+	"hoverContent": "Xn98xq_hoverContent",
+	"title": "Xn98xq_title",
+	"row-in": "Xn98xq_row-in",
+	"dropBefore": "Xn98xq_dropBefore",
+	"selected": "Xn98xq_selected",
+	"visuallyHidden": "Xn98xq_visuallyHidden",
+	"menuOpen": "Xn98xq_menuOpen",
+	"folderActive": "Xn98xq_folderActive",
+	"searchResultMeta": "Xn98xq_searchResultMeta",
+	"hoverTitle": "Xn98xq_hoverTitle",
+	"searchResultHeading": "Xn98xq_searchResultHeading",
+	"arrow": "Xn98xq_arrow"
 };
 
 //#endregion
@@ -923,7 +923,7 @@ function joinMultiroot(workspaces, records) {
 
 //#endregion
 //#region \0dsh-css:/Users/yang/Desktop/projects/deepseek-harness/tmp/logical-workspace/dsh-multiroot-workspace/src/client/multiroot/Dialogs.module.css.mjs
-const css$2 = "._1NmraW_form{flex-direction:column;gap:16px;width:100%;min-width:0;display:flex}._1NmraW_field{color:var(--dsw-alias-label-primary);flex-direction:column;gap:6px;font-size:13px;display:flex}._1NmraW_input{box-sizing:border-box;border:1px solid var(--dsw-alias-border-l2);background:var(--dsw-alias-button-elevated-fill);width:100%;color:var(--dsw-alias-label-primary);font:inherit;border-radius:8px;outline:none;padding:8px 10px}._1NmraW_input:focus{border-color:var(--dsw-alias-state-business-primary)}._1NmraW_roots{flex-direction:column;gap:8px;display:flex}._1NmraW_rootRow{border:1px solid var(--dsw-alias-border-l2);border-radius:10px;grid-template-columns:90px minmax(0,1fr);align-items:center;gap:8px;padding:8px;display:grid}._1NmraW_rootPath{text-overflow:ellipsis;white-space:nowrap;min-width:0;color:var(--dsw-alias-label-secondary);font-size:12px;overflow:hidden}._1NmraW_rootActions{grid-column:1/-1;justify-content:flex-end;align-items:center;gap:6px;display:flex}._1NmraW_primary{color:var(--dsw-alias-state-business-primary);white-space:nowrap;font-size:12px}._1NmraW_error{color:var(--dsw-alias-state-error-primary);font-size:12px}._1NmraW_hint{color:var(--dsw-alias-label-tertiary);font-size:12px}";
+const css$2 = "._1NmraW_dialog{width:min(760px,100%);max-height:calc(100dvh - 48px)}._1NmraW_dialogContent{min-height:0}._1NmraW_form{flex-direction:column;gap:16px;width:100%;min-width:0;display:flex}._1NmraW_field{color:var(--dsw-alias-label-primary);flex-direction:column;gap:6px;font-size:13px;display:flex}._1NmraW_input{box-sizing:border-box;border:1px solid var(--dsw-alias-border-l2);background:var(--dsw-alias-button-elevated-fill);width:100%;color:var(--dsw-alias-label-primary);font:inherit;border-radius:8px;outline:none;padding:8px 10px}._1NmraW_input:focus{border-color:var(--dsw-alias-state-business-primary)}._1NmraW_rootList{border-block:1px solid var(--dsw-alias-border-l2);min-height:0;overflow:hidden}._1NmraW_rootListHeader{color:var(--dsw-alias-label-tertiary);justify-content:space-between;padding:8px 4px;font-size:12px;display:flex}._1NmraW_rootScroller{overscroll-behavior:contain;scrollbar-gutter:stable;flex-direction:column;gap:8px;max-height:clamp(160px,100dvh - 390px,390px);padding:0 4px 8px;display:flex;overflow-y:auto}._1NmraW_rootRow{border:1px solid var(--dsw-alias-border-l2);background:var(--dsw-alias-bg-layer-1);border-radius:12px;padding:12px}._1NmraW_rootFields{grid-template-columns:minmax(180px,.7fr) minmax(260px,1.3fr);gap:12px;display:grid}._1NmraW_rootPath{overflow-wrap:anywhere;border:1px solid var(--dsw-alias-border-l2);background:var(--dsw-alias-bg-layer-2);min-width:0;min-height:36px;color:var(--dsw-alias-label-secondary);user-select:text;border-radius:8px;padding:8px 10px;font-size:12px;line-height:18px;display:block}._1NmraW_rootActions{justify-content:space-between;align-items:center;gap:8px;margin-top:10px;display:flex}._1NmraW_primary,._1NmraW_makePrimary{align-items:center;gap:7px;font-size:12px;display:inline-flex}._1NmraW_primary{color:var(--dsw-alias-label-primary)}._1NmraW_radio,._1NmraW_radioSelected{border:1px solid var(--dsw-alias-border-l1);border-radius:50%;width:14px;height:14px}._1NmraW_radioSelected{border:4px solid var(--dsw-alias-state-business-primary)}._1NmraW_removeButton{color:var(--dsw-alias-state-error-primary);margin-left:auto}._1NmraW_error{color:var(--dsw-alias-state-error-primary);font-size:12px}._1NmraW_hint{color:var(--dsw-alias-label-tertiary);font-size:12px}@media (width<=680px){._1NmraW_rootFields{grid-template-columns:1fr}}";
 const tagId$2 = "dsh-multiroot-workspace/Dialogs.module.css";
 if (typeof document !== "undefined" && document.querySelector("style[data-plugin-css=" + JSON.stringify(tagId$2) + "]") === null) {
 	const tag = document.createElement("style");
@@ -933,16 +933,25 @@ if (typeof document !== "undefined" && document.querySelector("style[data-plugin
 	document.head.appendChild(tag);
 }
 var Dialogs_module_css_default = {
-	"form": "_1NmraW_form",
-	"primary": "_1NmraW_primary",
-	"error": "_1NmraW_error",
-	"roots": "_1NmraW_roots",
-	"rootActions": "_1NmraW_rootActions",
-	"rootRow": "_1NmraW_rootRow",
-	"field": "_1NmraW_field",
-	"rootPath": "_1NmraW_rootPath",
+	"dialogContent": "_1NmraW_dialogContent",
 	"input": "_1NmraW_input",
-	"hint": "_1NmraW_hint"
+	"makePrimary": "_1NmraW_makePrimary",
+	"radio": "_1NmraW_radio",
+	"rootFields": "_1NmraW_rootFields",
+	"rootList": "_1NmraW_rootList",
+	"dialog": "_1NmraW_dialog",
+	"radioSelected": "_1NmraW_radioSelected",
+	"primary": "_1NmraW_primary",
+	"rootPath": "_1NmraW_rootPath",
+	"rootActions": "_1NmraW_rootActions",
+	"form": "_1NmraW_form",
+	"rootListHeader": "_1NmraW_rootListHeader",
+	"rootScroller": "_1NmraW_rootScroller",
+	"error": "_1NmraW_error",
+	"hint": "_1NmraW_hint",
+	"removeButton": "_1NmraW_removeButton",
+	"rootRow": "_1NmraW_rootRow",
+	"field": "_1NmraW_field"
 };
 
 //#endregion
@@ -1032,6 +1041,8 @@ function MultirootDialog({ open, record, onClose, refresh, renderDirectoryFlow, 
 		},
 		closeLabel: t("close"),
 		title: record === null ? t("multiroot.add") : t("multiroot.manage.title"),
+		className: Dialogs_module_css_default.dialog,
+		contentClassName: Dialogs_module_css_default.dialogContent,
 		footer: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [
 			record !== null && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_deepseek_ai_dsh_client_ui_primitives.Button, {
 				variant: "outline",
@@ -1075,67 +1086,89 @@ function MultirootDialog({ open, record, onClose, refresh, renderDirectoryFlow, 
 					})]
 				}),
 				/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
-					className: Dialogs_module_css_default.roots,
-					children: [
-						roots.map((root, index) => /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
+					className: Dialogs_module_css_default.rootList,
+					children: [/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
+						className: Dialogs_module_css_default.rootListHeader,
+						children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", { children: t("multiroot.roots") }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", { children: t("multiroot.rootCount", { count: roots.length }) })]
+					}), /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
+						className: Dialogs_module_css_default.rootScroller,
+						role: "region",
+						"aria-label": t("multiroot.roots"),
+						children: [roots.map((root, index) => /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 							className: Dialogs_module_css_default.rootRow,
-							children: [
-								/* @__PURE__ */ (0, react_jsx_runtime.jsx)("input", {
-									className: Dialogs_module_css_default.input,
-									"aria-label": t("multiroot.alias", { n: index + 1 }),
-									value: root.alias,
-									onChange: (event) => {
-										const alias = event.target.value;
-										setRoots((current) => current.map((item, candidate) => candidate === index ? {
-											...item,
-											alias
-										} : item));
-									}
-								}),
-								/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
-									className: Dialogs_module_css_default.rootPath,
-									title: root.path,
-									children: root.path
-								}),
-								/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("span", {
-									className: Dialogs_module_css_default.rootActions,
-									children: [root.primary ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
-										className: Dialogs_module_css_default.primary,
-										children: t("multiroot.primary")
-									}) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_deepseek_ai_dsh_client_ui_primitives.Button, {
-										variant: "ghost",
-										disabled: saving,
-										onClick: () => {
-											setRoots((current) => current.map((item, candidate) => ({
+							children: [/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
+								className: Dialogs_module_css_default.rootFields,
+								children: [/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("label", {
+									className: Dialogs_module_css_default.field,
+									children: [t("multiroot.directoryName"), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("input", {
+										className: Dialogs_module_css_default.input,
+										"aria-label": t("multiroot.alias", { n: index + 1 }),
+										value: root.alias,
+										onChange: (event) => {
+											const alias = event.target.value;
+											setRoots((current) => current.map((item, candidate) => candidate === index ? {
 												...item,
-												primary: candidate === index
-											})));
-										},
-										children: t("multiroot.makePrimary", { name: root.alias })
-									}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_deepseek_ai_dsh_client_ui_primitives.Button, {
-										variant: "ghost",
-										disabled: saving || roots.length === 1,
-										onClick: () => {
-											remove(index);
-										},
-										children: t("multiroot.remove")
+												alias
+											} : item));
+										}
 									})]
-								})
-							]
-						}, `${root.path}:${index}`)),
-						roots.length === 0 && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
+								}), /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
+									className: Dialogs_module_css_default.field,
+									children: [t("multiroot.directoryPath"), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
+										className: Dialogs_module_css_default.rootPath,
+										title: root.path,
+										children: root.path
+									})]
+								})]
+							}), /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
+								className: Dialogs_module_css_default.rootActions,
+								children: [root.primary ? /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("span", {
+									className: Dialogs_module_css_default.primary,
+									children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
+										className: Dialogs_module_css_default.radioSelected,
+										"aria-hidden": "true"
+									}), t("multiroot.currentPrimary")]
+								}) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_deepseek_ai_dsh_client_ui_primitives.Button, {
+									variant: "ghost",
+									size: "sm",
+									disabled: saving,
+									onClick: () => {
+										setRoots((current) => current.map((item, candidate) => ({
+											...item,
+											primary: candidate === index
+										})));
+									},
+									children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("span", {
+										className: Dialogs_module_css_default.makePrimary,
+										children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
+											className: Dialogs_module_css_default.radio,
+											"aria-hidden": "true"
+										}), t("multiroot.makePrimary", { name: root.alias })]
+									})
+								}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_deepseek_ai_dsh_client_ui_primitives.Button, {
+									className: Dialogs_module_css_default.removeButton,
+									variant: "ghost",
+									size: "sm",
+									disabled: saving || roots.length === 1,
+									onClick: () => {
+										remove(index);
+									},
+									children: t("multiroot.remove")
+								})]
+							})]
+						}, `${root.path}:${index}`)), roots.length === 0 && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
 							className: Dialogs_module_css_default.hint,
 							children: t("multiroot.empty")
-						}),
-						/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_deepseek_ai_dsh_client_ui_primitives.Button, {
-							variant: "outline",
-							disabled: saving || picking,
-							onClick: () => {
-								setPicking(true);
-							},
-							children: t("multiroot.addFolder")
-						})
-					]
+						})]
+					})]
+				}),
+				/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_deepseek_ai_dsh_client_ui_primitives.Button, {
+					variant: "outline",
+					disabled: saving || picking,
+					onClick: () => {
+						setPicking(true);
+					},
+					children: t("multiroot.addFolder")
 				}),
 				error !== null && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 					className: Dialogs_module_css_default.error,
@@ -1169,8 +1202,8 @@ if (typeof document !== "undefined" && document.querySelector("style[data-plugin
 	document.head.appendChild(tag);
 }
 var WorkspacePicker_module_css_default = {
-	"modalAction": "zHy4Zq_modalAction",
 	"modalError": "zHy4Zq_modalError",
+	"modalAction": "zHy4Zq_modalAction",
 	"menuStatus": "zHy4Zq_menuStatus"
 };
 
@@ -1341,43 +1374,43 @@ if (typeof document !== "undefined" && document.querySelector("style[data-plugin
 	document.head.appendChild(tag);
 }
 var WorkspaceBrowser_module_css_default = {
-	"searchExpanded": "Idd4fa_searchExpanded",
-	"searchInput": "Idd4fa_searchInput",
-	"searchTree": "Idd4fa_searchTree",
-	"searchSlotExpanded": "Idd4fa_searchSlotExpanded",
-	"searchSlot": "Idd4fa_searchSlot",
-	"list": "Idd4fa_list",
-	"groupSection": "Idd4fa_groupSection",
-	"fade": "Idd4fa_fade",
-	"renameInput": "Idd4fa_renameInput",
-	"search": "Idd4fa_search",
-	"root": "Idd4fa_root",
-	"iconButton": "Idd4fa_iconButton",
 	"listArea": "Idd4fa_listArea",
 	"searchWarning": "Idd4fa_searchWarning",
-	"empty": "Idd4fa_empty",
-	"sectionHeader": "Idd4fa_sectionHeader",
-	"deleteStatus": "Idd4fa_deleteStatus",
-	"rail": "Idd4fa_rail",
-	"deleteAction": "Idd4fa_deleteAction",
-	"sectionLabel": "Idd4fa_sectionLabel",
-	"headerActions": "Idd4fa_headerActions",
-	"clearButton": "Idd4fa_clearButton",
-	"wide-in": "Idd4fa_wide-in",
+	"workspaceDropBefore": "Idd4fa_workspaceDropBefore",
 	"sessionOverflowButton": "Idd4fa_sessionOverflowButton",
-	"sectionLabelHidden": "Idd4fa_sectionLabelHidden",
-	"searchStatus": "Idd4fa_searchStatus",
-	"wide": "Idd4fa_wide",
-	"workspaceDropAfter": "Idd4fa_workspaceDropAfter",
+	"treeBody": "Idd4fa_treeBody",
+	"flatList": "Idd4fa_flatList",
+	"list": "Idd4fa_list",
+	"searchTree": "Idd4fa_searchTree",
 	"listTopDropIndicator": "Idd4fa_listTopDropIndicator",
-	"listTopDropActive": "Idd4fa_listTopDropActive",
+	"sectionHeader": "Idd4fa_sectionHeader",
+	"searchSlotExpanded": "Idd4fa_searchSlotExpanded",
+	"searchSlot": "Idd4fa_searchSlot",
+	"searchInput": "Idd4fa_searchInput",
+	"rail": "Idd4fa_rail",
+	"groupSection": "Idd4fa_groupSection",
+	"fade": "Idd4fa_fade",
+	"clearButton": "Idd4fa_clearButton",
+	"searchStatus": "Idd4fa_searchStatus",
+	"sectionLabel": "Idd4fa_sectionLabel",
+	"iconButton": "Idd4fa_iconButton",
+	"workspaceDropAfter": "Idd4fa_workspaceDropAfter",
+	"sectionLabelHidden": "Idd4fa_sectionLabelHidden",
+	"renameInput": "Idd4fa_renameInput",
 	"renameError": "Idd4fa_renameError",
 	"headerActionsHidden": "Idd4fa_headerActionsHidden",
-	"treeBody": "Idd4fa_treeBody",
+	"root": "Idd4fa_root",
 	"multirootError": "Idd4fa_multirootError",
 	"searchButton": "Idd4fa_searchButton",
-	"flatList": "Idd4fa_flatList",
-	"workspaceDropBefore": "Idd4fa_workspaceDropBefore"
+	"deleteAction": "Idd4fa_deleteAction",
+	"searchExpanded": "Idd4fa_searchExpanded",
+	"wide-in": "Idd4fa_wide-in",
+	"empty": "Idd4fa_empty",
+	"wide": "Idd4fa_wide",
+	"deleteStatus": "Idd4fa_deleteStatus",
+	"headerActions": "Idd4fa_headerActions",
+	"search": "Idd4fa_search",
+	"listTopDropActive": "Idd4fa_listTopDropActive"
 };
 
 //#endregion
@@ -2629,8 +2662,13 @@ const zh = {
 	"multiroot.addFolder": "添加文件夹…",
 	"multiroot.remove": "移除",
 	"multiroot.primary": "主根",
+	"multiroot.currentPrimary": "当前主根",
 	"multiroot.makePrimary": "设“{name}”为主根",
 	"multiroot.alias": "根 {n} 的别名",
+	"multiroot.roots": "根目录",
+	"multiroot.rootCount": "{count} 个",
+	"multiroot.directoryName": "目录名称",
+	"multiroot.directoryPath": "目录路径",
 	"multiroot.empty": "至少添加一个文件夹。",
 	"multiroot.unavailable": "多根工作区暂不可用",
 	"multiroot.meta": "{count} 个根 · 主根 {primary}",
@@ -2707,8 +2745,13 @@ const en = {
 	"multiroot.addFolder": "Add folder…",
 	"multiroot.remove": "Remove",
 	"multiroot.primary": "Primary",
+	"multiroot.currentPrimary": "Current primary",
 	"multiroot.makePrimary": "Make {name} primary",
 	"multiroot.alias": "Alias for root {n}",
+	"multiroot.roots": "Root directories",
+	"multiroot.rootCount": "{count}",
+	"multiroot.directoryName": "Directory name",
+	"multiroot.directoryPath": "Directory path",
 	"multiroot.empty": "Add at least one folder.",
 	"multiroot.unavailable": "Multiroot workspaces are unavailable",
 	"multiroot.meta": "{count} roots · primary {primary}",

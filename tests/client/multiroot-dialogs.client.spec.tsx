@@ -6,6 +6,7 @@ import { zh as commonZh } from '@deepseek-ai/dsh-client-locale/src/locales/zh.ts
 import type { DirectoryFlowOwnerProps } from '../../src/client/upstream/contract/slots.ts'
 import { zh } from '../../src/client/upstream/locales.ts'
 import { MultirootDialog } from '../../src/client/multiroot/Dialogs.tsx'
+import type { MultirootWorkspaceRecord } from '../../src/client/multiroot/types.ts'
 
 afterEach(() => {
   cleanup()
@@ -15,6 +16,42 @@ afterEach(() => {
 const t = makeTranslate(zh, commonZh) as never
 
 describe('MultirootDialog', () => {
+  it('shows complete root fields inside a named list', () => {
+    const paths = [
+      '/Users/yang/Desktop/projects/deepseek-harness',
+      '/Users/yang/Desktop/projects/dify-log-consumer',
+      '/Users/yang/Desktop/projects/dify-sandbox',
+      '/Users/yang/Desktop/projects/deepseek-harness/website',
+      '/Users/yang/Desktop/projects/deepseek-harness/tests/integration/fixtures/multiroot-workspace',
+    ]
+    const record: MultirootWorkspaceRecord = {
+      id: 'logical-1',
+      title: 'product',
+      roots: paths.map((path, index) => ({
+        alias: ['deepseek-harness', 'dify-log-consumer', 'dify-sandbox', 'website', 'integration-fixtures'][index]!,
+        path,
+        primary: index === 0,
+      })),
+      shadowWorkspaceId: 'shadow-1',
+      createdAt: '2026-08-15T00:00:00.000Z',
+      updatedAt: '2026-08-15T00:00:00.000Z',
+    }
+
+    render(<MultirootDialog
+      open
+      record={record}
+      onClose={vi.fn()}
+      refresh={vi.fn(async () => undefined)}
+      renderDirectoryFlow={() => null}
+      t={t}
+    />)
+
+    expect(screen.getByRole('region', { name: '根目录' })).toBeTruthy()
+    for (const path of paths) expect(screen.getByText(path)).toBeTruthy()
+    expect(screen.getByText('当前主根')).toBeTruthy()
+    expect(screen.getByRole('button', { name: '设“dify-log-consumer”为主根' })).toBeTruthy()
+  })
+
   it('derives the initial name and preserves the draft when creation fails', async () => {
     let flow: DirectoryFlowOwnerProps | undefined
     vi.stubGlobal('fetch', vi.fn(async () => ({
@@ -40,6 +77,6 @@ describe('MultirootDialog', () => {
 
     expect(await screen.findByText('primary root is already owned')).toBeTruthy()
     expect(screen.getByLabelText('工作区名称')).toHaveProperty('value', 'app')
-    await waitFor(() => { expect(screen.getByText('主根')).toBeTruthy() })
+    await waitFor(() => { expect(screen.getByText('当前主根')).toBeTruthy() })
   })
 })

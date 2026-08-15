@@ -22,6 +22,7 @@ The Host API is served under `/plugins/multiroot/api`. Creating a logical Worksp
 - **按工作区** shows ordinary and logical Workspace project rows. Logical rows add the root count and primary alias.
 - **全部会话** is the stock flat view: it hides project rows and shows every visible Session once.
 - The branch icon in the Workspace header opens multiroot creation. A logical Workspace row's existing action menu opens management.
+- The management dialog shows complete directory names and paths in a two-column layout. When a Workspace has many roots, only the root list scrolls; the name field, add action, and footer remain fixed.
 - Forms use Harness Modal, Button, icon, and theme primitives; no Unicode folder/archive icons are rendered.
 
 Before uninstalling, call `DELETE /plugins/multiroot/api/data` to remove logical records and plugin-owned shadows. Adopted user Workspaces are preserved.
