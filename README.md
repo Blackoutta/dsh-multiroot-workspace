@@ -21,6 +21,18 @@ The Host API is served under `/plugins/multiroot/api`. Creating a logical Worksp
 
 The selection table is additive within storage-domain version 4. Harness rc.6 has no domain migration API and rejects a changed version stamp, while its supported backends safely materialize a newly declared table at the existing version; this preserves previously stored logical Workspaces.
 
+## Model tools and permissions
+
+Sessions opened in a logical Workspace receive these tools:
+
+- `ws_list` lists aliases, canonical paths, and the primary/current markers.
+- `ws_cd` changes the plugin-owned current alias for that Session.
+- `ws_read`, `ws_write`, and `ws_edit` access a root-relative text file. The tools reject lexical traversal and canonical targets outside the selected root (including symlink escapes); reads are limited to 1 MiB. Mutations use the Harness read-before-write/version waterfalls and publish `fs/observed` events.
+- `ws_glob` and `ws_grep` run ripgrep inside the selected root and cap output at 200 lines. Ripgrep exit 1 is an empty result; real command failures and cancellation are surfaced.
+- `ws_bash` runs in one selected root by default and passes that exact root to the active sandbox policy. `workdir` cannot escape the selected root.
+
+`crossRootBash` controls an explicit non-empty `roots` list. The default, `off`, rejects multiple roots. `ancestor` fences the process to their tightest common ancestor, which can expose sibling content below that ancestor. `unfenced` requests `danger-full-access` with no `workspaceRoot`; enable it only when the deployment deliberately accepts unrestricted host access. Unknown aliases are always rejected before a shell process starts.
+
 ## UI behavior
 
 - **按工作区** shows ordinary and logical Workspace project rows. Logical rows add the root count and primary alias.

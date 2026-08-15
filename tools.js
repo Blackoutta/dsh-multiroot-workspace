@@ -128,6 +128,33 @@ ${verb}
 </content>`
 }
 
+/** Treat only ripgrep's clean and no-match outcomes as successful. */
+function assertSearchSucceeded(result) {
+  const detail = result.stderr.text.trim()
+  const fail = (message) => {
+    throw new Error(detail === '' ? message : `${message}: ${detail}`)
+  }
+  if (result.aborted === true) fail('ripgrep search aborted')
+  if (result.timedOut === true) fail('ripgrep search timed out')
+  if (typeof result.signal === 'string') fail(`ripgrep search terminated by ${result.signal}`)
+  if (result.exitCode === 0 || result.exitCode === 1) return
+  if (result.exitCode === null) fail('ripgrep search failed without an exit code')
+  fail(`ripgrep exited with code ${result.exitCode}`)
+}
+
+/** Resolve a file path only when its canonical target remains under the addressed root. */
+async function resolveWithinRoot(ctx, root, path, signal) {
+  joinWithinRoot(root.path, path)
+  const [rootTarget, target] = await Promise.all([
+    ctx.fs.resolve(root.path, { cwd: root.path, signal }),
+    ctx.fs.resolve(path, { cwd: root.path, signal }),
+  ])
+  if (!ctx.fs.contains(rootTarget, target)) {
+    throw new Error(`path "${path}" escapes the addressed root`)
+  }
+  return target
+}
+
 export function apply(ctx, config) {
   const crossRootBash = CROSS_ROOT_POLICIES.includes(config?.crossRootBash) ? config.crossRootBash : 'off'
 
@@ -190,7 +217,7 @@ export function apply(ctx, config) {
     },
     async execute(args, exec) {
       const root = resolveRoot(ctx, exec, args)
-      const target = await ctx.fs.resolve(args.path, { cwd: root.path, signal: exec.signal })
+      const target = await resolveWithinRoot(ctx, root, args.path, exec.signal)
       const info = await ctx.fs.stat(target, exec.signal)
       if (info === undefined) {
         ctx.emit('fs/observed', target, { kind: 'absent' }, exec)
@@ -222,7 +249,7 @@ export function apply(ctx, config) {
     },
     async execute(args, exec) {
       const root = resolveRoot(ctx, exec, args)
-      const target = await ctx.fs.resolve(args.path, { cwd: root.path, signal: exec.signal })
+      const target = await resolveWithinRoot(ctx, root, args.path, exec.signal)
       const intent = await ctx.waterfall('fs/write-intent', target, exec, () => undefined)
       const outcome = await ctx.fs.writeText(target, args.content, intent, exec.signal, policyFor(ctx, exec, root))
       ctx.emit('fs/observed', target, { kind: 'present', version: outcome.version }, exec)
@@ -246,7 +273,7 @@ export function apply(ctx, config) {
     },
     async execute(args, exec) {
       const root = resolveRoot(ctx, exec, args)
-      const target = await ctx.fs.resolve(args.path, { cwd: root.path, signal: exec.signal })
+      const target = await resolveWithinRoot(ctx, root, args.path, exec.signal)
       const expected = await ctx.waterfall('fs/edit-intent', target, exec, () => undefined)
       const outcome = await ctx.fs.editText(
         target,
@@ -283,12 +310,17 @@ export function apply(ctx, config) {
       let policy
       let fenceNote = ''
       let workdirRootPath
+      let workdirRoot
       let rootLabel
 
       if (args.roots !== undefined) {
         const roots = resolveRoots(ctx, exec, args.roots)
+        if (roots.length === 0) {
+          throw new Error('ws_bash roots must contain at least one workspace root alias')
+        }
         if (roots.length <= 1) {
           const root = roots[0]
+          workdirRoot = root
           workdirRootPath = root.path
           rootLabel = root.alias
           policy = policyFor(ctx, exec, root)
@@ -296,6 +328,7 @@ export function apply(ctx, config) {
           throw new Error('跨根 bash 已被部署策略禁用（crossRootBash=off）。请按根拆分为多次 ws_bash 调用。')
         } else if (crossRootBash === 'ancestor') {
           const ancestor = commonAncestor(roots.map((root) => root.path))
+          workdirRoot = roots[0]
           workdirRootPath = roots[0].path
           rootLabel = roots.map((root) => root.alias).join(', ')
           policy = {
@@ -305,6 +338,7 @@ export function apply(ctx, config) {
           }
           fenceNote = `\n[fence: common ancestor ${ancestor} of roots ${rootLabel}]`
         } else {
+          workdirRoot = roots[0]
           workdirRootPath = roots[0].path
           rootLabel = roots.map((root) => root.alias).join(', ')
           policy = {
@@ -315,12 +349,15 @@ export function apply(ctx, config) {
         }
       } else {
         const root = resolveRoot(ctx, exec, args)
+        workdirRoot = root
         workdirRootPath = root.path
         rootLabel = root.alias
         policy = policyFor(ctx, exec, root)
       }
 
-      const workdir = args.workdir === undefined ? workdirRootPath : joinWithinRoot(workdirRootPath, args.workdir)
+      const workdir = args.workdir === undefined
+        ? workdirRootPath
+        : ctx.fs.processPath(await resolveWithinRoot(ctx, workdirRoot, args.workdir, exec.signal))
       const result = await ctx.shell.run(ctx.shell.resolve({
         command: args.command,
         workdir,
@@ -350,7 +387,8 @@ export function apply(ctx, config) {
     },
     async execute(args, exec) {
       const root = resolveRoot(ctx, exec, args)
-      const searchDir = args.path === undefined ? root.path : joinWithinRoot(root.path, args.path)
+      const searchTarget = await resolveWithinRoot(ctx, root, args.path ?? '.', exec.signal)
+      const searchDir = ctx.fs.processPath(searchTarget)
       const command = `rg --files -g ${shq(args.pattern)} ${shq(searchDir)}`
       const result = await ctx.shell.run(ctx.shell.resolve({
         command,
@@ -358,6 +396,7 @@ export function apply(ctx, config) {
         sandboxPolicy: policyFor(ctx, exec, root),
         signal: exec.signal,
       }))
+      assertSearchSucceeded(result)
       const lines = result.stdout.text.split('\n').filter((line) => line.length > 0)
       const capped = lines.slice(0, SEARCH_LINE_CAP)
       const suffix = lines.length > SEARCH_LINE_CAP ? `\n… ${lines.length - SEARCH_LINE_CAP} more` : ''
@@ -379,7 +418,8 @@ export function apply(ctx, config) {
     },
     async execute(args, exec) {
       const root = resolveRoot(ctx, exec, args)
-      const searchDir = args.path === undefined ? root.path : joinWithinRoot(root.path, args.path)
+      const searchTarget = await resolveWithinRoot(ctx, root, args.path ?? '.', exec.signal)
+      const searchDir = ctx.fs.processPath(searchTarget)
       const command = `rg --line-number --no-heading --color never -e ${shq(args.query)} ${shq(searchDir)}`
       const result = await ctx.shell.run(ctx.shell.resolve({
         command,
@@ -387,6 +427,7 @@ export function apply(ctx, config) {
         sandboxPolicy: policyFor(ctx, exec, root),
         signal: exec.signal,
       }))
+      assertSearchSucceeded(result)
       const lines = result.stdout.text.split('\n').filter((line) => line.length > 0)
       const capped = lines.slice(0, SEARCH_LINE_CAP)
       const suffix = lines.length > SEARCH_LINE_CAP ? `\n… ${lines.length - SEARCH_LINE_CAP} more` : ''
@@ -414,7 +455,7 @@ export function apply(ctx, config) {
 function joinWithinRoot(rootPath, relative) {
   const combined = isAbsolute(relative) ? relative : join(rootPath, relative)
   const relFromRoot = pathRelative(rootPath, combined)
-  if (relFromRoot.startsWith('..')) {
+  if (relFromRoot === '..' || relFromRoot.startsWith('../')) {
     throw new Error(`workdir "${relative}" escapes the addressed root`)
   }
   return combined
