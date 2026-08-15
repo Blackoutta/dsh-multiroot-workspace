@@ -20,7 +20,7 @@ export default defineConfig({
   format: 'cjs',
   platform: 'browser',
   deps: {
-    neverBundle: [/^react(-dom)?(\/.+)?$/, /^@deepseek-ai\//],
+    neverBundle: [/^react(?:-dom)?(?:\/.+)?$/],
     alwaysBundle: ['clsx'],
     onlyBundle: false,
   },

@@ -3,11 +3,11 @@
  * Unassigned Sessions trail under Ungrouped; only the selected blank Session
  * remains visible.
  */
-import {
-  indexSubagentDescendants, type PendingInteractionStatus, type SessionId, type SessionListState,
-  type SessionSearchResultItem, type SessionSummary, type SubagentDescendantSummary,
-  type WorkspaceId, type WorkspaceView,
+import type {
+  PendingInteractionStatus, SessionId, SessionListState, SessionSearchResultItem,
+  SessionSummary, WorkspaceId, WorkspaceView,
 } from '@deepseek-ai/dsh-client-runtime/client'
+import { indexSubagentDescendants, type SubagentDescendantSummary } from '../vendor/subagents.ts'
 
 /** Group key for Sessions outside every Workspace. */
 export const UNGROUPED_KEY = ''

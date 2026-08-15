@@ -8,6 +8,7 @@
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run --config vitest.config.mjs",
     "test:browser": "node tests/browser/multiroot-ui.spec.mjs",
+    "test:client-bundle": "node tests/integration/client-bundle.spec.mjs",
     "prepare": "npm run build"
   },
   "files": [

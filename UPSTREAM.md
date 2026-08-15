@@ -23,6 +23,10 @@ The Workspace view store retains the upstream structural slot contract: `defineS
 
 The local runtime intentionally omits the upstream generic Zustand, Immer, selector, animation-frame batching, shallow-equality, and arbitrary snapshot-store middleware because this plugin consumes only the JSON-compatible Workspace view store contract.
 
+## Vendored subagent lineage helper
+
+`src/client/vendor/subagents.ts` copies `indexSubagentDescendants` and its `SubagentDescendantSummary` result type from DeepSeek Harness commit `47f943859bef60e4160492346772ded9b24f765a`, source path `packages/client/runtime/src/client/sessions/subagent-lineage.ts`. The implementation is unchanged; its type-only imports use the public `@deepseek-ai/dsh-client-runtime/client` entry, and `src/client/upstream/tree.ts` imports the runtime value from this local module so the browser bundle has no DSH runtime JavaScript dependency.
+
 ## Verification
 
 Verified on 2026-08-14 against Harness `0.1.0-rc.5` / `47f943859b`:
