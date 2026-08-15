@@ -8,11 +8,12 @@ The first public prerelease targets DeepSeek Harness `0.1.0-rc.6` exactly on mac
 
 ## Install and start
 
-From an installation that exposes DeepSeek Harness `0.1.0-rc.6` through `pnpm dsh`:
+Install the compatible DeepSeek Harness CLI from npm, then add this plugin to the Web profile:
 
 ```sh
-DSH_HOME=~/dsh-test pnpm dsh plugin --profile web add dsh-multiroot-workspace@next
-DSH_HOME=~/dsh-test pnpm dsh web --port 3080
+npm install --global @deepseek-ai/dsh@0.1.0-rc.6
+DSH_HOME=~/dsh-test dsh plugin --profile web add dsh-multiroot-workspace@next
+DSH_HOME=~/dsh-test dsh web --port 3080
 ```
 
 Open `http://127.0.0.1:3080/`. The plugin disables only the stock Workspace client row while installed; Sessions, their ordinary Host Workspace membership, and all non-Workspace UI remain owned by Harness.
@@ -96,7 +97,7 @@ With Web still running, purge plugin-owned data before removing the package:
 ```sh
 curl -fsS -X DELETE http://127.0.0.1:3080/plugins/multiroot/api/data
 # Stop the Web process, then remove the profile dependency.
-DSH_HOME=~/dsh-test pnpm dsh plugin --profile web remove dsh-multiroot-workspace
+DSH_HOME=~/dsh-test dsh plugin --profile web remove dsh-multiroot-workspace
 ```
 
 Removing without the purge request leaves the plugin's durable records for a later reinstall; it does not make the plugin delete them implicitly.
