@@ -80,7 +80,7 @@ allowBuilds:
   '@deepseek-ai/dsh-subprocess-local': false
   '@google/genai': false
   koffi: false
-  node-pty: false
+  node-pty: true
   protobufjs: false
 `)
     await writeFile(profilePatch, `- id: directory-picker
