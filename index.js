@@ -62,8 +62,16 @@ const derivedSchema = z.object({
   owned: z.boolean(),
 })
 
+/** Plugin-owned current-root selection, keyed by Session id. */
+const sessionRootSchema = z.object({
+  workspaceId: z.string(),
+  alias: z.string(),
+})
+
 const domainSpec = defineDomain({
   name: 'multiroot_workspace',
+  // rc.6 has no domain migration API and rejects a changed version stamp.
+  // New tables are additive at the same version, preserving existing v4 data.
   version: 4,
   global: {
     schema: z.object({ order: z.array(z.string()) }),
@@ -72,6 +80,7 @@ const domainSpec = defineDomain({
   tables: {
     workspaces: domainTable(recordSchema),
     derived: domainTable(derivedSchema),
+    session_roots: domainTable(sessionRootSchema),
   },
 })
 
@@ -178,10 +187,9 @@ export async function apply(ctx, config) {
   const domain = await ctx.storageDomain.open(domainSpec)
   const table = domain.table('workspaces')
   const derivedTable = domain.table('derived')
+  const sessionRootsTable = domain.table('session_roots')
   const order = domain.global
-  ctx.effect(() => () => {
-    void domain.close()
-  }, 'multiroot: domain close')
+  ctx.effect(() => () => domain.close(), 'multiroot: domain close')
 
   const touch = async (id, patch) => {
     const record = table.get(id)
@@ -356,6 +364,37 @@ export async function apply(ctx, config) {
     return records
   }
 
+  const workspaceOfCwd = (cwd) => {
+    const key = cwd === undefined ? undefined : canonicalSync(cwd)
+    if (key === undefined) return undefined
+    for (const record of registryList()) {
+      const primary = record.roots.find((root) => root.primary)
+      if (primary !== undefined && canonicalSync(primary.path) === key) return record
+    }
+    return undefined
+  }
+
+  const deleteSessionRoots = async (workspaceId) => {
+    for (const [sessionId, selection] of [...sessionRootsTable.entries()]) {
+      if (selection.workspaceId === workspaceId) await sessionRootsTable.delete(sessionId)
+    }
+  }
+
+  const clearSessionRoots = async () => {
+    for (const [sessionId] of [...sessionRootsTable.entries()]) {
+      await sessionRootsTable.delete(sessionId)
+    }
+  }
+
+  const deleteInvalidSessionRoots = async (workspaceId, roots) => {
+    const aliases = new Set(roots.map((root) => root.alias.toLowerCase()))
+    for (const [sessionId, selection] of [...sessionRootsTable.entries()]) {
+      if (selection.workspaceId === workspaceId && !aliases.has(selection.alias.toLowerCase())) {
+        await sessionRootsTable.delete(sessionId)
+      }
+    }
+  }
+
   const registry = {
     list: registryList,
     get(id) {
@@ -364,13 +403,33 @@ export async function apply(ctx, config) {
     },
     /** The workspace whose canonical primary-root path equals the canonical cwd. */
     workspaceOfCwd(cwd) {
-      const key = cwd === undefined ? undefined : canonicalSync(cwd)
-      if (key === undefined) return undefined
-      for (const record of registryList()) {
-        const primary = record.roots.find((root) => root.primary)
-        if (primary !== undefined && canonicalSync(primary.path) === key) return record
+      return workspaceOfCwd(cwd)
+    },
+    currentRoot(sessionId, cwd) {
+      const workspace = workspaceOfCwd(cwd)
+      if (workspace === undefined) return undefined
+      const selection = sessionRootsTable.get(sessionId)
+      if (selection?.workspaceId === workspace.id) {
+        const selected = workspace.roots.find((root) =>
+          root.alias.toLowerCase() === selection.alias.toLowerCase())
+        if (selected !== undefined) return selected.alias
       }
-      return undefined
+      return workspace.roots.find((root) => root.primary)?.alias ?? workspace.roots[0]?.alias
+    },
+    async setCurrentRoot(sessionId, cwd, alias) {
+      const workspace = workspaceOfCwd(cwd)
+      if (workspace === undefined) {
+        throw Object.assign(new Error(`workspace for cwd "${cwd}" not found`), { code: 'workspace-not-found' })
+      }
+      const target = workspace.roots.find((root) =>
+        root.alias.toLowerCase() === String(alias).toLowerCase())
+      if (target === undefined) {
+        throw Object.assign(new Error(`alias "${alias}" not found`), { code: 'alias-not-found' })
+      }
+      await sessionRootsTable.put(sessionId, { workspaceId: workspace.id, alias: target.alias })
+    },
+    async clearCurrentRoot(sessionId) {
+      return sessionRootsTable.delete(sessionId)
     },
     async create({ title, roots }) {
       const cleanTitle = typeof title === 'string' ? title.trim() : ''
@@ -427,6 +486,9 @@ export async function apply(ctx, config) {
         patch.roots = canonicalRoots
       }
       const updated = await touch(id, patch)
+      if (updated !== undefined && patch.roots !== undefined) {
+        await deleteInvalidSessionRoots(id, updated.roots)
+      }
       await reconcileShadows()
       return updated === undefined ? undefined : view(id, updated)
     },
@@ -450,6 +512,7 @@ export async function apply(ctx, config) {
       if (id === CONFIG_WORKSPACE_ID) {
         throw Object.assign(new Error('config-declared roots are read-only'), { code: 'config-roots-readonly' })
       }
+      if (table.get(id) !== undefined) await deleteSessionRoots(id)
       const existed = await table.delete(id)
       if (existed) {
         await deleteShadow(id)
@@ -464,6 +527,7 @@ export async function apply(ctx, config) {
         await deleteShadow(multirootId)
         shadows += 1
       }
+      await clearSessionRoots()
       let records = 0
       for (const [id] of table.entries()) {
         if (id !== CONFIG_WORKSPACE_ID) {
@@ -489,6 +553,7 @@ export async function apply(ctx, config) {
       updatedAt: nowIso(),
     }
     await table.put(CONFIG_WORKSPACE_ID, record)
+    await deleteInvalidSessionRoots(CONFIG_WORKSPACE_ID, roots)
     const orderState = order.get().order
     if (!orderState.includes(CONFIG_WORKSPACE_ID)) {
       await order.set({ order: [...orderState, CONFIG_WORKSPACE_ID] })

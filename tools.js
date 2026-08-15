@@ -5,9 +5,9 @@
  * workspace is addressable by `root` alias; the primary root is the default
  * (and equals the session cwd, so built-in tools keep working unchanged).
  *
- * Current-root durability: `ws_cd` appends a `multiroot/current-root` session
- * event (mirroring `sandbox/mode` — log-only, no surface op); the fold reads
- * the last event back, so the selection survives restarts and replay.
+ * Current-root durability: `ws_cd` stores the selection in the plugin-owned
+ * storage domain, keyed by Session id. No custom Harness Session event is
+ * required, and the logical primary root remains the default.
  *
  * Sandbox boundary: each call constructs a per-call policy whose
  * `workspaceRoot` is the ADDRESSED root (mode inherits the session). Cross-
@@ -45,15 +45,12 @@ function shq(value) {
   return `'${String(value).replace(/'/g, `'\\''`)}'`
 }
 
-/** The last multiroot/current-root event's alias — replay IS the state. */
-function effectiveCurrentRoot(session) {
-  const events = session?.events
-  if (events === undefined) return undefined
-  for (let index = events.length - 1; index >= 0; index -= 1) {
-    const event = events[index]
-    if (event.type === 'multiroot/current-root') return event.data.alias
-  }
-  return undefined
+/** The plugin-owned current alias for a Session, with primary fallback. */
+function currentRoot(ctx, session) {
+  const sessionId = session?.id
+  const cwd = session?.header?.cwd
+  if (sessionId === undefined || cwd === undefined) return undefined
+  return ctx.multirootRegistry.currentRoot(sessionId, cwd)
 }
 
 /** The workspace of this call's session, or undefined when none applies. */
@@ -70,7 +67,7 @@ function resolveRoot(ctx, exec, args) {
     throw new Error('当前会话不属于任何多根工作区（会话 cwd 未匹配到主根）。请先在界面上创建多根工作区并在其中打开会话。')
   }
   let alias = args.root
-  if (alias === undefined) alias = effectiveCurrentRoot(session)
+  if (alias === undefined) alias = currentRoot(ctx, session)
   if (alias === undefined) {
     alias = workspace.roots.find((root) => root.primary)?.alias ?? workspace.roots[0].alias
   }
@@ -148,7 +145,7 @@ export function apply(ctx, config) {
       if (workspace === undefined) {
         return '当前会话不属于任何多根工作区。请在 Web 界面创建多根工作区并在其中打开会话，或用 ws_list 确认。'
       }
-      const current = effectiveCurrentRoot(session)
+      const current = currentRoot(ctx, session)
       const lines = [`逻辑工作区：${workspace.title}`, '根：']
       for (const root of workspace.roots) {
         const marks = [
@@ -175,7 +172,7 @@ export function apply(ctx, config) {
       const session = exec.agent?.session
       if (session === undefined) throw new Error('ws_cd requires a session')
       const root = resolveRoot(ctx, exec, args)
-      session.append('multiroot/current-root', { alias: root.alias })
+      await ctx.multirootRegistry.setCurrentRoot(session.id, session.header.cwd, root.alias)
       return `当前根已切换为 ${root.alias}（${root.path}）`
     },
   }))
@@ -405,7 +402,7 @@ export function apply(ctx, config) {
       const session = context.agent?.session
       const workspace = workspaceOf(ctx, session)
       if (workspace === undefined) return ''
-      const current = effectiveCurrentRoot(session)
+      const current = currentRoot(ctx, session)
       const lines = workspace.roots.map((root) =>
         `- ${root.alias}${root.primary ? ' (primary)' : ''}${root.alias === current ? ' (current)' : ''} → ${root.path}`)
       return `当前逻辑工作区 <${workspace.title}>，包含以下根：\n${lines.join('\n')}\n\n内建 read/write/edit/bash/搜索作用于 primary 根（即会话 cwd）；访问其他根请使用 ws_* 工具并指定 root 参数。`

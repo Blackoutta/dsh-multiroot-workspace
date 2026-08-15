@@ -56,7 +56,7 @@ Expected: FAIL because the registry has no Session-root storage methods.
 
 - [ ] **Step 2: Add the Session-root table**
 
-Advance the `multiroot_workspace` storage domain version to `5` and add a `sessionRoots` table containing `{ workspaceId, alias }`, keyed by Session id. Expose these registry methods:
+Keep the `multiroot_workspace` storage domain at version `4` and add a `session_roots` table containing `{ workspaceId, alias }`, keyed by Session id. Harness rc.6 has no domain migration API: changing an existing medium's version stamp to `5` produces `version-mismatch`, while its supported backends safely materialize a newly declared table under the unchanged version. Add a compatibility regression that opens existing v4 data and proves the new table works without deleting or rebuilding that data. Expose these registry methods:
 
 ```js
 currentRoot(sessionId, cwd)
