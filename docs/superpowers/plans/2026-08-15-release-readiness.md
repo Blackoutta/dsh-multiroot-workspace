@@ -30,6 +30,8 @@
 - Supported host platforms: macOS and Linux. Windows remains unsupported until the POSIX shell commands and common-ancestor calculation have Windows coverage.
 - Distribution: npm tarball with prebuilt `client.js`; Git installation remains supported through the source manifest's `prepare` script.
 
+Execute Task 4 first because relocating this repository deliberately invalidates its former `../../../packages` source paths. Continue with Tasks 1, 2, 3, 5, 6, 7, and 8 in that order.
+
 ### Task 1: Replace the unsupported Session event
 
 **Files:**
