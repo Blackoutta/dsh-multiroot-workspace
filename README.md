@@ -6,6 +6,44 @@ External DeepSeek Harness bundle providing logical Workspaces with multiple name
 
 The first public prerelease targets DeepSeek Harness `0.1.0-rc.6` exactly on macOS and Linux. Harness supplies the pinned Cordis, DSH client and Host services, Schemastery, React, and ReactDOM peers when it loads the plugin; consumers should install the plugin through a Harness profile instead of installing those peers into the plugin package. Source development uses Node.js `24.11.1` and pnpm `11.9.0`.
 
+## Install and start
+
+From an installation that exposes DeepSeek Harness `0.1.0-rc.6` through `pnpm dsh`:
+
+```sh
+DSH_HOME=~/dsh-test pnpm dsh plugin --profile web add dsh-multiroot-workspace@next
+DSH_HOME=~/dsh-test pnpm dsh web --port 3080
+```
+
+Open `http://127.0.0.1:3080/`. The plugin disables only the stock Workspace client row while installed; Sessions, their ordinary Host Workspace membership, and all non-Workspace UI remain owned by Harness.
+
+The bundled configuration keeps cross-root Bash disabled:
+
+```yaml
+- id: multiroot-workspace-tools
+  config:
+    crossRootBash: off
+```
+
+To deliberately choose `ancestor` or `unfenced`, put that row in a local patch and start Web with `--patch <file>`. The security differences are described under “Model tools and permissions” below.
+
+The Host row also accepts one deployment-declared logical Workspace:
+
+```yaml
+- id: multiroot-workspace
+  config:
+    title: Product repository
+    roots:
+      - alias: app
+        path: /srv/product/app
+        primary: true
+      - alias: docs
+        path: /srv/product/docs
+        primary: false
+```
+
+`roots` must be non-empty, aliases are unique case-insensitively, and exactly one root must set `primary: true`. This row becomes the read-only logical Workspace `config-roots`: it cannot be renamed, edited, reprioritized, or deleted through the UI/API. Paths may be absent during startup so deployments can mount them later; file and shell operations still require the selected path to exist when used. Purge clears its Session selections and shadow mapping but preserves the declared record and any adopted Host Workspace. Startup reapplies the configuration; a later new Session whose cwd matches the primary root creates or adopts a Host shadow and attaches that Session.
+
 ## Development
 
 ```sh
@@ -49,4 +87,16 @@ Sessions opened in a logical Workspace receive these tools:
 - The management dialog shows complete directory names and paths in a two-column layout. When a Workspace has many roots, only the root list scrolls; the name field, add action, and footer remain fixed.
 - Forms use Harness Modal, Button, icon, and theme primitives; no Unicode folder/archive icons are rendered.
 
-Before uninstalling, call `DELETE /plugins/multiroot/api/data` to remove logical records and plugin-owned shadows. Adopted user Workspaces are preserved.
+## Storage, purge, and removal
+
+Logical Workspace records, shadow ownership, and per-Session current-root selections live in the plugin's `multiroot_workspace` storage domain. An existing Host Workspace at the primary path is adopted; the plugin never deletes an adopted Workspace. If no suitable Workspace exists, the plugin creates and owns a shadow so stock Session grouping keeps working. Purge deletes owned shadows, user-created logical records, and all current-root selections while preserving adopted user Workspaces, Sessions, and the deployment-declared `config-roots` record.
+
+With Web still running, purge plugin-owned data before removing the package:
+
+```sh
+curl -fsS -X DELETE http://127.0.0.1:3080/plugins/multiroot/api/data
+# Stop the Web process, then remove the profile dependency.
+DSH_HOME=~/dsh-test pnpm dsh plugin --profile web remove dsh-multiroot-workspace
+```
+
+Removing without the purge request leaves the plugin's durable records for a later reinstall; it does not make the plugin delete them implicitly.

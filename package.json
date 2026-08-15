@@ -1,6 +1,24 @@
 {
   "name": "dsh-multiroot-workspace",
-  "version": "0.1.1",
+  "version": "0.1.0-rc.1",
+  "description": "Multi-root logical Workspaces for DeepSeek Harness",
+  "keywords": [
+    "deepseek",
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "multi-root",
+    "workspace"
+  ],
+  "license": "MIT",
+  "packageManager": "pnpm@11.9.0",
+  "engines": {
+    "node": ">=24.11.1 <25"
+  },
+  "os": [
+    "darwin",
+    "linux"
+  ],
   "type": "module",
   "main": "index.js",
   "scripts": {
@@ -11,12 +29,15 @@
     "test:client-bundle": "node tests/integration/client-bundle.spec.mjs",
     "test:package-manifest": "node tests/integration/package-manifest.spec.mjs",
     "test:profile-tools": "node tests/integration/profile-tools.spec.mjs",
+    "test:release-docs": "node tests/integration/release-docs.spec.mjs",
     "test:reproducible-build": "node scripts/check-client-reproducibility.mjs",
     "test:workflow-policy": "node tests/integration/workflow-policy.spec.mjs",
     "prepare": "npm run build"
   },
   "files": [
+    "CHANGELOG.md",
     "LICENSES",
+    "UPSTREAM.md",
     "index.js",
     "tools.js",
     "client.js",
@@ -27,6 +48,9 @@
     "./tools": "./tools.js",
     "./client": "./client.js",
     "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "dependencies": {
     "clsx": "^2.0.0",

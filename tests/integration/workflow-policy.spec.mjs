@@ -24,6 +24,7 @@ for (const command of [
   'pnpm install --frozen-lockfile',
   'pnpm run typecheck',
   'pnpm run test',
+  'pnpm run test:release-docs',
   'pnpm run test:reproducible-build',
   'pnpm run test:package-manifest',
   'pnpm run test:profile-tools',

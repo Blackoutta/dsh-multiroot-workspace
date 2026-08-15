@@ -29,11 +29,13 @@ The local runtime intentionally omits the upstream generic Zustand, Immer, selec
 
 ## Verification
 
-Verified on 2026-08-14 against Harness `0.1.0-rc.5` / `47f943859b`:
+Verified on 2026-08-15 against Harness `0.1.0-rc.6`; the copied source remains pinned to commit `47f943859bef60e4160492346772ded9b24f765a`:
 
-- `pnpm run test` — 11 files and 127 tests passed.
-- `pnpm run typecheck` — passed with the standalone strict program.
-- `pnpm run build` — emitted the loader factory and three inline CSS Modules; `clsx` is bundled because it is not a Harness platform module.
-- Isolated profile boot at `http://127.0.0.1:3090/` — the client loaded, a two-root logical Workspace rendered by explicit shadow id, grouped and All sessions views worked, and the management dialog remained aligned in the dark theme at a 1280 × 720 viewport.
+- Node.js `24.11.1` and pnpm `11.9.0`: frozen installation completed from this repository's own workspace and lockfile.
+- `pnpm run test`: 17 files and 217 tests passed; `pnpm run typecheck` passed.
+- Consecutive builds produced identical `client.js` and `dist/index.cjs` bytes with SHA-256 `b6171a42bce82ba0ece154d710ca3b54835e78a5745a9c2be14b0afc0cda9116`; neither artifact contains an absolute checkout path.
+- The packed client executes through the rc.6 module-loader handoff and requires only Host-provided `react`, `react-dom`, and `react/jsx-runtime`.
+- A fresh temporary rc.6 Web profile installed the tarball, loaded both bundle rows, executed packed `ws_write`/`ws_read` through the real ToolRuntime and LocalFileSystem, and required no model API key.
+- The autonomous Playwright matrix passed in light and dark themes across wide and rail layouts, creation, management, stock Session behavior, Hero selection, deletion, diagnostics, and cleanup. Two consecutive runs produced identical 10/10 screenshot hashes after display-only temporary-path normalization.
 
-The isolated boot used a temporary `DSH_HOME`; the parent Harness worktree remained clean.
+All clean-profile and browser checks use temporary `DSH_HOME` directories. The sibling DeepSeek Harness checkout is not imported, modified, or required.
