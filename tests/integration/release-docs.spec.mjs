@@ -38,7 +38,7 @@ assert.match(license, /^MIT License$/m)
 assert.match(license, /^Copyright \(c\) 2026 Blackoutta$/m)
 assert.match(license, /^Copyright \(c\) 2026 DeepSeek$/m)
 
-assert.match(readme, /```sh\ndsh plugin --profile web add dsh-multiroot-workspace@next\n```/)
+assert.match(readme, /```sh\ncd deepseek-harness\npnpm dsh plugin --profile web add dsh-multiroot-workspace@next\npnpm dsh web\n```/)
 assert.match(readme, /start the Web UI with `dsh web`/)
 assert.match(readme, /^dsh plugin --profile web remove dsh-multiroot-workspace$/m)
 assert.doesNotMatch(readme, /npm install --global @deepseek-ai\/dsh/)
