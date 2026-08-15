@@ -1,5 +1,6 @@
 import { readFile } from 'node:fs/promises'
-import { basename, dirname, resolve } from 'node:path'
+import { basename, dirname, relative, resolve, sep } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { transform } from 'lightningcss'
 import { defineConfig } from 'tsdown'
 
@@ -11,6 +12,7 @@ import { defineConfig } from 'tsdown'
  * externals, never inlined.
  */
 const ID = 'dsh-multiroot-workspace'
+const ROOT = dirname(fileURLToPath(import.meta.url))
 const CSS_VIRTUAL_PREFIX = '\0dsh-css:'
 const CSS_VIRTUAL_SUFFIX = '.mjs'
 
@@ -39,21 +41,25 @@ export default defineConfig({
     resolveId(source, importer) {
       if (!source.endsWith('.module.css')) return null
       const file = importer === undefined ? source : resolve(dirname(importer), source)
-      return CSS_VIRTUAL_PREFIX + file + CSS_VIRTUAL_SUFFIX
+      const relativeFile = relative(ROOT, file).split(sep).join('/')
+      return CSS_VIRTUAL_PREFIX + relativeFile + CSS_VIRTUAL_SUFFIX
     },
     async load(virtualId) {
       if (!virtualId.startsWith(CSS_VIRTUAL_PREFIX)) return null
-      const file = virtualId.slice(CSS_VIRTUAL_PREFIX.length, -CSS_VIRTUAL_SUFFIX.length)
+      const relativeFile = virtualId.slice(CSS_VIRTUAL_PREFIX.length, -CSS_VIRTUAL_SUFFIX.length)
+      const file = resolve(ROOT, relativeFile)
       this.addWatchFile(file)
       const source = await readFile(file)
       const { code, exports: cssExports } = transform({
-        filename: file,
+        filename: relativeFile,
         code: source,
         cssModules: { pattern: '[hash]_[local]' },
         minify: true,
       })
       const classMap = {}
-      for (const [local, value] of Object.entries(cssExports ?? {})) classMap[local] = value.name
+      for (const [local, value] of Object.entries(cssExports ?? {}).sort(([left], [right]) => left.localeCompare(right))) {
+        classMap[local] = value.name
+      }
       const tagId = `${ID}/${basename(file)}`
       return [
         `const css = ${JSON.stringify(code.toString())};`,

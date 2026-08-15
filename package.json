@@ -9,6 +9,7 @@
     "test": "vitest run --config vitest.config.mjs",
     "test:browser": "node tests/browser/multiroot-ui.spec.mjs",
     "test:client-bundle": "node tests/integration/client-bundle.spec.mjs",
+    "test:reproducible-build": "node scripts/check-client-reproducibility.mjs",
     "prepare": "npm run build"
   },
   "files": [
