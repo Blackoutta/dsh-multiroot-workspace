@@ -2,11 +2,12 @@ import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
 
 const root = new URL('../..', import.meta.url)
-const [manifestText, readme, upstream, changelog] = await Promise.all([
+const [manifestText, readme, upstream, changelog, license] = await Promise.all([
   readFile(new URL('package.json', root), 'utf8'),
   readFile(new URL('README.md', root), 'utf8'),
   readFile(new URL('UPSTREAM.md', root), 'utf8'),
   readFile(new URL('CHANGELOG.md', root), 'utf8'),
+  readFile(new URL('LICENSE', root), 'utf8'),
 ])
 const manifest = JSON.parse(manifestText)
 
@@ -17,6 +18,13 @@ assert.equal(manifest.packageManager, 'pnpm@11.9.0')
 assert.deepEqual(manifest.engines, { node: '>=24.11.1 <25' })
 assert.deepEqual(manifest.os, ['darwin', 'linux'])
 assert.deepEqual(manifest.publishConfig, { access: 'public' })
+assert.equal(manifest.author, 'Blackoutta <hyytez@gmail.com>')
+assert.deepEqual(manifest.repository, {
+  type: 'git',
+  url: 'git+https://github.com/Blackoutta/dsh-multiroot-workspace.git',
+})
+assert.equal(manifest.homepage, 'https://github.com/Blackoutta/dsh-multiroot-workspace#readme')
+assert.deepEqual(manifest.bugs, { url: 'https://github.com/Blackoutta/dsh-multiroot-workspace/issues' })
 assert.deepEqual(manifest.keywords, [
   'deepseek',
   'deepseek-harness',
@@ -25,7 +33,10 @@ assert.deepEqual(manifest.keywords, [
   'multi-root',
   'workspace',
 ])
-for (const file of ['CHANGELOG.md', 'UPSTREAM.md']) assert.ok(manifest.files.includes(file), file)
+for (const file of ['CHANGELOG.md', 'LICENSE', 'UPSTREAM.md']) assert.ok(manifest.files.includes(file), file)
+assert.match(license, /^MIT License$/m)
+assert.match(license, /^Copyright \(c\) 2026 Blackoutta$/m)
+assert.match(license, /^Copyright \(c\) 2026 DeepSeek$/m)
 
 assert.match(readme, /DSH_HOME=~\/dsh-test pnpm dsh plugin --profile web add dsh-multiroot-workspace@next/)
 assert.match(readme, /DSH_HOME=~\/dsh-test pnpm dsh web --port 3080/)

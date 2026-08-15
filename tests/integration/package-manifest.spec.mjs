@@ -44,6 +44,24 @@ try {
   assert.equal(extract.status, 0, extract.stderr)
   const manifest = JSON.parse(extract.stdout)
 
+  const listing = spawnSync('tar', ['-tzf', tarball], { encoding: 'utf8' })
+  assert.equal(listing.status, 0, listing.stderr)
+  assert.deepEqual(listing.stdout.trim().split('\n').sort(), [
+    'package/CHANGELOG.md',
+    'package/LICENSE',
+    'package/LICENSES/DeepSeek-Harness-MIT.txt',
+    'package/README.md',
+    'package/UPSTREAM.md',
+    'package/client.js',
+    'package/cordis.patch.yml',
+    'package/index.js',
+    'package/package.json',
+    'package/tools.js',
+  ])
+  const packedLicense = spawnSync('tar', ['-xOzf', tarball, 'package/LICENSE'], { encoding: 'utf8' })
+  assert.equal(packedLicense.status, 0, packedLicense.stderr)
+  assert.equal(packedLicense.stdout, await readFile(new URL('../../LICENSE', import.meta.url), 'utf8'))
+
   assert.deepEqual(manifest.peerDependencies, expectedPeers)
   assert.deepEqual(manifest.peerDependenciesMeta, expectedPeerMetadata)
   assert.deepEqual(manifest.dependencies, { clsx: '^2.0.0', zod: '^4.4.3' })

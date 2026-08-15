@@ -2,6 +2,7 @@
   "name": "dsh-multiroot-workspace",
   "version": "0.1.0-rc.1",
   "description": "Multi-root logical Workspaces for DeepSeek Harness",
+  "author": "Blackoutta <hyytez@gmail.com>",
   "keywords": [
     "deepseek",
     "deepseek-harness",
@@ -36,6 +37,7 @@
   },
   "files": [
     "CHANGELOG.md",
+    "LICENSE",
     "LICENSES",
     "UPSTREAM.md",
     "index.js",
@@ -48,6 +50,14 @@
     "./tools": "./tools.js",
     "./client": "./client.js",
     "./package.json": "./package.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Blackoutta/dsh-multiroot-workspace.git"
+  },
+  "homepage": "https://github.com/Blackoutta/dsh-multiroot-workspace#readme",
+  "bugs": {
+    "url": "https://github.com/Blackoutta/dsh-multiroot-workspace/issues"
   },
   "publishConfig": {
     "access": "public"

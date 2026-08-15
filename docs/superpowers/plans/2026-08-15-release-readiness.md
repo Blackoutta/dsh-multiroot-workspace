@@ -301,11 +301,11 @@ git commit -m "build: make client artifacts reproducible"
 - Modify: `UPSTREAM.md`
 - Create: `CHANGELOG.md`
 
-- [ ] **Step 1: Add the license owned by this repository**
+- [x] **Step 1: Add the license owned by this repository**
 
 Add an MIT license that preserves the DeepSeek copyright notice for copied Workspace UI code and adds the copyright holder for original multiroot code. Confirm the chosen holder before publishing.
 
-- [ ] **Step 2: Complete npm metadata**
+- [x] **Step 2: Complete npm metadata**
 
 Add description, license, author, repository, homepage, bugs, keywords, `packageManager`, Node engines, supported operating systems, and `publishConfig.access: public`. Set the version to `0.1.0-rc.1`.
 
@@ -321,7 +321,7 @@ Record the exact mirrored package and commit, the tested DSH version, current te
 
 Create an `Unreleased` section and a `0.1.0-rc.1` section describing logical Workspaces, shadow ownership, stock UI preservation, tools, platform limits, and the supported DSH version.
 
-- [ ] **Step 6: Inspect the tarball**
+- [x] **Step 6: Inspect the tarball**
 
 ```sh
 pnpm pack --pack-destination .artifacts
@@ -331,7 +331,7 @@ tar -xOzf .artifacts/dsh-multiroot-workspace-0.1.0-rc.1.tgz package/LICENSE | he
 
 Expected: the package contains the local license, README, manifest, Host entries, patch, and prebuilt client only.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```sh
 git add LICENSE package.json README.md UPSTREAM.md CHANGELOG.md pnpm-lock.yaml
