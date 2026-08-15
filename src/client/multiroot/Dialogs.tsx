@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import type { ReactNode } from 'react'
-import { Button, Modal } from '@deepseek-ai/dsh-client-ui-primitives'
+import { Button, Modal } from '../vendor/primitives/index.ts'
 import type { WorkspaceBrowserProps, DirectoryFlowOwnerProps } from '../upstream/contract/slots.ts'
 import { multirootApi } from './api.ts'
 import type { MultirootWorkspaceRecord, RootSpec } from './types.ts'

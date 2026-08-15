@@ -7,6 +7,16 @@
 
 Permitted deviations are limited to client registration assembly, Workspace browser integration props, project-row multiroot metadata and actions, dictionaries, and additive dialog styles. Tree derivation, stores, Session rows, stock dialogs, picker flow, and unrelated CSS rules remain upstream-equivalent. The Chinese flat-view label is clarified from `单列表` to `全部会话`; the underlying stock flat derivation is unchanged.
 
+## Vendored client primitives
+
+The reachable UI primitives were adapted from DeepSeek Harness commit `47f943859bef60e4160492346772ded9b24f765a`, from `packages/client/ui-primitives/src/{Button,HoverCard,Menu,Modal,StateDot,Tooltip}.{tsx,module.css}`. Their behavior and CSS are unchanged; imports were redirected to the local barrel at `src/client/vendor/primitives/index.ts`.
+
+The local barrel exports only the primitive values and types used by this plugin: `Button`, `HoverCard`, `Menu`, `MenuEntry`, `Modal`, `StateDot`, `StateDotState`, and `Tooltip`. Its reduced `icons.tsx` contains only `IconArchiveOutline20`, `IconBranchOutline16`, `IconCloseFill14`, `IconEditOutline16`, `IconEllipsisOutline16`, `IconFolderClose16`, `IconFolderOpen16`, `IconPersonalizationOutline16`, `IconPlusOutline16`, `IconProjectAddOutline16`, `IconSearchOutline16`, `IconSettingsOutline16`, `IconTrashOutline16`, and `IconTriangleRightFill14`.
+
+To avoid copying unrelated package modules, the reachable pointer-grace and clipboard helpers and the Menu/Modal-private check and close glyphs are retained inside their owning vendored components.
+
+The full upstream MIT notice is preserved in `LICENSES/DeepSeek-Harness-MIT.txt` and included in the published package.
+
 ## Verification
 
 Verified on 2026-08-14 against Harness `0.1.0-rc.5` / `47f943859b`:
