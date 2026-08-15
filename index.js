@@ -59,11 +59,20 @@ const recordSchema = z.object({
 const derivedSchema = z.object({
   registryWorkspaceId: z.string(),
   primaryPath: z.string(),
+  owned: z.boolean(),
+})
+
+/** Plugin-owned current-root selection, keyed by Session id. */
+const sessionRootSchema = z.object({
+  workspaceId: z.string(),
+  alias: z.string(),
 })
 
 const domainSpec = defineDomain({
   name: 'multiroot_workspace',
-  version: 3,
+  // rc.6 has no domain migration API and rejects a changed version stamp.
+  // New tables are additive at the same version, preserving existing v4 data.
+  version: 4,
   global: {
     schema: z.object({ order: z.array(z.string()) }),
     initial: { order: [] },
@@ -71,6 +80,7 @@ const domainSpec = defineDomain({
   tables: {
     workspaces: domainTable(recordSchema),
     derived: domainTable(derivedSchema),
+    session_roots: domainTable(sessionRootSchema),
   },
 })
 
@@ -177,10 +187,9 @@ export async function apply(ctx, config) {
   const domain = await ctx.storageDomain.open(domainSpec)
   const table = domain.table('workspaces')
   const derivedTable = domain.table('derived')
+  const sessionRootsTable = domain.table('session_roots')
   const order = domain.global
-  ctx.effect(() => () => {
-    void domain.close()
-  }, 'multiroot: domain close')
+  ctx.effect(() => () => domain.close(), 'multiroot: domain close')
 
   const touch = async (id, patch) => {
     const record = table.get(id)
@@ -193,7 +202,42 @@ export async function apply(ctx, config) {
   const prependOrder = (id) => order.set({ order: [id, ...order.get().order] })
   const removeOrder = (id) => order.set({ order: order.get().order.filter((entry) => entry !== id) })
 
+  const view = (id, record) => ({
+    id,
+    ...record,
+    shadowWorkspaceId: derivedTable.get(id)?.registryWorkspaceId,
+  })
+
   // ---- derived-shadow management ----
+
+  const prepareShadow = async (title, roots) => {
+    const primary = roots.find((root) => root.primary)
+    if (primary === undefined) {
+      throw Object.assign(new Error('primary root is missing'), { code: 'no-primary' })
+    }
+    const existing = await ctx.workspaceRegistry.resolveByPath(primary.path).catch(() => undefined)
+    if (existing !== undefined) {
+      return {
+        registryWorkspaceId: existing.id,
+        primaryPath: primary.path,
+        owned: false,
+      }
+    }
+    let created
+    try {
+      created = await ctx.workspaceRegistry.create(primary.path, title)
+    } catch {
+      created = await ctx.workspaceRegistry.create(primary.path, `${title} (multiroot)`)
+    }
+    if (created?.id === undefined) {
+      throw Object.assign(new Error('failed to prepare shadow Workspace'), { code: 'shadow-missing' })
+    }
+    return {
+      registryWorkspaceId: created.id,
+      primaryPath: primary.path,
+      owned: true,
+    }
+  }
 
   /**
    * Delete one derived shadow (registry entry + mapping row). Missing registry
@@ -202,12 +246,47 @@ export async function apply(ctx, config) {
   const deleteShadow = async (multirootId) => {
     const mapping = derivedTable.get(multirootId)
     if (mapping === undefined) return
-    await derivedTable.delete(multirootId)
-    try {
+    if (mapping.owned && ctx.workspaceRegistry.get(mapping.registryWorkspaceId) !== undefined) {
       await ctx.workspaceRegistry.delete(mapping.registryWorkspaceId)
-    } catch {
-      // registry entry already gone — the mapping cleanup is the point
     }
+    await derivedTable.delete(multirootId)
+  }
+
+  const migrateShadow = async (id, record, nextRoots) => {
+    const previous = derivedTable.get(id)
+    const prepared = await prepareShadow(record.title, nextRoots)
+    const previousWorkspace = previous === undefined
+      ? undefined
+      : ctx.workspaceRegistry.get(previous.registryWorkspaceId)
+    const sessionIds = [...(previousWorkspace?.sessionIds ?? [])]
+    const preparedWorkspace = ctx.workspaceRegistry.get(prepared.registryWorkspaceId)
+    if (preparedWorkspace === undefined) {
+      throw Object.assign(new Error('prepared shadow Workspace is missing'), { code: 'shadow-missing' })
+    }
+    try {
+      for (const sessionId of sessionIds) {
+        await preparedWorkspace.attachSession(sessionId)
+      }
+    } catch (cause) {
+      if (prepared.owned && ctx.workspaceRegistry.get(prepared.registryWorkspaceId) !== undefined) {
+        await ctx.workspaceRegistry.delete(prepared.registryWorkspaceId)
+      }
+      throw Object.assign(new Error('failed to migrate Session membership'), {
+        code: 'shadow-migration-failed',
+        cause,
+      })
+    }
+    await derivedTable.put(id, prepared)
+    const updated = await touch(id, { roots: nextRoots })
+    if (updated === undefined) {
+      throw Object.assign(new Error(`workspace "${id}" not found`), { code: 'workspace-not-found' })
+    }
+    if (previous?.owned === true
+      && previous.registryWorkspaceId !== prepared.registryWorkspaceId
+      && ctx.workspaceRegistry.get(previous.registryWorkspaceId) !== undefined) {
+      await ctx.workspaceRegistry.delete(previous.registryWorkspaceId)
+    }
+    return view(id, updated)
   }
 
   /**
@@ -219,18 +298,11 @@ export async function apply(ctx, config) {
     for (const [multirootId, mapping] of derivedTable.entries()) {
       const record = table.get(multirootId)
       const registryEntry = ctx.workspaceRegistry.get(mapping.registryWorkspaceId)
-      if (record === undefined
-        || registryEntry === undefined
-        || record.roots.find((root) => root.primary)?.path !== registryEntry.path) {
-        if (registryEntry !== undefined && record === undefined) {
-          // the owning workspace is gone — remove the orphaned shadow too
-          try {
-            await ctx.workspaceRegistry.delete(mapping.registryWorkspaceId)
-          } catch {
-            // concurrent removal — the mapping cleanup below is enough
-          }
-        }
+      if (registryEntry === undefined) {
         await derivedTable.delete(multirootId)
+      } else if (record === undefined
+        || record.roots.find((root) => root.primary)?.path !== registryEntry.path) {
+        await deleteShadow(multirootId)
       }
     }
   }
@@ -250,19 +322,9 @@ export async function apply(ctx, config) {
       shadowId = undefined
     }
     if (shadowId === undefined) {
-      const existing = await ctx.workspaceRegistry.resolveByPath(primary.path).catch(() => undefined)
-      if (existing !== undefined) {
-        shadowId = existing.id
-      } else {
-        let created
-        try {
-          created = await ctx.workspaceRegistry.create(primary.path, record.title)
-        } catch {
-          created = await ctx.workspaceRegistry.create(primary.path, `${record.title} (multiroot)`)
-        }
-        shadowId = created.id
-      }
-      await derivedTable.put(record.id, { registryWorkspaceId: shadowId, primaryPath: primary.path })
+      const prepared = await prepareShadow(record.title, record.roots)
+      shadowId = prepared.registryWorkspaceId
+      await derivedTable.put(record.id, prepared)
     }
     const shadow = ctx.workspaceRegistry.get(shadowId)
     await shadow?.attachSession(sessionId).catch((error) => {
@@ -294,29 +356,80 @@ export async function apply(ctx, config) {
     const records = []
     for (const id of order.get().order) {
       const record = table.get(id)
-      if (record !== undefined) records.push({ id, ...record })
+      if (record !== undefined) records.push(view(id, record))
     }
     for (const [id, record] of table.entries()) {
-      if (!records.some((entry) => entry.id === id)) records.push({ id, ...record })
+      if (!records.some((entry) => entry.id === id)) records.push(view(id, record))
     }
     return records
+  }
+
+  const workspaceOfCwd = (cwd) => {
+    const key = cwd === undefined ? undefined : canonicalSync(cwd)
+    if (key === undefined) return undefined
+    for (const record of registryList()) {
+      const primary = record.roots.find((root) => root.primary)
+      if (primary !== undefined && canonicalSync(primary.path) === key) return record
+    }
+    return undefined
+  }
+
+  const deleteSessionRoots = async (workspaceId) => {
+    for (const [sessionId, selection] of [...sessionRootsTable.entries()]) {
+      if (selection.workspaceId === workspaceId) await sessionRootsTable.delete(sessionId)
+    }
+  }
+
+  const clearSessionRoots = async () => {
+    for (const [sessionId] of [...sessionRootsTable.entries()]) {
+      await sessionRootsTable.delete(sessionId)
+    }
+  }
+
+  const deleteInvalidSessionRoots = async (workspaceId, roots) => {
+    const aliases = new Set(roots.map((root) => root.alias.toLowerCase()))
+    for (const [sessionId, selection] of [...sessionRootsTable.entries()]) {
+      if (selection.workspaceId === workspaceId && !aliases.has(selection.alias.toLowerCase())) {
+        await sessionRootsTable.delete(sessionId)
+      }
+    }
   }
 
   const registry = {
     list: registryList,
     get(id) {
       const record = table.get(id)
-      return record === undefined ? undefined : { id, ...record }
+      return record === undefined ? undefined : view(id, record)
     },
     /** The workspace whose canonical primary-root path equals the canonical cwd. */
     workspaceOfCwd(cwd) {
-      const key = cwd === undefined ? undefined : canonicalSync(cwd)
-      if (key === undefined) return undefined
-      for (const record of registryList()) {
-        const primary = record.roots.find((root) => root.primary)
-        if (primary !== undefined && canonicalSync(primary.path) === key) return record
+      return workspaceOfCwd(cwd)
+    },
+    currentRoot(sessionId, cwd) {
+      const workspace = workspaceOfCwd(cwd)
+      if (workspace === undefined) return undefined
+      const selection = sessionRootsTable.get(sessionId)
+      if (selection?.workspaceId === workspace.id) {
+        const selected = workspace.roots.find((root) =>
+          root.alias.toLowerCase() === selection.alias.toLowerCase())
+        if (selected !== undefined) return selected.alias
       }
-      return undefined
+      return workspace.roots.find((root) => root.primary)?.alias ?? workspace.roots[0]?.alias
+    },
+    async setCurrentRoot(sessionId, cwd, alias) {
+      const workspace = workspaceOfCwd(cwd)
+      if (workspace === undefined) {
+        throw Object.assign(new Error(`workspace for cwd "${cwd}" not found`), { code: 'workspace-not-found' })
+      }
+      const target = workspace.roots.find((root) =>
+        root.alias.toLowerCase() === String(alias).toLowerCase())
+      if (target === undefined) {
+        throw Object.assign(new Error(`alias "${alias}" not found`), { code: 'alias-not-found' })
+      }
+      await sessionRootsTable.put(sessionId, { workspaceId: workspace.id, alias: target.alias })
+    },
+    async clearCurrentRoot(sessionId) {
+      return sessionRootsTable.delete(sessionId)
     },
     async create({ title, roots }) {
       const cleanTitle = typeof title === 'string' ? title.trim() : ''
@@ -331,9 +444,19 @@ export async function apply(ctx, config) {
         createdAt: nowIso(),
         updatedAt: nowIso(),
       }
-      await table.put(id, record)
-      await prependOrder(id)
-      return { id, ...record }
+      const prepared = await prepareShadow(cleanTitle, canonicalRoots)
+      try {
+        await derivedTable.put(id, prepared)
+        await table.put(id, record)
+        await prependOrder(id)
+      } catch (error) {
+        await derivedTable.delete(id)
+        if (prepared.owned && ctx.workspaceRegistry.get(prepared.registryWorkspaceId) !== undefined) {
+          await ctx.workspaceRegistry.delete(prepared.registryWorkspaceId)
+        }
+        throw error
+      }
+      return view(id, record)
     },
     async update(id, { title, roots }) {
       const record = table.get(id)
@@ -352,11 +475,22 @@ export async function apply(ctx, config) {
         patch.title = clean
       }
       if (roots !== undefined) {
-        patch.roots = await validateRoots(roots, { tolerateMissing: false })
+        const canonicalRoots = await validateRoots(roots, { tolerateMissing: false })
+        const currentPrimary = record.roots.find((root) => root.primary)
+        const nextPrimary = canonicalRoots.find((root) => root.primary)
+        if (currentPrimary?.alias.toLowerCase() !== nextPrimary?.alias.toLowerCase()) {
+          throw Object.assign(new Error('primary changes require the primary endpoint'), {
+            code: 'primary-change-requires-endpoint',
+          })
+        }
+        patch.roots = canonicalRoots
       }
       const updated = await touch(id, patch)
+      if (updated !== undefined && patch.roots !== undefined) {
+        await deleteInvalidSessionRoots(id, updated.roots)
+      }
       await reconcileShadows()
-      return updated
+      return updated === undefined ? undefined : view(id, updated)
     },
     async setPrimary(id, alias) {
       const record = table.get(id)
@@ -370,15 +504,15 @@ export async function apply(ctx, config) {
       if (target === undefined) {
         throw Object.assign(new Error(`alias "${alias}" not found`), { code: 'alias-not-found' })
       }
+      if (target.primary) return view(id, record)
       const roots = record.roots.map((root) => ({ ...root, primary: root === target }))
-      const updated = await touch(id, { roots })
-      await reconcileShadows()
-      return updated
+      return migrateShadow(id, record, roots)
     },
     async delete(id) {
       if (id === CONFIG_WORKSPACE_ID) {
         throw Object.assign(new Error('config-declared roots are read-only'), { code: 'config-roots-readonly' })
       }
+      if (table.get(id) !== undefined) await deleteSessionRoots(id)
       const existed = await table.delete(id)
       if (existed) {
         await deleteShadow(id)
@@ -393,6 +527,7 @@ export async function apply(ctx, config) {
         await deleteShadow(multirootId)
         shadows += 1
       }
+      await clearSessionRoots()
       let records = 0
       for (const [id] of table.entries()) {
         if (id !== CONFIG_WORKSPACE_ID) {
@@ -418,6 +553,7 @@ export async function apply(ctx, config) {
       updatedAt: nowIso(),
     }
     await table.put(CONFIG_WORKSPACE_ID, record)
+    await deleteInvalidSessionRoots(CONFIG_WORKSPACE_ID, roots)
     const orderState = order.get().order
     if (!orderState.includes(CONFIG_WORKSPACE_ID)) {
       await order.set({ order: [...orderState, CONFIG_WORKSPACE_ID] })

@@ -1,0 +1,47 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  verify:
+    uses: ./.github/workflows/ci.yml
+    permissions:
+      contents: read
+
+  publish:
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+        with:
+          node-version: 24.11.1
+          registry-url: 'https://registry.npmjs.org'
+          package-manager-cache: false
+      - uses: pnpm/setup@5d160c5bc68a09337ad0d5654e237e03253b5879 # v1.0.0
+        with:
+          version: 11.9.0
+          install: false
+          cache: false
+      - name: Verify toolchain
+        run: |
+          test "$(node --version)" = "v24.11.1"
+          test "$(npm --version)" = "11.6.2"
+          test "$(pnpm --version)" = "11.9.0"
+      - name: Verify release tag
+        run: |
+          expected="v$(node -p "require('./package.json').version")"
+          if [ "$GITHUB_REF_NAME" != "$expected" ]; then
+            echo "package version does not match tag: $expected != $GITHUB_REF_NAME" >&2
+            exit 1
+          fi
+      - run: pnpm install --frozen-lockfile
+      - run: npm publish --tag next

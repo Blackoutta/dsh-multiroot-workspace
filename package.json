@@ -1,13 +1,45 @@
 {
   "name": "dsh-multiroot-workspace",
-  "version": "0.1.0",
+  "version": "0.1.0-rc.1",
+  "description": "Multi-root logical Workspaces for DeepSeek Harness",
+  "author": "Blackoutta <hyytez@gmail.com>",
+  "keywords": [
+    "deepseek",
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "multi-root",
+    "workspace"
+  ],
+  "license": "MIT",
+  "packageManager": "pnpm@11.9.0",
+  "engines": {
+    "node": ">=24.11.1 <25"
+  },
+  "os": [
+    "darwin",
+    "linux"
+  ],
   "type": "module",
   "main": "index.js",
   "scripts": {
     "build": "tsdown --config tsdown.config.mjs && cp dist/index.cjs client.js",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run --config vitest.config.mjs",
+    "test:browser": "node tests/browser/multiroot-ui.spec.mjs",
+    "test:client-bundle": "node tests/integration/client-bundle.spec.mjs",
+    "test:package-manifest": "node tests/integration/package-manifest.spec.mjs",
+    "test:profile-tools": "node tests/integration/profile-tools.spec.mjs",
+    "test:release-docs": "node tests/integration/release-docs.spec.mjs",
+    "test:reproducible-build": "node scripts/check-client-reproducibility.mjs",
+    "test:workflow-policy": "node tests/integration/workflow-policy.spec.mjs",
     "prepare": "npm run build"
   },
   "files": [
+    "CHANGELOG.md",
+    "LICENSE",
+    "LICENSES",
+    "UPSTREAM.md",
     "index.js",
     "tools.js",
     "client.js",
@@ -19,15 +51,89 @@
     "./client": "./client.js",
     "./package.json": "./package.json"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Blackoutta/dsh-multiroot-workspace.git"
+  },
+  "homepage": "https://github.com/Blackoutta/dsh-multiroot-workspace#readme",
+  "bugs": {
+    "url": "https://github.com/Blackoutta/dsh-multiroot-workspace/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
+    "clsx": "^2.0.0",
     "zod": "^4.4.3"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "4.0.1",
+    "@deepseek-ai/dsh-client-locale": "0.1.0-rc.6",
+    "@deepseek-ai/dsh-client-runtime": "0.1.0-rc.6",
+    "@deepseek-ai/dsh-client-ui-conversation": "0.1.0-rc.6",
+    "@deepseek-ai/dsh-client-ui-sidebar": "0.1.0-rc.6",
+    "@deepseek-ai/dsh-client-ui-slots": "0.1.0-rc.6",
+    "@deepseek-ai/dsh-fs": "0.1.0-rc.6",
+    "@deepseek-ai/dsh-storage-domain": "0.1.0-rc.6",
+    "@deepseek-ai/dsh-tools": "0.1.0-rc.6",
+    "@deepseek-ai/schemastery": "3.18.1",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "peerDependenciesMeta": {
+    "@deepseek-ai/cordis": { "optional": true },
+    "@deepseek-ai/dsh-client-locale": { "optional": true },
+    "@deepseek-ai/dsh-client-runtime": { "optional": true },
+    "@deepseek-ai/dsh-client-ui-conversation": { "optional": true },
+    "@deepseek-ai/dsh-client-ui-sidebar": { "optional": true },
+    "@deepseek-ai/dsh-client-ui-slots": { "optional": true },
+    "@deepseek-ai/dsh-fs": { "optional": true },
+    "@deepseek-ai/dsh-storage-domain": { "optional": true },
+    "@deepseek-ai/dsh-tools": { "optional": true },
+    "@deepseek-ai/schemastery": { "optional": true },
+    "react": { "optional": true },
+    "react-dom": { "optional": true }
+  },
+  "devDependencies": {
+    "@deepseek-ai/cordis": "4.0.1",
+    "@deepseek-ai/dsh-client-locale": "0.1.0-rc.6",
+    "@deepseek-ai/dsh-client-runtime": "0.1.0-rc.6",
+    "@deepseek-ai/dsh-client-test-runtime": "0.1.0-rc.6",
+    "@deepseek-ai/dsh-client-ui-conversation": "0.1.0-rc.6",
+    "@deepseek-ai/dsh-client-ui-sidebar": "0.1.0-rc.6",
+    "@deepseek-ai/dsh-client-ui-slots": "0.1.0-rc.6",
+    "@deepseek-ai/dsh-client-web-react": "0.1.0-rc.6",
+    "@deepseek-ai/dsh-fs": "0.1.0-rc.6",
+    "@deepseek-ai/dsh-storage-domain": "0.1.0-rc.6",
+    "@deepseek-ai/dsh-tools": "0.1.0-rc.6",
+    "@deepseek-ai/schemastery": "3.18.1",
+    "@testing-library/react": "^16.3.2",
+    "@types/node": "^22.20.0",
+    "@types/react": "~18.3.1",
+    "@types/react-dom": "~18.3.7",
+    "@types/use-sync-external-store": "^0.0.6",
+    "jsdom": "29.1.1",
+    "lightningcss": "^1.32.0",
+    "playwright": "1.61.1",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "tsdown": "^0.22.2",
+    "typescript": "^6.0.3",
+    "use-sync-external-store": "1.2.0",
+    "vitest": "^4.1.8"
   },
   "dsh": {
     "bundle": {
       "patch": "./cordis.patch.yml"
     },
     "client": {
-      "platform": "web"
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-runtime",
+        "@deepseek-ai/dsh-client-ui-conversation",
+        "@deepseek-ai/dsh-client-ui-sidebar"
+      ]
     }
   }
 }

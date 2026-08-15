@@ -5,9 +5,9 @@
  * workspace is addressable by `root` alias; the primary root is the default
  * (and equals the session cwd, so built-in tools keep working unchanged).
  *
- * Current-root durability: `ws_cd` appends a `multiroot/current-root` session
- * event (mirroring `sandbox/mode` — log-only, no surface op); the fold reads
- * the last event back, so the selection survives restarts and replay.
+ * Current-root durability: `ws_cd` stores the selection in the plugin-owned
+ * storage domain, keyed by Session id. No custom Harness Session event is
+ * required, and the logical primary root remains the default.
  *
  * Sandbox boundary: each call constructs a per-call policy whose
  * `workspaceRoot` is the ADDRESSED root (mode inherits the session). Cross-
@@ -45,15 +45,12 @@ function shq(value) {
   return `'${String(value).replace(/'/g, `'\\''`)}'`
 }
 
-/** The last multiroot/current-root event's alias — replay IS the state. */
-function effectiveCurrentRoot(session) {
-  const events = session?.events
-  if (events === undefined) return undefined
-  for (let index = events.length - 1; index >= 0; index -= 1) {
-    const event = events[index]
-    if (event.type === 'multiroot/current-root') return event.data.alias
-  }
-  return undefined
+/** The plugin-owned current alias for a Session, with primary fallback. */
+function currentRoot(ctx, session) {
+  const sessionId = session?.id
+  const cwd = session?.header?.cwd
+  if (sessionId === undefined || cwd === undefined) return undefined
+  return ctx.multirootRegistry.currentRoot(sessionId, cwd)
 }
 
 /** The workspace of this call's session, or undefined when none applies. */
@@ -70,7 +67,7 @@ function resolveRoot(ctx, exec, args) {
     throw new Error('当前会话不属于任何多根工作区（会话 cwd 未匹配到主根）。请先在界面上创建多根工作区并在其中打开会话。')
   }
   let alias = args.root
-  if (alias === undefined) alias = effectiveCurrentRoot(session)
+  if (alias === undefined) alias = currentRoot(ctx, session)
   if (alias === undefined) {
     alias = workspace.roots.find((root) => root.primary)?.alias ?? workspace.roots[0].alias
   }
@@ -131,6 +128,33 @@ ${verb}
 </content>`
 }
 
+/** Treat only ripgrep's clean and no-match outcomes as successful. */
+function assertSearchSucceeded(result) {
+  const detail = result.stderr.text.trim()
+  const fail = (message) => {
+    throw new Error(detail === '' ? message : `${message}: ${detail}`)
+  }
+  if (result.aborted === true) fail('ripgrep search aborted')
+  if (result.timedOut === true) fail('ripgrep search timed out')
+  if (typeof result.signal === 'string') fail(`ripgrep search terminated by ${result.signal}`)
+  if (result.exitCode === 0 || result.exitCode === 1) return
+  if (result.exitCode === null) fail('ripgrep search failed without an exit code')
+  fail(`ripgrep exited with code ${result.exitCode}`)
+}
+
+/** Resolve a file path only when its canonical target remains under the addressed root. */
+async function resolveWithinRoot(ctx, root, path, signal) {
+  joinWithinRoot(root.path, path)
+  const [rootTarget, target] = await Promise.all([
+    ctx.fs.resolve(root.path, { cwd: root.path, signal }),
+    ctx.fs.resolve(path, { cwd: root.path, signal }),
+  ])
+  if (!ctx.fs.contains(rootTarget, target)) {
+    throw new Error(`path "${path}" escapes the addressed root`)
+  }
+  return target
+}
+
 export function apply(ctx, config) {
   const crossRootBash = CROSS_ROOT_POLICIES.includes(config?.crossRootBash) ? config.crossRootBash : 'off'
 
@@ -148,7 +172,7 @@ export function apply(ctx, config) {
       if (workspace === undefined) {
         return '当前会话不属于任何多根工作区。请在 Web 界面创建多根工作区并在其中打开会话，或用 ws_list 确认。'
       }
-      const current = effectiveCurrentRoot(session)
+      const current = currentRoot(ctx, session)
       const lines = [`逻辑工作区：${workspace.title}`, '根：']
       for (const root of workspace.roots) {
         const marks = [
@@ -175,7 +199,7 @@ export function apply(ctx, config) {
       const session = exec.agent?.session
       if (session === undefined) throw new Error('ws_cd requires a session')
       const root = resolveRoot(ctx, exec, args)
-      session.append('multiroot/current-root', { alias: root.alias })
+      await ctx.multirootRegistry.setCurrentRoot(session.id, session.header.cwd, root.alias)
       return `当前根已切换为 ${root.alias}（${root.path}）`
     },
   }))
@@ -193,7 +217,7 @@ export function apply(ctx, config) {
     },
     async execute(args, exec) {
       const root = resolveRoot(ctx, exec, args)
-      const target = await ctx.fs.resolve(args.path, { cwd: root.path, signal: exec.signal })
+      const target = await resolveWithinRoot(ctx, root, args.path, exec.signal)
       const info = await ctx.fs.stat(target, exec.signal)
       if (info === undefined) {
         ctx.emit('fs/observed', target, { kind: 'absent' }, exec)
@@ -225,7 +249,7 @@ export function apply(ctx, config) {
     },
     async execute(args, exec) {
       const root = resolveRoot(ctx, exec, args)
-      const target = await ctx.fs.resolve(args.path, { cwd: root.path, signal: exec.signal })
+      const target = await resolveWithinRoot(ctx, root, args.path, exec.signal)
       const intent = await ctx.waterfall('fs/write-intent', target, exec, () => undefined)
       const outcome = await ctx.fs.writeText(target, args.content, intent, exec.signal, policyFor(ctx, exec, root))
       ctx.emit('fs/observed', target, { kind: 'present', version: outcome.version }, exec)
@@ -249,7 +273,7 @@ export function apply(ctx, config) {
     },
     async execute(args, exec) {
       const root = resolveRoot(ctx, exec, args)
-      const target = await ctx.fs.resolve(args.path, { cwd: root.path, signal: exec.signal })
+      const target = await resolveWithinRoot(ctx, root, args.path, exec.signal)
       const expected = await ctx.waterfall('fs/edit-intent', target, exec, () => undefined)
       const outcome = await ctx.fs.editText(
         target,
@@ -286,12 +310,17 @@ export function apply(ctx, config) {
       let policy
       let fenceNote = ''
       let workdirRootPath
+      let workdirRoot
       let rootLabel
 
       if (args.roots !== undefined) {
         const roots = resolveRoots(ctx, exec, args.roots)
+        if (roots.length === 0) {
+          throw new Error('ws_bash roots must contain at least one workspace root alias')
+        }
         if (roots.length <= 1) {
           const root = roots[0]
+          workdirRoot = root
           workdirRootPath = root.path
           rootLabel = root.alias
           policy = policyFor(ctx, exec, root)
@@ -299,6 +328,7 @@ export function apply(ctx, config) {
           throw new Error('跨根 bash 已被部署策略禁用（crossRootBash=off）。请按根拆分为多次 ws_bash 调用。')
         } else if (crossRootBash === 'ancestor') {
           const ancestor = commonAncestor(roots.map((root) => root.path))
+          workdirRoot = roots[0]
           workdirRootPath = roots[0].path
           rootLabel = roots.map((root) => root.alias).join(', ')
           policy = {
@@ -308,6 +338,7 @@ export function apply(ctx, config) {
           }
           fenceNote = `\n[fence: common ancestor ${ancestor} of roots ${rootLabel}]`
         } else {
+          workdirRoot = roots[0]
           workdirRootPath = roots[0].path
           rootLabel = roots.map((root) => root.alias).join(', ')
           policy = {
@@ -318,12 +349,15 @@ export function apply(ctx, config) {
         }
       } else {
         const root = resolveRoot(ctx, exec, args)
+        workdirRoot = root
         workdirRootPath = root.path
         rootLabel = root.alias
         policy = policyFor(ctx, exec, root)
       }
 
-      const workdir = args.workdir === undefined ? workdirRootPath : joinWithinRoot(workdirRootPath, args.workdir)
+      const workdir = args.workdir === undefined
+        ? workdirRootPath
+        : ctx.fs.processPath(await resolveWithinRoot(ctx, workdirRoot, args.workdir, exec.signal))
       const result = await ctx.shell.run(ctx.shell.resolve({
         command: args.command,
         workdir,
@@ -353,7 +387,8 @@ export function apply(ctx, config) {
     },
     async execute(args, exec) {
       const root = resolveRoot(ctx, exec, args)
-      const searchDir = args.path === undefined ? root.path : joinWithinRoot(root.path, args.path)
+      const searchTarget = await resolveWithinRoot(ctx, root, args.path ?? '.', exec.signal)
+      const searchDir = ctx.fs.processPath(searchTarget)
       const command = `rg --files -g ${shq(args.pattern)} ${shq(searchDir)}`
       const result = await ctx.shell.run(ctx.shell.resolve({
         command,
@@ -361,6 +396,7 @@ export function apply(ctx, config) {
         sandboxPolicy: policyFor(ctx, exec, root),
         signal: exec.signal,
       }))
+      assertSearchSucceeded(result)
       const lines = result.stdout.text.split('\n').filter((line) => line.length > 0)
       const capped = lines.slice(0, SEARCH_LINE_CAP)
       const suffix = lines.length > SEARCH_LINE_CAP ? `\n… ${lines.length - SEARCH_LINE_CAP} more` : ''
@@ -382,7 +418,8 @@ export function apply(ctx, config) {
     },
     async execute(args, exec) {
       const root = resolveRoot(ctx, exec, args)
-      const searchDir = args.path === undefined ? root.path : joinWithinRoot(root.path, args.path)
+      const searchTarget = await resolveWithinRoot(ctx, root, args.path ?? '.', exec.signal)
+      const searchDir = ctx.fs.processPath(searchTarget)
       const command = `rg --line-number --no-heading --color never -e ${shq(args.query)} ${shq(searchDir)}`
       const result = await ctx.shell.run(ctx.shell.resolve({
         command,
@@ -390,6 +427,7 @@ export function apply(ctx, config) {
         sandboxPolicy: policyFor(ctx, exec, root),
         signal: exec.signal,
       }))
+      assertSearchSucceeded(result)
       const lines = result.stdout.text.split('\n').filter((line) => line.length > 0)
       const capped = lines.slice(0, SEARCH_LINE_CAP)
       const suffix = lines.length > SEARCH_LINE_CAP ? `\n… ${lines.length - SEARCH_LINE_CAP} more` : ''
@@ -405,7 +443,7 @@ export function apply(ctx, config) {
       const session = context.agent?.session
       const workspace = workspaceOf(ctx, session)
       if (workspace === undefined) return ''
-      const current = effectiveCurrentRoot(session)
+      const current = currentRoot(ctx, session)
       const lines = workspace.roots.map((root) =>
         `- ${root.alias}${root.primary ? ' (primary)' : ''}${root.alias === current ? ' (current)' : ''} → ${root.path}`)
       return `当前逻辑工作区 <${workspace.title}>，包含以下根：\n${lines.join('\n')}\n\n内建 read/write/edit/bash/搜索作用于 primary 根（即会话 cwd）；访问其他根请使用 ws_* 工具并指定 root 参数。`
@@ -417,7 +455,7 @@ export function apply(ctx, config) {
 function joinWithinRoot(rootPath, relative) {
   const combined = isAbsolute(relative) ? relative : join(rootPath, relative)
   const relFromRoot = pathRelative(rootPath, combined)
-  if (relFromRoot.startsWith('..')) {
+  if (relFromRoot === '..' || relFromRoot.startsWith('../')) {
     throw new Error(`workdir "${relative}" escapes the addressed root`)
   }
   return combined
