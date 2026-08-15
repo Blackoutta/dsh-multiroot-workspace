@@ -412,7 +412,13 @@ try {
   await overflow.click()
 
   await page.getByRole('button', { name: '搜索会话', exact: true }).click()
+  const searchResponsePromise = page.waitForResponse(response =>
+    response.request().method() === 'POST' && new URL(response.url()).pathname === '/api/session.search',
+  )
   await page.getByRole('textbox', { name: '搜索会话…', exact: true }).fill(sessionTitles[2])
+  const searchResponse = await searchResponsePromise
+  assert.equal(searchResponse.status(), 200)
+  await searchResponse.finished()
   const searchResults = page.getByRole('tree', { name: '搜索结果' })
   await searchResults.getByText(sessionTitles[2], { exact: true }).waitFor()
   for (const other of sessionTitles.filter(candidate => candidate !== sessionTitles[2])) {
