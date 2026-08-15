@@ -17,6 +17,12 @@ To avoid copying unrelated package modules, the reachable pointer-grace and clip
 
 The full upstream MIT notice is preserved in `LICENSES/DeepSeek-Harness-MIT.txt` and included in the published package.
 
+## Vendored client store runtime
+
+The Workspace view store retains the upstream structural slot contract: `defineStore` returns a handle carrying its declaration and a scoped instance factory; instances expose snapshot reads, synchronous subscriptions, draft-stripped actions, and persisted-value cleanup. Actions clone before mutation, publish only after successful mutation, then persist whole-value JSON under the unchanged `dsh.workspace.view.v5` key (with an optional scope suffix). Malformed persisted JSON and localStorage read, write, or removal failures fall back without breaking the live store.
+
+The local runtime intentionally omits the upstream generic Zustand, Immer, selector, animation-frame batching, shallow-equality, and arbitrary snapshot-store middleware because this plugin consumes only the JSON-compatible Workspace view store contract.
+
 ## Verification
 
 Verified on 2026-08-14 against Harness `0.1.0-rc.5` / `47f943859b`:
