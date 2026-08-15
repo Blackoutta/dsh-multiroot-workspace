@@ -10,7 +10,9 @@
     "test:browser": "node tests/browser/multiroot-ui.spec.mjs",
     "test:client-bundle": "node tests/integration/client-bundle.spec.mjs",
     "test:package-manifest": "node tests/integration/package-manifest.spec.mjs",
+    "test:profile-tools": "node tests/integration/profile-tools.spec.mjs",
     "test:reproducible-build": "node scripts/check-client-reproducibility.mjs",
+    "test:workflow-policy": "node tests/integration/workflow-policy.spec.mjs",
     "prepare": "npm run build"
   },
   "files": [

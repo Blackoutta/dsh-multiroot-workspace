@@ -21,6 +21,8 @@ The browser check packs the current plugin, creates an isolated temporary DSH ho
 
 The check writes ten review screenshots under `tests/browser/screenshots/`: light and dark variants of the wide sidebar, rail, create dialog, manage dialog, and Hero picker. Runtime directories remain exclusive temporary paths, while their visible screenshot text is normalized to a stable display prefix. These generated PNGs are local review artifacts and are intentionally not staged with release commits; the directory itself is retained by `.gitkeep`.
 
+Pull requests and `main` run the same Node.js 24.11.1 / pnpm 11.9.0 release gate in GitHub Actions, including packed-profile, deterministic-build, client-bundle, and browser checks. A `v<package-version>` tag may publish the `next` dist-tag only after that reusable gate passes. Publication uses npm Trusted Publishing through `.github/workflows/release.yml` with GitHub OIDC; no long-lived npm token is used.
+
 The Host API is served under `/plugins/multiroot/api`. Creating a logical Workspace immediately creates or adopts its primary Host Workspace and returns `shadowWorkspaceId`. The browser joins logical metadata by that id and leaves the stock Workspace list authoritative for Session membership, search, grouping, ordering, and selection.
 
 `ws_cd` stores the current-root selection as plugin-owned state keyed by Session id, so it survives plugin and Harness restarts without adding a custom Session event. A Session with no stored selection uses its logical Workspace's primary root. Deleting or purging that logical Workspace clears its selections. Forked Sessions do not inherit the source Session's selection and therefore begin on the primary root.

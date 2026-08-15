@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+        with:
+          node-version: 24.11.1
+          package-manager-cache: false
+      - uses: pnpm/setup@5d160c5bc68a09337ad0d5654e237e03253b5879 # v1.0.0
+        with:
+          version: 11.9.0
+          install: false
+          cache: true
+      - name: Verify toolchain
+        run: |
+          test "$(node --version)" = "v24.11.1"
+          test "$(npm --version)" = "11.6.2"
+          test "$(pnpm --version)" = "11.9.0"
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run test:workflow-policy
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm run typecheck
+      - run: pnpm run test
+      - run: pnpm run test:reproducible-build
+      - run: pnpm run test:package-manifest
+      - run: pnpm run test:profile-tools
+      - run: pnpm run test:client-bundle
+      - run: pnpm run test:browser

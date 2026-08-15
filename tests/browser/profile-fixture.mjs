@@ -10,7 +10,7 @@ const PNPM_VERSION = '11.9.0'
 const projectRoot = fileURLToPath(new URL('../..', import.meta.url))
 
 function pnpm(args, options) {
-  return spawn('corepack', [`pnpm@${PNPM_VERSION}`, ...args], {
+  return spawn('pnpm', args, {
     ...options,
     env: { ...process.env, ...options?.env },
   })
@@ -69,6 +69,10 @@ export async function startProfile() {
 
   try {
     await mkdir(runner)
+    const pnpmVersion = (await run('pnpm', ['--version'], { cwd: runner })).trim()
+    if (pnpmVersion !== PNPM_VERSION) {
+      throw new Error(`browser fixture requires pnpm ${PNPM_VERSION}, received ${pnpmVersion}`)
+    }
     await writeFile(path.join(runner, 'package.json'), JSON.stringify({ private: true }))
     await writeFile(path.join(runner, 'pnpm-workspace.yaml'), `packages:
   - .
@@ -110,9 +114,9 @@ allowBuilds:
       home,
       async stop() {
         if (stopped) return
-        stopped = true
         await stopChild(server)
         await rm(temporaryRoot, { recursive: true, force: true })
+        stopped = true
       },
     }
   } catch (error) {
