@@ -202,6 +202,8 @@ git commit -m "build: complete external dependency metadata"
 
 ### Task 4: Remove parent-checkout dependencies
 
+**Status (2026-08-15): Complete.** The implementation steps below are superseded by the approved self-contained-client design. Their intended outcome is preserved: the client and its tests resolve only installed packages and repository-owned source. The physical-independence acceptance in Step 4 remains unchanged and was verified from an isolated source archive with the DeepSeek Harness checkout unavailable.
+
 **Files:**
 
 - Modify: `tsconfig.json`
@@ -210,19 +212,19 @@ git commit -m "build: complete external dependency metadata"
 - Modify: `tests/client/upstream/*.spec.tsx`
 - Modify: `package.json`
 
-- [ ] **Step 1: Remove the parent source path**
+- [x] **Step 1: Remove the parent source path**
 
 Delete the `@deepseek-ai/dsh-client-locale/src/*` mapping to `../../../packages/client/locale/src/*` from `tsconfig.json`.
 
-- [ ] **Step 2: Remove the parent tsconfig plugin configuration**
+- [x] **Step 2: Remove the parent tsconfig plugin configuration**
 
 Remove `vite-tsconfig-paths` and every alias targeting `../../../packages`. Resolve tests only through installed package exports and local source paths.
 
-- [ ] **Step 3: Replace source-only locale imports**
+- [x] **Step 3: Replace source-only locale imports**
 
 Replace `@deepseek-ai/dsh-client-locale/src/locales/zh.ts` fixtures with local test dictionaries or the public locale export. Do not import another package's `src/` path from tests.
 
-- [ ] **Step 4: Prove physical independence**
+- [x] **Step 4: Prove physical independence**
 
 Copy a clean archive of the repository to a temporary directory outside every workspace and run:
 
@@ -236,7 +238,7 @@ pnpm pack --pack-destination .artifacts
 
 Expected: every command passes with the DeepSeek Harness checkout renamed or unavailable.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```sh
 git add tsconfig.json vitest.config.mjs tests package.json pnpm-lock.yaml

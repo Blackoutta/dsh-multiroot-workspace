@@ -5,7 +5,7 @@ import type {
   SessionListState, WorkspaceId, WorkspaceListState, WorkspaceView,
 } from '@deepseek-ai/dsh-client-runtime/client'
 import { makeTranslate } from '@deepseek-ai/dsh-client-test-runtime'
-import { zh as commonZh } from '@deepseek-ai/dsh-client-locale/src/locales/zh.ts'
+import { commonZh } from '../common-locale.ts'
 import type { DirectoryFlowOwnerProps, WorkspacePickerProps } from '../../../src/client/upstream/contract/slots.ts'
 import { bindSnapshotSelector } from '@deepseek-ai/dsh-client-web-react'
 import { WorkspacePicker } from '../../../src/client/upstream/WorkspacePicker.tsx'

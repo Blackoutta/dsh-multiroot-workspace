@@ -64,10 +64,6 @@ export default defineConfig({
         find: /^@testing-library\/react(\/.*)?$/,
         replacement: `${fileURLToPath(new URL('./node_modules/@testing-library/react/', import.meta.url))}$1`,
       },
-      {
-        find: /^@deepseek-ai\/dsh-client-locale\/src\/(.*)$/,
-        replacement: `${fileURLToPath(new URL('../../../packages/client/locale/src/', import.meta.url))}$1`,
-      },
     ],
   },
   test: {

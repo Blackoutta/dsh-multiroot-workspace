@@ -84,9 +84,6 @@ importers:
       use-sync-external-store:
         specifier: 1.2.0
         version: 1.2.0(react@18.3.1)
-      vite-tsconfig-paths:
-        specifier: ^6.1.1
-        version: 6.1.1(typescript@6.0.3)(vite@8.2.1(@types/node@22.20.1))
       vitest:
         specifier: ^4.1.8
         version: 4.1.10(@types/node@22.20.1)(jsdom@29.1.1)(vite@8.2.1(@types/node@22.20.1))
@@ -1314,9 +1311,6 @@ packages:
     resolution: {integrity: sha512-/6gFNr0N04nob252sTQxyFLi3eKFRqIg1I87YcqAMT1i6SQrSF6KujUEQrtrjMV0H/eejTCltLdDSTEMzHbnsQ==}
     engines: {node: '>=20.20.0'}
 
-  globrex@0.1.2:
-    resolution: {integrity: sha512-uHJgbwAMwNFf5mLst7IWLNg14x1CkeqglJb/K3doi4dw6q2IvAAmM/Y81kevy83wP+Sst+nutFTYOGg3d1lsxg==}
-
   hast-util-to-html@9.0.5:
     resolution: {integrity: sha512-OguPdidb+fbHQSU4Q4ZiLKnzWo8Wwsf5bZfbvu7//a9oTYoqD/fWpe96NuHkoS9h0ccGOTe0C4NGXdtS0iObOw==}
 
@@ -1768,17 +1762,6 @@ packages:
   trim-lines@3.0.1:
     resolution: {integrity: sha512-kRj8B+YHZCc9kQYdWfJB2/oUl9rA99qbowYYBtr4ui4mZyAQ2JpvVBd/6U2YloATfqBhBTSMhTpgBHtU0Mf3Rg==}
 
-  tsconfck@3.1.6:
-    resolution: {integrity: sha512-ks6Vjr/jEw0P1gmOVwutM3B7fWxoWBL2KRDb1JfqGVawBmO5UsvmWOQFGHBPl5yxYz4eERr19E6L7NMv+Fej4w==}
-    engines: {node: ^18 || >=20}
-    deprecated: unmaintained
-    hasBin: true
-    peerDependencies:
-      typescript: ^5.0.0
-    peerDependenciesMeta:
-      typescript:
-        optional: true
-
   tsdown@0.22.14:
     resolution: {integrity: sha512-ule7Y+fsAN2iZbLDoo7C4KYljFJNJJ+fLshyn+9gozeTspVersWHxwdGB+Dm2hzA38s6muFnUTl0jK3vJm9ifQ==}
     engines: {node: ^22.18.0 || >=24.11.0}
@@ -1860,11 +1843,6 @@ packages:
 
   vfile@6.0.3:
     resolution: {integrity: sha512-KzIbH/9tXat2u30jf+smMwFCsno4wHVdNmzFyL+T/L3UGqqk6JKfVqOFOZEpZSHADH1k40ab6NUIXZq422ov3Q==}
-
-  vite-tsconfig-paths@6.1.1:
-    resolution: {integrity: sha512-2cihq7zliibCCZ8P9cKJrQBkfgdvcFkOOc3Y02o3GWUDLgqjWsZudaoiuOwO/gzTzy17cS5F7ZPo4bsnS4DGkg==}
-    peerDependencies:
-      vite: '*'
 
   vite@8.2.1:
     resolution: {integrity: sha512-EU/eS7BH3XROHh2YnBefjM6DBKA6ZeMZEYQbj7NLWg5wHYlhB8B/Mayd5XsgWq+NFYccDOTemRpdETWR6Ka/lw==}
@@ -3199,8 +3177,6 @@ snapshots:
     dependencies:
       resolve-pkg-maps: 1.0.0
 
-  globrex@0.1.2: {}
-
   hast-util-to-html@9.0.5:
     dependencies:
       '@types/hast': 3.0.5
@@ -3840,10 +3816,6 @@ snapshots:
 
   trim-lines@3.0.1: {}
 
-  tsconfck@3.1.6(typescript@6.0.3):
-    optionalDependencies:
-      typescript: 6.0.3
-
   tsdown@0.22.14(typescript@6.0.3):
     dependencies:
       ansis: 4.3.1
@@ -3923,16 +3895,6 @@ snapshots:
     dependencies:
       '@types/unist': 3.0.3
       vfile-message: 4.0.3
-
-  vite-tsconfig-paths@6.1.1(typescript@6.0.3)(vite@8.2.1(@types/node@22.20.1)):
-    dependencies:
-      debug: 4.4.3
-      globrex: 0.1.2
-      tsconfck: 3.1.6(typescript@6.0.3)
-      vite: 8.2.1(@types/node@22.20.1)
-    transitivePeerDependencies:
-      - supports-color
-      - typescript
 
   vite@8.2.1(@types/node@22.20.1):
     dependencies:

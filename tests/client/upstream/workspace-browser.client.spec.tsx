@@ -6,7 +6,7 @@ import type {
   SessionId, SessionListState, SessionSummary, WorkspaceId, WorkspaceListState, WorkspaceView,
 } from '@deepseek-ai/dsh-client-runtime/client'
 import { makeTranslate } from '@deepseek-ai/dsh-client-test-runtime'
-import { zh as commonZh } from '@deepseek-ai/dsh-client-locale/src/locales/zh.ts'
+import { commonZh } from '../common-locale.ts'
 import type { WorkspaceBrowserProps } from '../../../src/client/upstream/contract/slots.ts'
 import { createWorkspaceViewStore, FLAT_SESSION_ORDER_KEY } from '../../../src/client/upstream/stores.ts'
 import { UNGROUPED_KEY } from '../../../src/client/upstream/tree.ts'

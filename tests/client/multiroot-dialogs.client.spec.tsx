@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { makeTranslate } from '@deepseek-ai/dsh-client-test-runtime'
-import { zh as commonZh } from '@deepseek-ai/dsh-client-locale/src/locales/zh.ts'
+import { commonZh } from './common-locale.ts'
 import type { DirectoryFlowOwnerProps } from '../../src/client/upstream/contract/slots.ts'
 import { zh } from '../../src/client/upstream/locales.ts'
 import { MultirootDialog } from '../../src/client/multiroot/Dialogs.tsx'
