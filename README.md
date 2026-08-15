@@ -2,10 +2,14 @@
 
 External DeepSeek Harness bundle providing logical Workspaces with multiple named filesystem roots. It replaces the stock Workspace UI only while installed, using a source fork pinned in [UPSTREAM.md](./UPSTREAM.md); it does not modify Harness repository files.
 
+## Prerequisites
+
+The first public prerelease targets DeepSeek Harness `0.1.0-rc.6` exactly on macOS and Linux. Harness supplies the pinned Cordis, DSH client and Host services, Schemastery, React, and ReactDOM peers when it loads the plugin; consumers should install the plugin through a Harness profile instead of installing those peers into the plugin package. Source development uses Node.js `24.11.1` and pnpm `11.9.0`.
+
 ## Development
 
 ```sh
-pnpm install --ignore-workspace
+pnpm install --frozen-lockfile
 pnpm run test
 pnpm run typecheck
 pnpm run build

@@ -188,7 +188,7 @@ pnpm install --frozen-lockfile
 pnpm pack --pack-destination .artifacts
 release_home=$(mktemp -d)
 DSH_HOME="$release_home" dsh plugin --profile web add .artifacts/dsh-multiroot-workspace-0.1.0-rc.1.tgz
-pnpm peers check -C "$release_home/profiles/web"
+corepack pnpm@11.9.0 peers check -C "$release_home/profiles/web"
 ```
 
 Expected: installation succeeds without an unexplained peer warning; the package's direct imports are all declared.
